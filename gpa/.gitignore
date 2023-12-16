@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-#amplify-do-not-edit-begin
+# amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
@@ -31,7 +31,7 @@ amplify/mock-data
 amplify/mock-api-resources
 amplify/backend/amplify-meta.json
 amplify/backend/.temp
-build/
+# build/
 dist/
 node_modules/
 aws-exports.js
