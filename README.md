@@ -5,7 +5,7 @@ Vite + React + TypeScript
 
 ### https://main.dnqrtybjo5tlc.amplifyapp.com 
 
-### Make sure you have NVM (Node Version Manager) Downloaded, and also Node V20.0.0 to prevent any issues.
+### Make sure you have NVM (Node Version Manager) Downloaded, and also Node #V18.0.0 to prevent any issues.
 
 # Important Before Installation - If you would like to be able to make changes that effect the Main Branch on AWS Amplify.
 
