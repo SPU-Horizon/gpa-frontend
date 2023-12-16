@@ -1,0 +1,15 @@
+{
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frontendgpa-prod-200453-authRole",
+      "UnauthRoleArn": "arn:aws:iam::347977416648:role/amplify-frontendgpa-prod-200453-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::347977416648:role/amplify-frontendgpa-prod-200453-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-frontendgpa-prod-200453-deployment",
+      "UnauthRoleName": "amplify-frontendgpa-prod-200453-unauthRole",
+      "StackName": "amplify-frontendgpa-prod-200453",
+      "StackId": "arn:aws:cloudformation:us-east-1:347977416648:stack/amplify-frontendgpa-prod-200453/45c1fe50-9bc8-11ee-8ed6-129616fa9bcd",
+      "AmplifyAppId": "d1x3ltrnf59i23"
+    }
+  }
+}
