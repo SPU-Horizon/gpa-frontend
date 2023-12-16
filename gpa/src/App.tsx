@@ -2,7 +2,7 @@
 import "./App.css";
 
 function App() {
-  return <div>Among Us.</div>;
+  return <div>Among Uss.</div>;
 }
 
 export default App;
