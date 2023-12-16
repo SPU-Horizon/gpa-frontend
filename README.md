@@ -3,7 +3,7 @@ For building the Frontend of the GPA App - Configuring with AWS Amplify for Cont
 
 Vite + React + TypeScript
 
-### https://main.d332h07fhbappd.amplifyapp.com 
+### https://main.dnqrtybjo5tlc.amplifyapp.com 
 
 ### Make sure you have NVM (Node Version Manager) Downloaded, and also Node V20.0.0 to prevent any issues.
 
