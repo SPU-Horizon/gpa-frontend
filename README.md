@@ -10,7 +10,7 @@ Vite + React + TypeScript
 # How to Install 
 
 - Clone the Repo and Open on VS Code or your IDE of choice.
-- Enter the terminal, cd into the gpa-frontend directory and run 'npm ci' This will clean install the project with all the project dependencies.
+- Enter the terminal, cd into the gpa directory and run 'npm ci' This will clean install the project with all the project dependencies.
 - Before Running Locally - run this command 'npm run build'
 - Then To Run Locally - you should be able to run 'npm run dev' and this will open the project on your local server.
 
