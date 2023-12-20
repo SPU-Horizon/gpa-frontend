@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function VisionSection() {
   return (
     <div>
