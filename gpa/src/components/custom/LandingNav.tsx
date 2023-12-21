@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { GpaGold } from "@/icons";
 import { MobileDrawer } from "./MobileDrawer";
+import { links } from "@/constants/navlinks";
 
 export default function LandingNavbar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 750);
@@ -26,21 +27,15 @@ export default function LandingNavbar() {
         </div>
       ) : (
         <div className="flex space-x-4 items-center text-2xl font-medium pr-4">
-          <a className="text-white cursor-pointer hover:text-gold-light ">
-            Vision
-          </a>
-          <a className="text-white cursor-pointer hover:text-gold-light">
-            Key Features
-          </a>
-          <a className="text-white cursor-pointer  hover:text-gold-light">
-            Contact Us
-          </a>
-          <a
-            className="text-white cursor-pointer  hover:text-gold-light"
-            href="/login"
-          >
-            Login
-          </a>
+          {links.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-white-base hover:text-gold-light font-bold"
+            >
+              {link.name}
+            </a>
+          ))}
         </div>
       )}
     </div>

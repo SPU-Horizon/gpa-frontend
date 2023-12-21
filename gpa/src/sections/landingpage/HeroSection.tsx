@@ -6,7 +6,7 @@ import LandingNavbar from "@/components/custom/LandingNav";
 export default function HeroSection() {
   return (
     <div
-      className="flex flex-col w-full gap-20 overflow-hidden bg-cover items-start pl-12 pt-16 pr-12 pb-16 sm:p-3 text-white-base"
+      className="flex flex-col w-full gap-20 overflow-hidden bg-cover items-start pl-12 pt-16 pr-12 pb-16 sm:p-3 sm:pt-16 text-white-base"
       style={{
         backgroundImage: `url(${GPAHero})`,
         height: "100vh",
