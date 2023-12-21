@@ -1,7 +1,7 @@
 import { GpaGold } from "@/icons";
 import { Container, Group, Anchor } from "@mantine/core";
 import classes from "@/modules/Footer.module.css";
-import { GetInTouchSimple } from "@/components/custom/GetInTouch";
+import { GetInTouchSimple } from "@/components/custom/ContactUsModal";
 
 const links = [
   { link: "#", label: "Vision" },

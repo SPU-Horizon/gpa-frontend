@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { GpaGold } from "@/icons";
-import { MobileDrawer } from "./MobileDrawer";
+import { MobileDrawer } from "../custom/MobileDrawer";
 import { links } from "@/constants/navlinks";
 
 export default function LandingNavbar() {

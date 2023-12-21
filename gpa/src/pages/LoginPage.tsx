@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { UserAuthForm } from "@/components/custom/Auth";
+import { UserAuthForm } from "@/components/custom/AuthenticationForm";
 import { SeattleLanding } from "@/images";
 
 export default function AuthenticationPage() {

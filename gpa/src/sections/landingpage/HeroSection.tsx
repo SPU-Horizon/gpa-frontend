@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
 
 import { GPAHero } from "@/images";
-import LandingNavbar from "@/components/custom/LandingNav";
+import LandingNavbar from "@/components/landingpage/LandingNavigation";
 
 export default function HeroSection() {
   return (
@@ -9,7 +9,7 @@ export default function HeroSection() {
       className="flex flex-col w-full gap-20 overflow-hidden bg-cover items-start pl-12 pt-16 pr-12 pb-16 sm:p-3 sm:pt-16 text-white-base"
       style={{
         backgroundImage: `url(${GPAHero})`,
-        height: "100vh",
+
         fontFamily: "Avenir Next",
       }}
     >
@@ -30,15 +30,15 @@ export default function HeroSection() {
           aspirations.
         </div>
 
-        <div className="w-full flex gap-4 sm:flex-col sm:w-full md:justify-center">
+        <div className="w-full flex gap-4 sm:flex-col sm:w-full md:justify-center transition-all ease-in-out">
           <Button
             size="xl"
             color="#927d4e8b"
-            className="text-gray-200 hover:#222"
+            className="text-gray-200 hover:bg-gold-base hover:text-white-base"
           >
             Get started
           </Button>
-          <Button size="xl" color="#222" className="text-gray-800">
+          <Button size="xl" color="#e9e9e9" className="text-black-light">
             Login
           </Button>
         </div>
