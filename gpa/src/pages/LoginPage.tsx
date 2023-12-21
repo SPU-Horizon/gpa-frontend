@@ -22,10 +22,10 @@ export default function AuthenticationPage() {
   return (
     <div>
       {!isMobile ? (
-        <div className="grid grid-cols-2 my-12 mx-auto h-[750px] max-w-screen-xl">
+        <div className="grid grid-cols-2 my-12 mx-auto h-[750px] max-w-screen-xl pl-7">
           <div className="relative flex flex-col overflow-hidden ">
             <img
-              className="absolute h-full w-full object-cover object-center ml-7"
+              className="absolute h-full w-full object-cover object-center "
               loading="lazy"
               srcSet={SeattleLanding}
             />
@@ -35,7 +35,7 @@ export default function AuthenticationPage() {
               href="/signin"
               className={cn(
                 buttonVariants({ variant: "ghost" }),
-                "absolute right-4 top-4 md:right-8 md:top-8"
+                "absolute right-16 top-8 md:right-8 md:top-8 hover:bg-gold-light"
               )}
             >
               Login
@@ -51,6 +51,15 @@ export default function AuthenticationPage() {
         </div>
       ) : (
         <div className="max-w-screen-xl relative">
+          <a
+            href="/signin"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "absolute right-16 top-8 md:right-8 md:top-8 z-10 text-gray-100 bg-white-base hover:bg-gold-light hover:text-white-base border-0"
+            )}
+          >
+            Login
+          </a>
           <div className="relative flex flex-col overflow-hidden h-screen justify-center ">
             <img
               className="absolute h-full w-full object-cover object-center "

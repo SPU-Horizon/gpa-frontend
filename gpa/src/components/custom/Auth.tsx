@@ -33,7 +33,7 @@ export function UserAuthForm({
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={onSubmit}>
         <div className="grid gap-3">
-          <div className="grid gap-1">
+          <div className="grid gap-1 text-white-base">
             <Label className="sr-only" htmlFor="email">
               Email
             </Label>
@@ -45,10 +45,10 @@ export function UserAuthForm({
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
-              className="text-white"
+              className="text-white bg-black-light text-base border-0"
             />
           </div>
-          <div className="grid gap-1">
+          <div className="grid gap-1 text-white-base">
             <Label className="sr-only" htmlFor="email">
               Password
             </Label>
@@ -60,7 +60,7 @@ export function UserAuthForm({
               autoComplete="password"
               autoCorrect="off"
               disabled={isLoading}
-              className="text-white"
+              className="text-white bg-black-light text-base border-0"
             />
           </div>
         </div>
@@ -72,13 +72,16 @@ export function UserAuthForm({
 
         <div className="relative flex justify-center text-xs uppercase">
           {!isMobile ? (
-            <span className="bg-background px-2 text-muted-foreground">
+            <span className="bg-background px-2 text-muted-foreground text-sm">
               Or Continue With
             </span>
           ) : null}
         </div>
       </div>
-      <Button disabled={isLoading} className="bg-slate-500">
+      <Button
+        disabled={isLoading}
+        className="bg-white-light hover:bg-gold-light hover:text-white-base"
+      >
         {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         Create An Account
       </Button>
@@ -86,7 +89,7 @@ export function UserAuthForm({
         variant="outline"
         type="button"
         disabled={isLoading}
-        className="bg:dark:bg-zinc-900 dark:text-white"
+        className="  bg-white-light  border-0 hover:bg-gold-light hover:text-white-base "
       >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

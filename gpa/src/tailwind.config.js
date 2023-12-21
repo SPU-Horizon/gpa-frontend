@@ -35,7 +35,7 @@ export default {
     },
     backgroundImage: {},
     fontFamily: {
-      sans: ["Avenir", "sans-serif"],
+      avenir: ["Avenir", "Avenir-Next", "sans-serif"],
     },
   },
   plugins: [require("tailwindcss-animate")],
