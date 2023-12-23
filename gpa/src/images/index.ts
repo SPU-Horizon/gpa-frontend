@@ -5,3 +5,5 @@ export { default as FeatureThree } from "./LandingPage/Feature3.jpg";
 export { default as GPAHero } from "./LandingPage/GPAHeroPhoto.jpg";
 export { default as Laptop } from "./LandingPage/laptop.jpg";
 export { default as DontStress } from "./LandingPage/dontstress.jpg";
+export { default as VisionOne } from "./LandingPage/VisionPhoto1.jpg";
+export { default as VisionTwo } from "./LandingPage/VisionPhoto2.jpg";

@@ -1,4 +1,4 @@
-import { DontStress } from "@/images";
+import { VisionOne } from "@/images";
 import {
   VisionSectionContentTop,
   VisionSectionContentBottom,
@@ -16,6 +16,7 @@ export default function VisionSection() {
           <LandingSectionHeader
             header="Our Vision"
             subtitle="From Students to Students."
+            className="text-center"
           />
 
           {/* Vision Section Member Heading */}
@@ -24,14 +25,14 @@ export default function VisionSection() {
             MemberHeader="Streamline Academic Planning "
             MemberDescription="We want to empower students to chart their academic future with
             clarity and confidence."
-            image={DontStress}
+            image={VisionOne}
           />
 
           <VisionSectionMember
             content={VisionSectionContentBottom}
             MemberHeader="Student-Centric Success"
             MemberDescription="Envision success from a student-centric perspective, where the app becomes a catalyst for personal growth, resilience, and achievement, laying the foundation for a fulfilling academic future."
-            image={DontStress}
+            image={VisionOne}
             swap
           />
         </div>

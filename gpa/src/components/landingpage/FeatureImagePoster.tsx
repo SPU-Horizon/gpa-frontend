@@ -7,14 +7,10 @@ type FeatureImagePosterProps = {
 
 export default function FeatureImagePoster({ photo }: FeatureImagePosterProps) {
   return (
-    <div className="relative">
+    <div className="relative ">
       {/* <!-- Tab Content --> */}
       <div>
-        <div
-          id="tabs-with-card-1"
-          role="tabpanel"
-          aria-labelledby="tabs-with-card-item-1"
-        >
+        <div role="tabpanel" aria-labelledby="tabs-with-card-item-1">
           {photo === 1 && (
             <img
               className="shadow-xl shadow-gray-200 rounded-xl dark:shadow-gray-900/[.2]"

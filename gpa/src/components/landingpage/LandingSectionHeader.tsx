@@ -13,10 +13,8 @@ export default function LandingSectionHeader({
 }: LandingSectionHeaderProps) {
   return (
     <div className={className}>
-      <h2 className="text-3xl font-bold tracki text-center sm:text-5xl ">
-        {header}
-      </h2>
-      <p className="max-w-3xl mx-auto mt-4 text-xl text-center dark:text-gray-400">
+      <h2 className="text-3xl font-bold sm:text-3xl ">{header}</h2>
+      <p className="max-w-3xl mx-auto mt-4 text-xl  dark:text-gray-400">
         {subtitle}
       </p>
     </div>

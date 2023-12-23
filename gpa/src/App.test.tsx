@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import App from "./App";
+import { render } from "./testconfig/renderMock";
 
 // Arrange the Test
 
@@ -11,6 +12,6 @@ import App from "./App";
 describe("App", () => {
   it("renders GPA in the Works", () => {
     render(<App />);
-    expect(screen.getByText("Among Uss.")).toBeInTheDocument();
+    expect(screen.getByText("The Graduation Planning App")).toBeInTheDocument();
   });
 });

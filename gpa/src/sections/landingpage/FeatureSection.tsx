@@ -18,6 +18,7 @@ export default function FeatureSection() {
               <LandingSectionHeader
                 header="GPA Features"
                 subtitle="How we make our Vision a Reality."
+                className="sm:text-center"
               />
 
               {/* <!-- Tab Navs --> */}

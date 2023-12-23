@@ -51,6 +51,14 @@ export function DemoCreateAccount() {
           <Label htmlFor="password">Password</Label>
           <Input id="password" type="password" />
         </div>
+        <div className="grid gap-2">
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" type="password" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" type="password" />
+        </div>
       </CardContent>
       <CardFooter>
         <Button className="w-full">Create account</Button>

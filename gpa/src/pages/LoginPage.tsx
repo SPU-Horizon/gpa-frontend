@@ -1,85 +1,105 @@
-import { useState, useEffect } from "react";
-
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { UserAuthForm } from "@/components/custom/AuthenticationForm";
 import { SeattleLanding } from "@/images";
+import { GoogleIcon, GpaGold } from "@/icons";
 
 export default function AuthenticationPage() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1000);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
-    <div>
-      {!isMobile ? (
-        <div className="grid grid-cols-2 my-12 mx-auto h-[750px] max-w-screen-xl pl-7">
-          <div className="relative flex flex-col overflow-hidden ">
-            <img
-              className="absolute h-full w-full object-cover object-center "
-              loading="lazy"
-              srcSet={SeattleLanding}
-            />
+    <div className="flex justify-center items-center h-[50rem] w-full bg-gradient-to-r from-neutral-500 to-black-light">
+      <div className="flex w-full md:max-w-sm mx-auto overflow-hidden bg-white-light rounded-lg shadow-lg max-w-3xl">
+        <div
+          className="md:hidden bg-cover block w-1/2 bg-center"
+          style={{
+            backgroundImage: `url(${SeattleLanding})`,
+          }}
+        ></div>
+
+        <div className="w-full px-6 py-8 md:px-8 ">
+          <div className="flex justify-center mx-auto">
+            <GpaGold />
           </div>
-          <div className="flex justify-center items-center grow flex-col gap-6 relative">
-            <a
-              href="/signin"
-              className={cn(
-                buttonVariants({ variant: "ghost" }),
-                "absolute right-16 top-8 md:right-8 md:top-8 hover:bg-gold-light"
-              )}
-            >
-              Login
-            </a>
-            <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">Sign In</h1>
-              <p className="text-sm text-muted-foreground ">
-                Enter your email below to sign in - Or Create an Account
-              </p>
-            </div>
-            <UserAuthForm className=" w-4/5" isMobile={isMobile} />
-          </div>
-        </div>
-      ) : (
-        <div className="max-w-screen-xl relative">
+
+          <p className="mt-3 text-xl text-center text-gray-600 ">
+            Welcome back!
+          </p>
+
           <a
-            href="/signin"
-            className={cn(
-              buttonVariants({ variant: "outline" }),
-              "absolute right-16 top-8 md:right-8 md:top-8 z-10 text-gray-100 bg-white-base hover:bg-gold-light hover:text-white-base border-0"
-            )}
+            href="#"
+            className="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg hover:bg-gray-50 "
           >
-            Login
+            <GoogleIcon />
+
+            <span className="w-5/6 px-4 py-3 font-bold text-center">
+              Sign in with Google
+            </span>
           </a>
-          <div className="relative flex flex-col overflow-hidden h-screen justify-center ">
-            <img
-              className="absolute h-full w-full object-cover object-center "
-              loading="lazy"
-              srcSet={SeattleLanding}
+
+          <div className="flex items-center justify-between mt-4">
+            <span className="w-1/5 border-b  lg:w-1/4"></span>
+
+            <a
+              href="#"
+              className="text-xs text-center text-gray-500 uppercase  hover:underline"
+              aria-disabled="true"
+            >
+              or login with email
+            </a>
+
+            <span className="w-1/5 border-b  lg:w-1/4"></span>
+          </div>
+
+          <div className="mt-4">
+            <label
+              className="block mb-2 text-sm font-medium text-gray-600 "
+              htmlFor="LoggingEmailAddress"
+            >
+              Email Address
+            </label>
+            <input
+              id="LoggingEmailAddress"
+              className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg  dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+              type="email"
             />
-            <div className="flex justify-center items-center flex-col gap-6 relative">
-              <div className="flex flex-col space-y-2 text-center">
-                <h1 className="text-2xl font-semibold tracking-tight">
-                  Sign In to GPA
-                </h1>
-                <p className="text-sm text-muted-foreground ">
-                  Enter your email below to sign in - Or Create an Account
-                </p>
-              </div>
-              <UserAuthForm className=" w-4/5" isMobile={isMobile} />
+          </div>
+
+          <div className="mt-4">
+            <div className="flex justify-between">
+              <label
+                className="block mb-2 text-sm font-medium text-gray-600 "
+                htmlFor="loggingPassword"
+              >
+                Password
+              </label>
+              <a href="#" className="text-xs text-gray-500  hover:underline">
+                Forget Password?
+              </a>
             </div>
+
+            <input
+              id="loggingPassword"
+              className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg   dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+              type="password"
+            />
+          </div>
+
+          <div className="mt-6">
+            <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white-light capitalize transition-colors duration-300 transform bg-gold-light rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
+              Sign In
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between mt-4">
+            <span className="w-1/5 border-b  md:w-1/4"></span>
+
+            <a
+              href="/register"
+              className="text-xs text-gray-500 uppercase  hover:underline"
+            >
+              or sign up
+            </a>
+
+            <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
