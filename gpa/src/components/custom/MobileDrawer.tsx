@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-
+import { Button } from "@mantine/core";
 import {
   Sheet,
   SheetContent,
@@ -14,7 +13,7 @@ export function MobileDrawer() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" className="hover:bg-transparent bg-transparent">
           <LuMenu size={"2.5em"} />
         </Button>
       </SheetTrigger>

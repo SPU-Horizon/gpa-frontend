@@ -1,28 +1,18 @@
-import { useState, useEffect } from "react";
 import { GpaGold } from "@/icons";
 import { MobileDrawer } from "../custom/MobileDrawer";
 import { links } from "@/constants/navlinks";
 
+import { useMediaQuery } from "usehooks-ts";
+
 export default function LandingNavbar() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 750);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 750);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const isMobile = useMediaQuery("(max-width: 750px)");
 
   return (
-    <div className="flex justify-between w-full text-white-base ml-7 md:ml-1">
+    <div className="flex justify-between w-full text-white-base ml-7 ">
       <GpaGold />
 
       {isMobile ? (
-        <div onAnimationEnd={() => null}>
+        <div className="hover:bg-transparent">
           <MobileDrawer />
         </div>
       ) : (
