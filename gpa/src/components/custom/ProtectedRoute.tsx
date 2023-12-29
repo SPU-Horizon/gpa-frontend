@@ -6,5 +6,5 @@ export const PrivateRoute = () => {
   const { isAuthenticated } = useAuthStore();
 
   supabase();
-  return isAuthenticated ? <Outlet /> : <Navigate to="/sign-in" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
