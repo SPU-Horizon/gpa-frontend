@@ -1,7 +1,7 @@
 #root {
   max-width: 2400px;
   margin: 0 auto;
-
+  padding: none;
   font-family: Avenir, system-ui, Inter, Helvetica, Arial, sans-serif;
 }
 
