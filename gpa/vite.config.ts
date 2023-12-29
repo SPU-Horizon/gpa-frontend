@@ -32,6 +32,5 @@ export default defineConfig(({ command, mode }) => {
       setupFiles: ["./src/testconfig/setup.ts"],
       pool: "forks",
     },
-    base: "./",
   };
 });
