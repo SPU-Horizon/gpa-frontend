@@ -3,9 +3,7 @@ import { useAuthStore } from "@/stores/AuthStore";
 import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
-  const { token, refreshToken, signOut } = useAuthStore();
-  console.log(token);
-  console.log(refreshToken);
+  const { signOut } = useAuthStore();
 
   return (
     <>

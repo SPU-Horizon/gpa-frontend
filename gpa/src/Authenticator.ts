@@ -9,9 +9,10 @@ const options = {
   },
 };
 
-const supabaseUrl = "https://itbhcggrlntcrgozrapb.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml0YmhjZ2dybG50Y3Jnb3pyYXBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDM3MTU0MTksImV4cCI6MjAxOTI5MTQxOX0.wo6hqbNUegnc4bBh26XJ49k4YQiD9p3C-IFFJg_vjPY";
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY as string;
+
+console.log(import.meta.env.PROD);
 
 const client = createClient(supabaseUrl, supabaseKey, options);
 
