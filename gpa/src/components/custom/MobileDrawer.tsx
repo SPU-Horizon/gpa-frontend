@@ -36,7 +36,7 @@ export function MobileDrawer() {
           </a>
           <a
             className="text-white cursor-pointer  hover:text-gold-light"
-            href="/login"
+            href="/sign-in"
           >
             Login
           </a>

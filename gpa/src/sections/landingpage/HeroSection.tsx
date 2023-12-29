@@ -39,7 +39,7 @@ export default function HeroSection() {
             Get started
           </Button>
           <Button size="xl" color="#e9e9e9" className="text-black-light">
-            Login
+            Sign In
           </Button>
         </div>
       </div>
