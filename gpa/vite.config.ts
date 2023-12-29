@@ -38,7 +38,7 @@ dotenv.config();
 // });
 
 export default defineConfig(({ command, mode }) => {
-  const env = loadEnv(mode, process.cwd());
+  const env = loadEnv(mode, process.cwd(), "");
 
   return {
     plugins: [react()],
@@ -59,11 +59,11 @@ export default defineConfig(({ command, mode }) => {
       setupFiles: ["./src/testconfig/setup.ts"],
       pool: "forks",
     },
-    envDir: "root",
-    envPrefix: "VITE_",
-    define: {
-      VITE_SUPABASE_KEY: JSON.stringify(env.VITE_SUPABASE_KEY),
-      VITE_SUPABASE_URL: JSON.stringify(env.VITE_SUPABASE_URL),
-    },
+    // envDir: "root",
+    // envPrefix: "VITE_",
+    // define: {
+    //   VITE_SUPABASE_KEY: JSON.stringify(env.VITE_SUPABASE_KEY),
+    //   VITE_SUPABASE_URL: JSON.stringify(env.VITE_SUPABASE_URL),
+    // },
   };
 });
