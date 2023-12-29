@@ -4,8 +4,11 @@
 import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import dotenv from "dotenv";
 
 // https://vitejs.dev/config/
+
+dotenv.config();
 
 export default defineConfig({
   plugins: [react()],
@@ -27,4 +30,9 @@ export default defineConfig({
     pool: "forks",
   },
   envDir: "./",
+  // envPrefix: "VITE_",
+  define: {
+    // VITE_supabaseUrl: process.env.VITE_SUPABASE_URL,
+    // VITE_supabaseKey: process.env.VITE_SUPABASE_KEY,
+  },
 });
