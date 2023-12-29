@@ -2,7 +2,7 @@
 /// <reference types="vite/client" />
 
 import path from "path";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 
@@ -10,9 +10,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export default defineConfig(({ command, mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
-
+export default defineConfig(() => {
   return {
     plugins: [react()],
     resolve: {
