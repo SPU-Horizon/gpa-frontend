@@ -2,12 +2,17 @@
 /// <reference types="vite/client" />
 
 import path from "path";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import dotenv from "dotenv";
 
 // https://vitejs.dev/config/
 
-export default defineConfig(() => {
+dotenv.config();
+
+export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+
   return {
     plugins: [react()],
     resolve: {
@@ -27,5 +32,6 @@ export default defineConfig(() => {
       setupFiles: ["./src/testconfig/setup.ts"],
       pool: "forks",
     },
+    base: "./",
   };
 });
