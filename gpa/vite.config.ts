@@ -59,7 +59,7 @@ export default defineConfig(({ command, mode }) => {
       setupFiles: ["./src/testconfig/setup.ts"],
       pool: "forks",
     },
-    envDir: "./",
+    envDir: "root",
     envPrefix: "VITE_",
     define: {
       VITE_SUPABASE_KEY: JSON.stringify(env.VITE_SUPABASE_KEY),
