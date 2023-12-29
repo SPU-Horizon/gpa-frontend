@@ -9,8 +9,8 @@ const options = {
   },
 };
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY as string;
+const supabaseUrl = VITE_SUPABASE_URL as string;
+const supabaseKey = VITE_SUPABASE_KEY as string;
 
 console.log(import.meta.env.PROD);
 
