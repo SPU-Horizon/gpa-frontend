@@ -5,8 +5,14 @@ import {
   FooterSection,
 } from "@/sections";
 
+import { useAuthStore } from "@/stores/AuthStore";
+import { Navigate } from "react-router-dom";
+
 export default function LandingPage() {
-  return (
+  const { isAuthenticated } = useAuthStore();
+  return isAuthenticated ? (
+    <Navigate to="/dashboard" />
+  ) : (
     <>
       <HeroSection />
       <VisionSection />
