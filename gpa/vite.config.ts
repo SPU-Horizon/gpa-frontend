@@ -27,6 +27,5 @@ export default defineConfig(() => {
       setupFiles: ["./src/testconfig/setup.ts"],
       pool: "forks",
     },
-    envDir: ".",
   };
 });

@@ -2,7 +2,7 @@ import { Laptop } from "@/images";
 //meraki ui
 import { RegisterInputFields } from "@/constants/InputFieldContent";
 import InputField from "@/components/RegisterPage/InputField";
-import { Student, Advisor, ArrowRight } from "@/icons";
+import { ArrowRight } from "@/icons";
 
 export default function RegisterPage() {
   return (
@@ -25,25 +25,15 @@ export default function RegisterPage() {
 
             <div className="mt-6">
               <h1 className="text-gray-500 md:text-center ">
-                Select type of account
+                For Admin Access - Contact us at:{" "}
+                <a>graduationplanningapp@gmail.com</a>
               </h1>
-
-              <div className="mt-3 md:flex md:flex-col md:gap-4 md:items-center md:-mx-2">
-                <button className="flex justify-center w-full px-6 py-3 text-white border border-gray-200 hover:bg-gold-light hover:border-gold-light rounded-lg  md:mx-2 focus:outline-none">
-                  <Advisor />
-                  <span className="mx-2">Advisor</span>
-                </button>
-
-                <button className="flex justify-center w-full px-6 py-3 mt-4 text-white border border-gray-200 hover:bg-gold-light hover:border-gold-light  rounded-lg md:mt-0  md:mx-2 focus:outline-none">
-                  <Student />
-                  <span className="mx-2">Student</span>
-                </button>
-              </div>
             </div>
 
             <form className="grid md:grid-cols-1 gap-6 mt-8 grid-cols-2">
-              {RegisterInputFields.map((inputField) => (
+              {RegisterInputFields.map((inputField, i) => (
                 <InputField
+                  key={i * 4}
                   header={inputField.header}
                   placeholder={inputField.placeholder}
                 ></InputField>
