@@ -13,6 +13,7 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 
 const client = createClient(supabaseUrl, supabaseKey, options);
+console.log("supabaseUrl: ", supabaseUrl);
 
 const supabase = () => client;
 
