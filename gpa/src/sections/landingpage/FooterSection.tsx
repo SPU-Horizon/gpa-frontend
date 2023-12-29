@@ -2,7 +2,7 @@ const links = [
   { link: "#", label: "Vision" },
   { link: "#", label: "Features" },
   { link: "#", label: "SPU" },
-  { link: "/sign-in", label: "Sign In" },
+  { link: "/login", label: "Sign In" },
   { link: "/register", label: "Create Account" },
 ];
 
