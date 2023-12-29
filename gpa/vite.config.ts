@@ -30,9 +30,9 @@ export default defineConfig({
     pool: "forks",
   },
   envDir: "./",
-  // envPrefix: "VITE_",
+  envPrefix: "VITE_",
   define: {
-    // VITE_supabaseUrl: process.env.VITE_SUPABASE_URL,
-    // VITE_supabaseKey: process.env.VITE_SUPABASE_KEY,
+    VITE_SUPABASE_KEY: JSON.stringify(process.env.VITE_SUPABASE_KEY),
+    VITE_SUPABASE_URL: JSON.stringify(process.env.VITE_SUPABASE_URL),
   },
 });
