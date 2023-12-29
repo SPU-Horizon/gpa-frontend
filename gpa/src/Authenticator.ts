@@ -9,6 +9,9 @@ const options = {
   },
 };
 
+console.log(import.meta.env.VITE_SUPABASE_URL);
+console.log(import.meta.env.VITE_SUPABASE_KEY);
+
 const client = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_KEY,
