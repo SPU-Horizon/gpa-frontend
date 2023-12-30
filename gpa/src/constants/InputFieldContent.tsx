@@ -1,4 +1,4 @@
-import { InputFieldProps } from "@/components/RegisterPage/InputField";
+import { InputFieldProps } from "@/components/custom/InputField";
 
 export const RegisterInputFields: InputFieldProps[] = [
   {

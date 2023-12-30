@@ -1,7 +1,7 @@
 import { Laptop } from "@/images";
 //meraki ui
 import { RegisterInputFields } from "@/constants/InputFieldContent";
-import InputField from "@/components/RegisterPage/InputField";
+import InputField from "@/components/custom/InputField";
 import { ArrowRight } from "@/icons";
 
 export default function RegisterPage() {

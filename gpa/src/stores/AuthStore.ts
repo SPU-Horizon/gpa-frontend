@@ -3,37 +3,41 @@ import supabase from "@/Authenticator";
 import { persist } from "zustand/middleware";
 
 type AuthStore = {
-  signIn: (email: string, password: string) => Promise<boolean | undefined>; // Updated return type
+  signIn: (email: string, password: string) => Promise<boolean>; // Updated return type
   signOut: () => void;
+  checkAuth: () => void;
   isAuthenticated: boolean;
   token: string;
   refreshToken: string;
   email: string;
+  isLoading: boolean;
+};
+
+const initialState = {
+  // the inital state of our 'primitive' values
+  isAuthenticated: false as boolean | false,
+  token: "",
+  refreshToken: "",
+  email: "",
+  isLoading: false,
 };
 
 export const useAuthStore = create<AuthStore>()(
   persist(
     (set) => ({
-      isAuthenticated: false as boolean | false,
-      token: "",
-      refreshToken: "",
-      email: "",
+      ...initialState, // we spread our initial state here
 
-      setIsAuthenticated: (val: boolean) => {
-        set({ isAuthenticated: val });
-      },
       signIn: async (email: string, password: string) => {
+        set({ isLoading: true });
         const { data, error } = await supabase().auth.signInWithPassword({
           email: email,
           password: password,
         });
 
-        localStorage.removeItem;
-
         if (error) {
+          set({ isLoading: false });
           return false;
         }
-        console.log("here.");
 
         if (data.user.aud) {
           set({ isAuthenticated: true });
@@ -41,14 +45,24 @@ export const useAuthStore = create<AuthStore>()(
           set({ refreshToken: data.session.refresh_token });
           set({ email: email });
         }
+        set({ isLoading: false });
         return true;
       },
       signOut: () => {
+        set({ isLoading: true });
         supabase().auth.signOut();
-        set({ isAuthenticated: false });
-        set({ token: "" });
-        set({ refreshToken: "" });
-        set({ email: "" });
+        set(initialState); // we can simply reset our store here rather than writing all the values down again
+      },
+      checkAuth: async () => {
+        set({ isLoading: true });
+        const { error } = await supabase().auth.getSession();
+        if (error) {
+          set({ isLoading: false });
+          return false;
+        } else {
+          set({ isLoading: false });
+          return true;
+        }
       },
     }),
     {
