@@ -3,7 +3,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 import { cn } from "@/lib/utils";
 
-import { Mail } from "./ClassCards";
+import { Mail } from "./CardData";
 
 import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
@@ -12,13 +12,13 @@ interface MailListProps {
   items: Mail[];
 }
 
-export function ClassList({ items }: MailListProps) {
+export function ClassCard({ items }: MailListProps) {
   return (
     <ScrollArea className="h-screen">
       <div className="flex flex-col gap-2 p-4 pt-0">
-        {items.map((item) => (
+        {items.map((item, i) => (
           <button
-            key={item.id}
+            key={i * 42}
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent"
             )}
