@@ -16,7 +16,7 @@ interface NavProps {
     variant: "default" | "ghost";
   }[];
 }
-
+//
 export function Nav({ links, isCollapsed }: NavProps) {
   const [currentLink, setCurrentLink] = useState("Home");
 
