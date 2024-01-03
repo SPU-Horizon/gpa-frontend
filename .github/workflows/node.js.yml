@@ -21,6 +21,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18.x"
+      - run: cd gpa
       - run: npm ci
       - run: npm run build
       - run: npm run test
