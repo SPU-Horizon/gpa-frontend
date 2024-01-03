@@ -12,8 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+        working-directory: ./gpa
     steps: 
-    - run: cd gpa
     - uses: actions/checkout@v3
     - name: Use Node.js 18.x
       uses: actions/setup-node@v3
