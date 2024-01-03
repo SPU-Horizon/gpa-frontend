@@ -1,5 +1,5 @@
 import { UserNavIcon } from "@/components/dashboard/UserNavIcon";
-import { Nav } from "@/components/dashboard/nav";
+import { Nav } from "@/components/dashboard/NavBar";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -12,11 +12,12 @@ import { Separator } from "@/components/ui/separator";
 import { Castle, Search, User } from "lucide-react";
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { useWindowSize } from "usehooks-ts";
 
 export const PrivateRoute = () => {
   const { isAuthenticated } = useAuthStore();
   const [isCollapsed, setIsCollapsed] = React.useState(true);
-  console.log(isCollapsed);
+  const { width } = useWindowSize();
 
   return isAuthenticated ? (
     <div className="h-screen">
@@ -31,10 +32,10 @@ export const PrivateRoute = () => {
           }}
         >
           <ResizablePanel
-            defaultSize={5}
+            defaultSize={width < 768 ? 10 : 25}
             collapsedSize={5}
             collapsible={true}
-            minSize={15}
+            minSize={width < 768 ? 20 : 20}
             maxSize={25}
             onCollapse={() => setIsCollapsed(true)}
             className={cn(
@@ -81,11 +82,38 @@ export const PrivateRoute = () => {
                   },
                 ]}
               />
+              <Separator />
+              <Nav
+                isCollapsed={isCollapsed}
+                links={[
+                  {
+                    title: "Random",
+                    icon: User,
+                    variant: "default",
+                  },
+                  {
+                    title: "Requirements",
+                    label: "9",
+                    icon: Search,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Majors",
+                    icon: Search,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Build Schedule",
+                    icon: Castle,
+                    variant: "ghost",
+                  },
+                ]}
+              />
             </div>
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={75}>
-            <Outlet />{" "}
+          <ResizablePanel defaultSize={width < 768 ? 90 : 75}>
+            <Outlet />
           </ResizablePanel>
         </ResizablePanelGroup>
       </TooltipProvider>

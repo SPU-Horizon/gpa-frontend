@@ -1,30 +1,17 @@
-import { Search } from "lucide-react";
-
-import { Input } from "../../components/ui/input";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "../../components/ui/resizable";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../../components/ui/tabs";
+import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { TooltipProvider } from "../../components/ui/tooltip";
-import { Separator } from "../../components/ui/separator";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Separator } from "@/components/ui/separator";
 import React from "react";
-import { Mail } from "../../components/dashboard/CardData";
-import { ClassCard } from "../../components/dashboard/ClassCard";
-import StatsGroup from "../../components/dashboard/StatsGroup";
+import { Class } from "@/constants/CardData";
+import { ClassCard } from "@/components/dashboard/ClassCard";
 import { Button } from "@/components/ui/button";
+import { SearchBar } from "@/components/custom/SearchBar";
 
 interface DashboardProps {
   accounts: {
@@ -32,15 +19,12 @@ interface DashboardProps {
     email: string;
     icon: React.ReactNode;
   }[];
-  mails: Mail[];
-  defaultLayout: number[] | undefined;
+  Class: Class[];
+  defaultLayout?: number[] | undefined;
   defaultCollapsed?: boolean;
 }
 
-export function DashboardMenu({
-  mails,
-  defaultLayout = [265, 440, 655],
-}: DashboardProps) {
+export function ClassHistory({ Class }: DashboardProps) {
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
@@ -52,11 +36,7 @@ export function DashboardMenu({
         }}
         className="h-full max-h-full items-stretch"
       >
-        <ResizablePanel
-          defaultSize={defaultLayout[1]}
-          minSize={0}
-          maxSize={100}
-        >
+        <ResizablePanel defaultSize={50} minSize={0} maxSize={100}>
           <Tabs defaultValue="tab1">
             <div className="flex items-center px-3 py-2">
               <h1 className="text-xl font-bold">Your Class Transcript</h1>
@@ -89,34 +69,21 @@ export function DashboardMenu({
               </DropdownMenu>
             </div>
             <Separator />
-            <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <form>
-                <div className="relative">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search" className="pl-8" />
-                </div>
-              </form>
-            </div>
+            <SearchBar />
             <TabsContent value="tab1" className="m-0">
-              <ClassCard items={mails.filter((item) => item.read)} />
+              <ClassCard items={Class.filter((item) => item.completed)} />
             </TabsContent>
             <TabsContent value="tab2" className="m-0">
-              <ClassCard items={mails.filter((item) => !item.read)} />
+              <ClassCard
+                items={Class.filter(
+                  (item) => !item.completed && !item.isRemaining
+                )}
+              />
             </TabsContent>
             <TabsContent value="tab3" className="m-0">
-              <ClassCard items={mails.filter((item) => !item.read)} />
+              <ClassCard items={Class.filter((item) => item.isRemaining)} />
             </TabsContent>
           </Tabs>
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel
-          defaultSize={defaultLayout[2]}
-          minSize={0}
-          maxSize={100}
-        >
-          <div className="w-full h-full">
-            <StatsGroup />
-          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
