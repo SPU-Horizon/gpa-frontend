@@ -1,14 +1,21 @@
 import * as React from "react";
 
-import { ClassHistory } from "@/sections/Transcript/ClassHistory";
+import { ClassHistory } from "@/sections";
 import { classes } from "@/constants/CardData";
+
+import { Routes, Route } from "react-router-dom";
+import HomeOptions from "@/sections/home/HomeOptions";
 
 export default function Dashboard() {
   return (
     <>
-      <ClassHistory accounts={[]} Class={classes} />
-
-      {/* <Button onClick={signOut}>Sign Out</Button> */}
+      <Routes>
+        <Route
+          path="transcript"
+          element={<ClassHistory accounts={[]} Class={classes} />}
+        />
+        <Route path="" element={<HomeOptions />} />
+      </Routes>
     </>
   );
 }

@@ -6,3 +6,6 @@ export { default as FeatureSection } from "./landingpage/FeatureSection";
 export { default as FooterSection } from "./landingpage/FooterSection";
 
 /* ----------------- Dashboard Sections --------------------- */
+
+export { default as ClassHistory } from "./Transcript/ClassHistory";
+export { default as MenuOptions } from "../components/dashboard/home/MenuOption";

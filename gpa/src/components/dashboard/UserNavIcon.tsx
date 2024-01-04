@@ -22,14 +22,14 @@ export function UserNavIcon() {
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarImage src="" alt="@shadcn" />
-            <AvatarFallback className="bg-black-light text-white-light">
+            <AvatarFallback className="bg-black-base text-white-light">
               MN
             </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-56 bg-black-light text-white-light"
+        className="w-56 bg-black-base text-white-light ml-2 "
         align="end"
         forceMount
       >
@@ -41,7 +41,7 @@ export function UserNavIcon() {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-black-base" />
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={() => navigate("/profile")}>
             Profile
@@ -53,7 +53,7 @@ export function UserNavIcon() {
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-black-base" />
         <DropdownMenuItem onClick={signOut}>
           Sign Out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

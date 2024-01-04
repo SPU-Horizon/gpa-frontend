@@ -9,7 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { Class } from "@/constants/CardData";
-import { ClassCard } from "@/components/dashboard/ClassCard";
+import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { Button } from "@/components/ui/button";
 import { SearchBar } from "@/components/custom/SearchBar";
 
@@ -24,7 +24,7 @@ interface DashboardProps {
   defaultCollapsed?: boolean;
 }
 
-export function ClassHistory({ Class }: DashboardProps) {
+export default function ClassHistory({ Class }: DashboardProps) {
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
@@ -44,6 +44,7 @@ export function ClassHistory({ Class }: DashboardProps) {
                 <DropdownMenuTrigger asChild className="ml-auto mr-4">
                   <Button variant="outline">Filter</Button>
                 </DropdownMenuTrigger>
+
                 <DropdownMenuContent className="bg-black-light border-none">
                   <TabsList className="bg-black-light font-avenir text-white-light active:text-white-base  ">
                     <TabsTrigger
@@ -71,17 +72,17 @@ export function ClassHistory({ Class }: DashboardProps) {
             <Separator />
             <SearchBar />
             <TabsContent value="tab1" className="m-0">
-              <ClassCard items={Class.filter((item) => item.completed)} />
+              <ClassCardList items={Class.filter((item) => item.completed)} />
             </TabsContent>
             <TabsContent value="tab2" className="m-0">
-              <ClassCard
+              <ClassCardList
                 items={Class.filter(
                   (item) => !item.completed && !item.isRemaining
                 )}
               />
             </TabsContent>
             <TabsContent value="tab3" className="m-0">
-              <ClassCard items={Class.filter((item) => item.isRemaining)} />
+              <ClassCardList items={Class.filter((item) => item.isRemaining)} />
             </TabsContent>
           </Tabs>
         </ResizablePanel>

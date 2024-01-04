@@ -9,14 +9,24 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/stores/AuthStore";
 import { Separator } from "@/components/ui/separator";
-import { Castle, Search, User } from "lucide-react";
-import React from "react";
+import {
+  Castle,
+  Search,
+  User,
+  Speech,
+  BookMarked,
+  Unplug,
+  ListTodo,
+} from "lucide-react";
+import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useWindowSize } from "usehooks-ts";
+import { useNavigationStore } from "@/stores/NavigationStore";
 
 export const PrivateRoute = () => {
   const { isAuthenticated } = useAuthStore();
-  const [isCollapsed, setIsCollapsed] = React.useState(true);
+  const { currentTab, setCurrentTab } = useNavigationStore();
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const { width } = useWindowSize();
 
   return isAuthenticated ? (
@@ -40,7 +50,7 @@ export const PrivateRoute = () => {
             onCollapse={() => setIsCollapsed(true)}
             className={cn(
               isCollapsed &&
-                "min-w-[50px] transition-all duration-300 ease-in-out"
+                "min-w-[50px] transition-all duration-300 ease-in-out h-full"
             )}
             onResize={(size) => {
               size > 0 && setIsCollapsed(false);
@@ -53,59 +63,67 @@ export const PrivateRoute = () => {
               )}
             >
               <UserNavIcon />
+              {!isCollapsed && <>Dude</>}
             </div>
             <Separator />
             <div className=" h-screen items-stretch">
               <Nav
+                currentLink={currentTab}
+                setCurrentLink={setCurrentTab}
                 isCollapsed={isCollapsed}
                 links={[
                   {
                     title: "Home",
                     icon: User,
                     variant: "default",
+                    route: "/",
                   },
                   {
-                    title: "Requirements",
-                    label: "9",
-                    icon: Search,
+                    title: "View Transcript",
+
+                    icon: ListTodo,
                     variant: "ghost",
+                    route: "/transcript",
                   },
                   {
-                    title: "Majors",
+                    title: "Majors & Reqs",
                     icon: Search,
                     variant: "ghost",
+                    route: "/majors",
                   },
                   {
                     title: "Build Schedule",
                     icon: Castle,
                     variant: "ghost",
+                    route: "/build-schedule",
                   },
                 ]}
               />
               <Separator />
               <Nav
+                withLogout
+                currentLink={currentTab}
+                setCurrentLink={setCurrentTab}
                 isCollapsed={isCollapsed}
                 links={[
                   {
-                    title: "Random",
-                    icon: User,
+                    title: "Saved Schedules",
+                    icon: BookMarked,
                     variant: "default",
+                    route: "/saved-schedules",
+                  },
+
+                  {
+                    title: "Meet an Advisor",
+                    icon: Speech,
+                    variant: "ghost",
+                    route: "/meet-advisor",
                   },
                   {
-                    title: "Requirements",
-                    label: "9",
-                    icon: Search,
+                    title: "Integrate with Banner",
+                    icon: Unplug,
                     variant: "ghost",
-                  },
-                  {
-                    title: "Majors",
-                    icon: Search,
-                    variant: "ghost",
-                  },
-                  {
-                    title: "Build Schedule",
-                    icon: Castle,
-                    variant: "ghost",
+                    route: "/integrate-banner",
                   },
                 ]}
               />

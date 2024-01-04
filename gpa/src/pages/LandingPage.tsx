@@ -6,13 +6,16 @@ import {
 } from "@/sections";
 
 import { useAuthStore } from "@/stores/AuthStore";
+
 import { Navigate } from "react-router-dom";
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuthStore();
-  return isAuthenticated ? (
-    <Navigate to="/dashboard" />
-  ) : (
+
+  if (isAuthenticated) {
+    <Navigate to="/dashboard" />;
+  }
+  return (
     <>
       <HeroSection />
       <VisionSection />
