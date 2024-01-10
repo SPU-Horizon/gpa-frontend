@@ -21,7 +21,7 @@ export default function LandingNavbar() {
             <a
               key={link.name}
               href={link.href}
-              className="text-white-base hover:text-gold-light font-bold"
+              className="text-white-base hover:text-amber-200 font-bold"
             >
               {link.name}
             </a>

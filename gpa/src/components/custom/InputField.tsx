@@ -3,6 +3,9 @@ import React from "react";
 export type InputFieldProps = {
   header: string;
   placeholder: string;
+  zodTitle: string;
+  type: string;
+  required?: boolean;
 };
 
 export default function InputField({ header, placeholder }: InputFieldProps) {

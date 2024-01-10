@@ -13,7 +13,7 @@ import {
 import { useAuthStore } from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
 
-export function UserNavIcon() {
+export function UserAvatar() {
   const { signOut } = useAuthStore();
   const navigate = useNavigate();
   return (
@@ -29,7 +29,7 @@ export function UserNavIcon() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-56 bg-black-base text-white-light ml-2 "
+        className="w-56 bg-black-base text-white-light ml-2 border-none"
         align="end"
         forceMount
       >

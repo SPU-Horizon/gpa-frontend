@@ -3,10 +3,27 @@ import supabase from "@/Authenticator";
 import { persist } from "zustand/middleware";
 import { useNavigationStore } from "./NavigationStore";
 
+type RegisterType = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  Major: string;
+  Year: string;
+};
+
 type AuthStore = {
   signIn: (email: string, password: string) => Promise<boolean>; // Updated return type
   signOut: () => void;
   checkAuth: () => void;
+  registerUser: ({
+    firstName,
+    lastName,
+    email,
+    password,
+    Major,
+    Year,
+  }: RegisterType) => Promise<boolean>;
   isAuthenticated: boolean;
   token: string;
   refreshToken: string;
@@ -40,6 +57,9 @@ export const useAuthStore = create<AuthStore>()(
           return false;
         }
 
+        // connect to aws db
+        // pass in the user
+
         if (data.user.aud) {
           set({ isAuthenticated: true });
           set({ token: data.session.access_token });
@@ -66,7 +86,45 @@ export const useAuthStore = create<AuthStore>()(
           return true;
         }
       },
+      registerUser: async ({
+        firstName,
+        lastName,
+        email,
+        password,
+        Major,
+        Year,
+      }: RegisterType) => {
+        set({ isLoading: true });
+        const { data, error } = await supabase().auth.signUp({
+          email: email,
+          password: password,
+          options: {
+            data: {
+              first_name: firstName,
+              last_name: lastName,
+              major: Major,
+              year: Year,
+            },
+            emailRedirectTo: `http://${window.origin}/dashboard`,
+          },
+        });
+
+        if (error) {
+          set({ isLoading: false });
+          return false;
+        }
+
+        if (data?.user?.aud) {
+          set({ isAuthenticated: true });
+          set({ token: data?.session?.access_token });
+          set({ refreshToken: data?.session?.refresh_token });
+          set({ email: email });
+        }
+        set({ isLoading: false });
+        return true;
+      },
     }),
+
     {
       name: "auth",
     }

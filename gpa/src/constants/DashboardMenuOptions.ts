@@ -6,7 +6,7 @@ export interface Classes {
 
 import { SeattleLanding, Laptop, FeatureOne } from "@/images";
 
-export const listenNowAlbums: Classes[] = [
+export const DashboardMenuOptions: Classes[] = [
   {
     name: "Design Schedule",
     artist: "Plan A Path",

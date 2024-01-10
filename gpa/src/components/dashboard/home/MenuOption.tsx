@@ -13,7 +13,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 
-import { Classes } from "@/constants/MenuOptions";
+import { Classes } from "@/constants/DashboardMenuOptions";
 
 interface MenuOptionProps extends React.HTMLAttributes<HTMLDivElement> {
   aspectRatio?: "portrait" | "square";

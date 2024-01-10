@@ -1,15 +1,16 @@
 import React from "react";
 import MenuOption from "@/components/dashboard/home/MenuOption";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { listenNowAlbums } from "@/constants/MenuOptions";
+import { DashboardMenuOptions } from "@/constants/DashboardMenuOptions";
 
 export default function HomeOptions() {
   return (
-    <div className="">
+    <div className="ml-5 mt-5">
+      <h1 className=" mb-3 text-4xl font-semibold">Dashboard</h1>
       <div className="relative">
         <ScrollArea>
           <div className="flex space-x-4 pb-4">
-            {listenNowAlbums.map((Classes) => (
+            {DashboardMenuOptions.map((Classes) => (
               <MenuOption
                 key={Classes.name}
                 option={Classes}

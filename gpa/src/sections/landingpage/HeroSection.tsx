@@ -2,8 +2,11 @@ import { Button } from "@mantine/core";
 
 import { GPAHero } from "@/images";
 import LandingNavbar from "@/components/landingpage/LandingNavigation";
+import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
+  const navigate = useNavigate();
+
   return (
     <div
       className="flex flex-col w-full gap-20 overflow-hidden bg-cover items-start pl-12 pt-16 pr-12 pb-16 sm:p-3 sm:pt-16 text-white-base"
@@ -34,11 +37,17 @@ export default function HeroSection() {
           <Button
             size="xl"
             color="#927d4e8b"
-            className="text-gray-200 hover:bg-gold-base hover:text-white-base"
+            className="text-gray-200 hover:bg-gold-light hover:text-white-base"
+            onClick={() => navigate("/register")}
           >
             Get started
           </Button>
-          <Button size="xl" color="#e9e9e9" className="text-black-light">
+          <Button
+            size="xl"
+            color="#e9e9e9"
+            className="text-black-light"
+            onClick={() => navigate("/sign-in")}
+          >
             Sign In
           </Button>
         </div>

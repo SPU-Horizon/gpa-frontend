@@ -1,5 +1,5 @@
-import { UserNavIcon } from "@/components/dashboard/UserNavIcon";
-import { Nav } from "@/components/dashboard/NavBar";
+import { UserAvatar } from "@/components/custom/UserAvator";
+import { Nav } from "@/components/custom/NavBar";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -62,7 +62,7 @@ export const PrivateRoute = () => {
                 isCollapsed ? "h-[56px]" : "px-2"
               )}
             >
-              <UserNavIcon />
+              <UserAvatar />
               {!isCollapsed && <>Dude</>}
             </div>
             <Separator />

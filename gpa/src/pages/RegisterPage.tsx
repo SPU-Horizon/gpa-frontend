@@ -1,12 +1,84 @@
+import { useState } from "react";
+import { Eye } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Laptop } from "@/images";
-//meraki ui
-import { RegisterInputFields } from "@/constants/InputFieldContent";
-import InputField from "@/components/custom/InputField";
 import { ArrowRight } from "@/icons";
+import { OptionDropdown } from "@/components/custom";
+import RegisterPageHeader from "@/components/RegisterAndLogin/RegisterPageHeader";
+
+import { RegisterInputFields } from "@/constants/RegisterPageInputField";
+import { majorOptions } from "@/constants/MajorOptions";
+import { YearOptions } from "@/constants/StudentYearOptions";
+import { useAuthStore } from "@/stores/AuthStore";
+
+const registerSchema = z
+  .object({
+    firstName: z.string().min(1).max(18),
+    lastName: z.string().min(1).max(18),
+    email: z.string().email(),
+    password: z.string().min(9, "Password must be at least 9 characters."),
+    confirmPassword: z
+      .string()
+      .min(9, "Password must be at least 9 characters."),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords must be matching match.",
+    path: ["confirmPassword"],
+  });
 
 export default function RegisterPage() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const { registerUser } = useAuthStore();
+  const [value, setValue] = useState("");
+  const [year, setYear] = useState("");
+  const [isPassword, setInputType] = useState(true);
+
+  const submitHandler = async () => {
+    isSubmitting ? toast.loading("Loading...") : toast.dismiss();
+
+    const res = await registerUser({
+      firstName: getValues().firstName,
+      lastName: getValues().lastName,
+      email: getValues().email,
+      password: getValues().password,
+      Major: value,
+      Year: year,
+    });
+
+    if (!res) {
+      toast.error("An Error Occured.");
+    } else {
+      toast.success("Validation should be sent to your Email!");
+    }
+    console.log(getValues());
+    reset();
+    setValue("");
+    setYear("");
+  };
+
+  if (errors.password) {
+    toast.error("Password must be at least 9 characters.");
+  }
+
+  if (errors.email) {
+    toast.error("Invalid email address.");
+  }
+
   return (
-    <section className="bg-white-light ">
+    <section className="bg-white-light">
       <div className="flex justify-center min-h-screen">
         <div
           className="md:hidden bg-cover bg-center block w-2/5"
@@ -15,31 +87,75 @@ export default function RegisterPage() {
 
         <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2">
           <div className="w-full md:pt-12">
-            <h1 className="text-2xl font-semibold tracking-wider text-gray-800 capitalize md:text-center ">
-              Sign up for GPA Today
-            </h1>
+            <RegisterPageHeader />
 
-            <p className="mt-4 text-gray-500 md:text-center ">
-              Let’s get you set up for your account with some basic information.
-            </p>
-
-            <div className="mt-6">
-              <h1 className="text-gray-500 md:text-center ">
-                For Admin Access - Contact us at:{" "}
-                <a>graduationplanningapp@gmail.com</a>
-              </h1>
-            </div>
-
-            <form className="grid md:grid-cols-1 gap-6 mt-8 grid-cols-2">
+            <form
+              className="grid md:grid-cols-1 gap-6 mt-8 grid-cols-2"
+              onSubmit={handleSubmit(() => {
+                submitHandler();
+              })}
+              id="registerForm"
+            >
               {RegisterInputFields.map((inputField, i) => (
-                <InputField
-                  key={i * 4}
-                  header={inputField.header}
-                  placeholder={inputField.placeholder}
-                ></InputField>
+                <div key={i}>
+                  <>
+                    <label className="block mb-2 text-sm text-gray-600 ">
+                      {inputField.header} {inputField.required ? "*" : ""}
+                    </label>
+
+                    {inputField.type === "password" ? (
+                      <div className="flex gap-4">
+                        <input
+                          {...register(inputField.zodTitle)}
+                          type={isPassword ? "password" : "text"}
+                          placeholder={inputField.placeholder}
+                          className="block w-full px-5 py-3  text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                        />
+                        <div
+                          onClick={() => setInputType(!isPassword)}
+                          className="self-center pt-1"
+                        >
+                          <Eye className="opacity-75" />
+                        </div>
+                      </div>
+                    ) : (
+                      <input
+                        {...register(inputField.zodTitle)}
+                        type={inputField.type}
+                        placeholder={inputField.placeholder}
+                        className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      />
+                    )}
+                  </>
+                </div>
               ))}
 
-              <button className="md:mb-6 flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-gold-light rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+              <div className="flex flex-col gap-2">
+                <label className="block text-sm text-gray-600 ">
+                  Major or Field of Study
+                </label>
+                <OptionDropdown
+                  value={value}
+                  setValue={setValue}
+                  optionList={majorOptions}
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="block text-sm text-gray-600 ">
+                  Current Year
+                </label>
+                <OptionDropdown
+                  value={year}
+                  setValue={setYear}
+                  optionList={YearOptions}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="md:mb-6 self-end h-[50px] flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-gold-light rounded-lg hover:bg-black-base hover:text-white-light focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+              >
                 <span>Sign Up </span>
                 <ArrowRight />
               </button>
