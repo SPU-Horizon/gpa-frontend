@@ -1,4 +1,4 @@
-# GPA-FrontendDev
+# GPA-FrontEnd
 For building the Frontend of the GPA App - Configuring with AWS Amplify for Continuous Deployment. 
 
 Vite + React + TypeScript
