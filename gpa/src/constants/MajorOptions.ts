@@ -1,4 +1,4 @@
-export const majorOptions = [
+const majorOptions = [
   {
     name: "Mechanical Engineering",
   },
@@ -147,3 +147,5 @@ export const majorOptions = [
     name: "Urban Studies/Affairs",
   },
 ];
+
+export default majorOptions;

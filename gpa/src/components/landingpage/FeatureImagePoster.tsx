@@ -7,7 +7,7 @@ type FeatureImagePosterProps = {
 
 export default function FeatureImagePoster({ photo }: FeatureImagePosterProps) {
   return (
-    <div className="relative ">
+    <div className="relative min-h-[500px] ">
       {/* <!-- Tab Content --> */}
       <div>
         <div role="tabpanel" aria-labelledby="tabs-with-card-item-1">

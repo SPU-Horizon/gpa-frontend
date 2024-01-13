@@ -8,6 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LuMenu } from "react-icons/lu";
+import { Links } from "@/constants";
 
 export function MobileDrawer() {
   return (
@@ -17,29 +18,25 @@ export function MobileDrawer() {
           <LuMenu size={"2.5em"} />
         </Button>
       </SheetTrigger>
-      <SheetContent className="bg-black-light border-0 font-avenir text-white-light">
+      <SheetContent className="bg-black-base border-0 font-avenir text-white-light">
         <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
-          <SheetDescription className="mt-5">
+          <SheetTitle className="text-3xl dark:text-white-light text-white-light">
+            Menu
+          </SheetTitle>
+          <SheetDescription className="mt-5 text-white-light">
             - Let's Navigate -
           </SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-10 items-center mt-8">
-          <a className="text-white cursor-pointer hover:text-gold-light ">
-            Vision
-          </a>
-          <a className="text-white cursor-pointer hover:text-gold-light">
-            Key Features
-          </a>
-          <a className="text-white cursor-pointer  hover:text-gold-light">
-            Contact Us
-          </a>
-          <a
-            className="text-white cursor-pointer  hover:text-gold-light"
-            href="/sign-in"
-          >
-            Login
-          </a>
+          {Links.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-white-dark hover:text-white-light ease-in-out duration-150 font-bold text-3xl"
+            >
+              {link.name}
+            </a>
+          ))}
         </div>
       </SheetContent>
     </Sheet>

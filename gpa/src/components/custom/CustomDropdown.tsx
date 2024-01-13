@@ -38,14 +38,14 @@ export default function OptionDropdown({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full h-[50px] justify-between text-gray-400 font-avenir overflow-x-hidden"
+          className="w-full h-[50px] justify-between text-gray-400 font-avenir overflow-x-hidden dark:bg-white-light dark:hover:bg-gold-light dark:text-white-light "
         >
           {value ? (
             <p className="text-sm">{value.toUpperCase()}</p>
           ) : (
-            <p className="text-sm">Select Major</p>
+            <p className="text-sm text-black-base">Select Major</p>
           )}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50 " />
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50 dark:text-black-base " />
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-60 h-60 bg-black-light p-0">
@@ -56,10 +56,10 @@ export default function OptionDropdown({
           />
           <CommandEmpty>No Major found.</CommandEmpty>
           <CommandGroup className="overflow-scroll">
-            {optionList?.map((framework, i) => (
+            {optionList?.map((option, i) => (
               <CommandItem
                 key={i}
-                value={framework.name}
+                value={option.name}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
@@ -69,12 +69,12 @@ export default function OptionDropdown({
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === framework.name
+                    value === option.name
                       ? "opacity-100 bg-white-light"
                       : "opacity-0"
                   )}
                 />
-                {framework.name}
+                {option.name}
               </CommandItem>
             ))}
           </CommandGroup>

@@ -105,7 +105,7 @@ export const useAuthStore = create<AuthStore>()(
               major: Major,
               year: Year,
             },
-            emailRedirectTo: `http://${window.origin}/dashboard`,
+            emailRedirectTo: `http://${window.origin}/sign-in`,
           },
         });
 

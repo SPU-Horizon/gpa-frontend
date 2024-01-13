@@ -10,9 +10,12 @@ import { ArrowRight } from "@/icons";
 import { OptionDropdown } from "@/components/custom";
 import RegisterPageHeader from "@/components/RegisterAndLogin/RegisterPageHeader";
 
-import { RegisterInputFields } from "@/constants/RegisterPageInputField";
-import { majorOptions } from "@/constants/MajorOptions";
-import { YearOptions } from "@/constants/StudentYearOptions";
+import {
+  MajorOptions,
+  RegisterInputFields,
+  StudentYearOptions,
+} from "@/constants";
+
 import { useAuthStore } from "@/stores/AuthStore";
 
 const registerSchema = z
@@ -78,14 +81,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <section className="bg-white-light">
-      <div className="flex justify-center min-h-screen">
+    <section className="">
+      <div className="flex justify-center min-h-screen dark:bg-black-light ">
         <div
           className="md:hidden bg-cover bg-center block w-2/5"
           style={{ backgroundImage: `url(${Laptop})` }}
         ></div>
 
-        <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2">
+        <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2 ">
           <div className="w-full md:pt-12">
             <RegisterPageHeader />
 
@@ -99,7 +102,7 @@ export default function RegisterPage() {
               {RegisterInputFields.map((inputField, i) => (
                 <div key={i}>
                   <>
-                    <label className="block mb-2 text-sm text-gray-600 ">
+                    <label className="block mb-2 text-md text-gray-600 dark:text-white-light ">
                       {inputField.header} {inputField.required ? "*" : ""}
                     </label>
 
@@ -109,7 +112,7 @@ export default function RegisterPage() {
                           {...register(inputField.zodTitle)}
                           type={isPassword ? "password" : "text"}
                           placeholder={inputField.placeholder}
-                          className="block w-full px-5 py-3  text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                          className="block w-full px-5 py-3 dark:text-white-light dark:placeholder-white-light text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                         <div
                           onClick={() => setInputType(!isPassword)}
@@ -123,7 +126,7 @@ export default function RegisterPage() {
                         {...register(inputField.zodTitle)}
                         type={inputField.type}
                         placeholder={inputField.placeholder}
-                        className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className="block w-full px-5 py-3 mt-2 dark:placeholder-white-light dark:text-white-light text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     )}
                   </>
@@ -131,32 +134,32 @@ export default function RegisterPage() {
               ))}
 
               <div className="flex flex-col gap-2">
-                <label className="block text-sm text-gray-600 ">
+                <label className="block text-md text-gray-600 dark:text-white-light">
                   Major or Field of Study
                 </label>
                 <OptionDropdown
                   value={value}
                   setValue={setValue}
-                  optionList={majorOptions}
+                  optionList={MajorOptions}
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="block text-sm text-gray-600 ">
+                <label className="block text-md text-gray-600 dark:text-white-light ">
                   Current Year
                 </label>
                 <OptionDropdown
                   value={year}
                   setValue={setYear}
-                  optionList={YearOptions}
+                  optionList={StudentYearOptions}
                 />
               </div>
 
               <button
                 type="submit"
-                className="md:mb-6 self-end h-[50px] flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-gold-light rounded-lg hover:bg-black-base hover:text-white-light focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                className="md:my-10 self-end h-[50px] flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-gold-light rounded-lg hover:bg-black-base hover:text-white-light focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
               >
-                <span>Sign Up </span>
+                <span className="dark:text-white-light ">Sign Up </span>
                 <ArrowRight />
               </button>
             </form>

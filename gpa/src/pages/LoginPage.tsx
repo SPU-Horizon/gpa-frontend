@@ -37,12 +37,8 @@ export default function AuthenticationPage() {
     reset();
   };
 
-  if (errors.password) {
-    toast.error("Password must be at least 4 characters.");
-  }
-
   if (errors.email) {
-    toast.error("Invalid email address.");
+    toast.error("Please Enter a Valid Email Address");
   }
 
   useEffect(() => {
@@ -54,7 +50,7 @@ export default function AuthenticationPage() {
   return (
     <div className="h-screen flex justify-center items-center">
       <div className="flex justify-center items-center h-full w-full bg-gradient-to-r from-neutral-500 to-black-light">
-        <div className="flex w-full md:max-w-sm mx-auto overflow-hidden bg-white-light rounded-lg shadow-lg max-w-3xl">
+        <div className="flex w-full md:max-w-sm mx-auto overflow-hidden bg-white-light rounded-lg shadow-lg max-w-3xl ">
           <div
             className="md:hidden bg-cover block w-1/2 bg-center"
             style={{
@@ -108,7 +104,7 @@ export default function AuthenticationPage() {
               </label>
               <input
                 {...register("email")}
-                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg  dark:border-gray-300 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+                className="block w-full px-4 py-2 text-gray-700 bg-white dark:bg-white-light border rounded-lg  dark:border-gray-300 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
               />
             </div>
 
@@ -124,7 +120,7 @@ export default function AuthenticationPage() {
 
               <input
                 {...register("password")}
-                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg   dark:border-gray-300 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+                className="block w-full px-4 py-2 text-gray-700 bg-white dark:bg-white-light border rounded-lg   dark:border-gray-300 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
                 type="password"
               />
             </div>

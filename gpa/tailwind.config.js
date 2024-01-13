@@ -17,6 +17,7 @@ export default {
         white: {
           base: "#e9e9e9",
           light: "#fff",
+          dark: "#e1e1e1",
         },
       },
     },
@@ -42,5 +43,5 @@ export default {
   },
   // eslint-disable-next-line no-undef
   plugins: [require("tailwindcss-animate")],
-  darkMode: "false",
+  darkMode: "class",
 };

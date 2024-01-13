@@ -1,16 +1,14 @@
-import { useState } from "react";
-
-import { FeatureSectionContent } from "@/constants/FeatureSectionContent";
+import { FeatureSectionContent } from "@/constants";
 import FeatureButton from "@/components/landingpage/FeatureButton";
-import FeatureImagePoster from "@/components/landingpage/FeatureImagePoster";
 import LandingSectionHeader from "@/components/landingpage/LandingSectionHeader";
+import { CustomCarousel } from "@/components/custom";
+import { FeatureOne, FeatureThree, FeatureTwo } from "@/images";
 
 export default function FeatureSection() {
-  const [photo, setPhoto] = useState(1);
   return (
-    <div className="">
+    <div className="dark:bg-black-light dark:text-white-light">
       {/* <!-- Features --> */}
-      <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+      <div className="max-w-[85rem] px-4 py-20 sm:px-6 md:py-[5rem] lg:px-8 lg:py-14 mx-auto">
         <div className="relative p-6 md:p-2">
           {/* <!-- Grid --> */}
           <div className="relative z-10 grid grid-cols-12 gap-16 lg:block ">
@@ -34,10 +32,9 @@ export default function FeatureSection() {
                     description={content.description}
                     icon={content.icon}
                     index={index + 1}
-                    HandleChange={() => setPhoto(index + 1)}
                     className={
                       index + 1 === FeatureSectionContent.length
-                        ? "mb-7"
+                        ? "mb-7 "
                         : undefined
                     }
                   />
@@ -47,7 +44,15 @@ export default function FeatureSection() {
             </div>
 
             <div className="col-span-6">
-              <FeatureImagePoster photo={photo} />
+              <div className="h-full">
+                <CustomCarousel
+                  content={[
+                    { photo: FeatureOne },
+                    { photo: FeatureTwo },
+                    { photo: FeatureThree },
+                  ]}
+                />
+              </div>
             </div>
           </div>
           {/* <!-- End Grid --> */}

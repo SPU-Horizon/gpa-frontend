@@ -30,11 +30,11 @@ export const PrivateRoute = () => {
   const { width } = useWindowSize();
 
   return isAuthenticated ? (
-    <div className="h-screen">
+    <div className="h-screen dark:bg-black-base dark:text-white-light">
       <TooltipProvider>
         <ResizablePanelGroup
           direction="horizontal"
-          className="h-screen w-full rounded-lg border"
+          className="h-screen w-full  "
           onLayout={(sizes: number[]) => {
             document.cookie = `react-resizable-panels:layout=${JSON.stringify(
               sizes
@@ -50,7 +50,7 @@ export const PrivateRoute = () => {
             onCollapse={() => setIsCollapsed(true)}
             className={cn(
               isCollapsed &&
-                "min-w-[50px] transition-all duration-300 ease-in-out h-full"
+                "min-w-[50px] transition-all duration-300 ease-in-out h-full "
             )}
             onResize={(size) => {
               size > 0 && setIsCollapsed(false);

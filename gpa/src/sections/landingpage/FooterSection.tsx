@@ -8,13 +8,13 @@ const links = [
 
 export default function FooterSection() {
   return (
-    <section className="min-h-screen bg-white dark:bg-gray-900 flex md:flex-col">
-      <div className="sm:text-center sm:p-7 flex flex-col justify-center  w-full p-14  dark:bg-gray-200 lg:px-12 xl:px-32 lg:w-1/2 md:w-full">
-        <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white lg:text-3xl">
+    <section className="min-h-screen bg-white dark:bg-black-light flex md:flex-col md:justify-between border-t-[3px] border-gold-ligh dark:border-black-base ">
+      <div className="sm:text-center sm:p-7 flex flex-col justify-center  w-full p-14  dark:bg-black-light lg:px-12 xl:px-32 lg:w-1/2 md:w-full">
+        <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white-light lg:text-3xl">
           Get In Touch
         </h1>
 
-        <p className="font-medium mt-4 text-gray-500 dark:text-gray-400">
+        <p className="font-medium mt-4 text-gray-500 dark:text-white-light">
           Any suggestions? We'd love to hear from you.
         </p>
       </div>
@@ -55,12 +55,12 @@ export default function FooterSection() {
             ></textarea>
           </div>
 
-          <button className="w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white-light capitalize transition-colors duration-300 transform bg-black-light rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+          <button className="w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white-light capitalize transition-colors duration-300 transform bg-black-light rounded-md hover:bg-black-base focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
             Submit
           </button>
         </form>
         <div className=" md:mt-8 mt-16 mb-4 ">
-          <h3 className="font-medium text-gray-600 dark:text-gray-300 text-center hover:text-gray-50">
+          <h3 className="font-medium text-gray-600 dark:text-gray-100 text-center hover:text-gray-50 dark:hover:text-white-light">
             Need Directions?
           </h3>
         </div>
@@ -69,7 +69,7 @@ export default function FooterSection() {
             <a
               key={link.label}
               href={link.link}
-              className=" hover:text-gray-50 dark:text-gray-300 font-medium line-clamp-1"
+              className=" hover:text-gray-50 dark:text-gray-100 font-medium line-clamp-1 dark:hover:text-white-light"
             >
               {link.label}
             </a>

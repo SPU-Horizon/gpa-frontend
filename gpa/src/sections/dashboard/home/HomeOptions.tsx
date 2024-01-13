@@ -1,7 +1,7 @@
 import React from "react";
 import MenuOption from "@/components/dashboard/home/MenuOption";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { DashboardMenuOptions } from "@/constants/DashboardMenuOptions";
+import { DashboardMenuOptions } from "@/constants";
 
 export default function HomeOptions() {
   return (

@@ -1,4 +1,4 @@
-export const classes = [
+const classes = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
     name: "CS 4152 Senior SWE II",
@@ -464,3 +464,5 @@ export const classes = [
 ];
 
 export type Class = (typeof classes)[number];
+
+export default classes;

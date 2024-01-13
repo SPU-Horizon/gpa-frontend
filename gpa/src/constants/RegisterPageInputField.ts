@@ -1,6 +1,6 @@
 import { InputFieldProps } from "@/components/custom/InputField";
 
-export const RegisterInputFields: InputFieldProps[] = [
+const RegisterInputFields: InputFieldProps[] = [
   {
     header: "First Name",
     placeholder: "John",
@@ -10,7 +10,7 @@ export const RegisterInputFields: InputFieldProps[] = [
   },
   {
     header: "Last Name",
-    placeholder: "John",
+    placeholder: "Doe",
     zodTitle: "lastName",
     type: "text",
     required: true,
@@ -18,7 +18,7 @@ export const RegisterInputFields: InputFieldProps[] = [
 
   {
     header: "Email Address",
-    placeholder: "johnsnow@gmail.com",
+    placeholder: "johndoe@gmail.com",
     zodTitle: "email",
     type: "email",
     required: true,
@@ -38,3 +38,5 @@ export const RegisterInputFields: InputFieldProps[] = [
     required: true,
   },
 ];
+
+export default RegisterInputFields;

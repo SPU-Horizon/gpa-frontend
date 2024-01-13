@@ -1,5 +1,4 @@
 import { Button } from "@mantine/core";
-
 import { GPAHero } from "@/images";
 import LandingNavbar from "@/components/landingpage/LandingNavigation";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +10,11 @@ export default function HeroSection() {
     <div
       className="flex flex-col w-full gap-20 overflow-hidden bg-cover items-start pl-12 pt-16 pr-12 pb-16 sm:p-3 sm:pt-16 text-white-base"
       style={{
-        backgroundImage: `url(${GPAHero})`,
-
+        backgroundImage: ` 
+        linear-gradient(180deg, rgba(68,70,74,1) 0%, rgba(0,0,0,0.4458158263305322) 100%),
+        url(${GPAHero})`,
         fontFamily: "Avenir Next",
+        zIndex: `-1`,
       }}
     >
       {/* --------------- Navigation Bar -------------------  */}
@@ -37,7 +38,7 @@ export default function HeroSection() {
           <Button
             size="xl"
             color="#927d4e8b"
-            className="text-gray-200 hover:bg-gold-light hover:text-white-base"
+            className="text-gray-200 hover:bg-black-base hover:text-white-base duration-200 ease-in-out"
             onClick={() => navigate("/register")}
           >
             Get started
@@ -45,7 +46,7 @@ export default function HeroSection() {
           <Button
             size="xl"
             color="#e9e9e9"
-            className="text-black-light"
+            className="text-black-light hover:bg-gray-950 hover:text-white-base ease-in-out duration-200 w-40"
             onClick={() => navigate("/sign-in")}
           >
             Sign In

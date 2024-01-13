@@ -3,7 +3,7 @@ export default function GpaGold({ className }: GpaGoldProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="104"
+      width="130"
       height="42"
       fill="none"
       className={className}

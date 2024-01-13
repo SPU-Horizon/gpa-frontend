@@ -1,7 +1,7 @@
 import { FeatureButtonProps } from "@/components/landingpage/FeatureButton";
 import { BannerIntegration, ModernUX, VisualizeIcon } from "@/icons";
 
-export const FeatureSectionContent: FeatureButtonProps[] = [
+const FeatureSectionContent: FeatureButtonProps[] = [
   {
     header: "Modern User Experience",
     description:
@@ -21,3 +21,5 @@ export const FeatureSectionContent: FeatureButtonProps[] = [
     icon: <VisualizeIcon height={50} width={50} />,
   },
 ];
+
+export default FeatureSectionContent;

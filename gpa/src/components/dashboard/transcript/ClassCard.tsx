@@ -21,7 +21,7 @@ export default function ClassCard({ item }: ClassCardProps) {
   return (
     <button
       className={cn(
-        "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent"
+        "flex flex-col items-start gap-2 mb-4 rounded-md border p-3 text-left text-sm ease-in-out transition-all hover:bg-accent hover:-translate-x-1 hover:scale-[1.01] dark:bg-white-light duration-200 dark:text-black-base"
       )}
     >
       <div className="flex w-full flex-col gap-1">

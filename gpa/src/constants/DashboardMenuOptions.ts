@@ -6,7 +6,7 @@ export interface Classes {
 
 import { SeattleLanding, Laptop, FeatureOne } from "@/images";
 
-export const DashboardMenuOptions: Classes[] = [
+const DashboardMenuOptions: Classes[] = [
   {
     name: "Design Schedule",
     artist: "Plan A Path",
@@ -67,3 +67,5 @@ export const madeForYouAlbums: Classes[] = [
       "https://images.unsplash.com/photo-1490300472339-79e4adc6be4a?w=300&dpr=2&q=80",
   },
 ];
+
+export default DashboardMenuOptions;
