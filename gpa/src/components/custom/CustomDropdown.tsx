@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/popover";
 
 export type MajorOptionDropdownProps = {
+  title: string;
   value: string;
   setValue: (value: string) => void;
   optionList?: { name: string }[];
@@ -28,6 +29,7 @@ export default function OptionDropdown({
   value,
   setValue,
   optionList,
+  title,
 }: MajorOptionDropdownProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -38,12 +40,14 @@ export default function OptionDropdown({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full h-[50px] justify-between text-gray-400 font-avenir overflow-x-hidden dark:bg-white-light dark:hover:bg-gold-light dark:text-white-light "
+          className="w-full h-[50px] justify-between text-gray-900 font-avenir overflow-x-hidden dark:bg-white-light dark:hover:bg-gold-light dark:text-black-base "
         >
           {value ? (
-            <p className="text-sm">{value.toUpperCase()}</p>
+            <p className="text-base ">{value.toUpperCase()}</p>
           ) : (
-            <p className="text-sm text-black-base">Select Major</p>
+            <p className="text-base text-black-base">
+              Select {title.toString()}
+            </p>
           )}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50 dark:text-black-base " />
         </Button>
@@ -64,7 +68,7 @@ export default function OptionDropdown({
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
                 }}
-                className="text-white-light"
+                className="text-white-light "
               >
                 <Check
                   className={cn(

@@ -138,6 +138,7 @@ export default function RegisterPage() {
                   Major or Field of Study
                 </label>
                 <OptionDropdown
+                  title="Major"
                   value={value}
                   setValue={setValue}
                   optionList={MajorOptions}
@@ -149,6 +150,7 @@ export default function RegisterPage() {
                   Current Year
                 </label>
                 <OptionDropdown
+                  title="Year"
                   value={year}
                   setValue={setYear}
                   optionList={StudentYearOptions}
