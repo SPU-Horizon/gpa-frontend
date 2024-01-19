@@ -1,21 +1,24 @@
-# GPA-FrontEnd
-For building the Frontend of the GPA App - Configuring with AWS Amplify for Continuous Deployment. 
+# The Graduation Planning App
 
-Vite + React + TypeScript
+## Front-End Overview
 
-### https://main.dnqrtybjo5tlc.amplifyapp.com 
+## Project Purpose
 
-### Make sure you have NVM (Node Version Manager) Downloaded, and also Node V18.0.0 to prevent any issues.
+The Graduation Planning App is designed to assist students and academic advisors in managing and planning academic journeys. It provides tools for course scheduling, progress tracking, and graduation requirement analysis.
 
-# How to Install 
+## Key Features
 
-- Clone the Repo and Open on VS Code or your IDE of choice.
-- Enter the terminal, cd into the gpa directory and run 'npm ci' This will clean install the project with all the project dependencies.
-- Before Running Locally - run this command 'npm run build'
-- Then To Run Locally - you should be able to run 'npm run dev' and this will open the project on your local server.
+- **Automatic Web Scraping**: GPA can scrape numerous SPU sites to collect relevant course and student data.
+- **Data Management**: GPA processes and safely stores the user's data for use in various app features.
+- **User-Friendly Interface**: GPA is easy to use and beneficial for students and advisors in managing academic information.
 
-## Further Information 
+## How to Use
 
-- Any changes committed to the main branch will still make an impact on the Amplify main branch - whether you have the CLI or not. 
+- **Accessing the App**: Users can access the app through a web browser. The backend runs on a server, managing data and user requests.
+- **Interacting with Features**: Users interact with the app's features through a web interface, where they can view academic information, track progress, and plan courses.
 
+## Technical Overview
 
+- **Built With**: The frontend is built using Vite, React, and TypeScript, popular technologies for client-side development.
+
+[https://main.dnqrtybjo5tlc.amplifyapp.com](https://main.dnqrtybjo5tlc.amplifyapp.com)
