@@ -43,9 +43,9 @@ export default function OptionDropdown({
           className="w-full h-[50px] justify-between text-gray-900 font-avenir overflow-x-hidden dark:bg-white-light dark:hover:bg-gold-light dark:text-black-base "
         >
           {value ? (
-            <p className="text-base ">{value.toUpperCase()}</p>
+            <p className="text-sm ">{value.toUpperCase()}</p>
           ) : (
-            <p className="text-base text-black-base">
+            <p className=" text-black-base text-sm">
               Select {title.toString()}
             </p>
           )}
