@@ -11,7 +11,7 @@ export default function Dashboard() {
     <>
       <Routes>
         <Route
-          path="transcript"
+          path="/transcript"
           element={<ClassHistory accounts={[]} Class={classes} />}
         />
         <Route path="" element={<HomeOptions />} />

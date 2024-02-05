@@ -19,6 +19,9 @@ export default {
           light: "#fff",
           dark: "#e1e1e1",
         },
+        grey: {
+          dark: "#2e2e2e",
+        },
       },
     },
 
