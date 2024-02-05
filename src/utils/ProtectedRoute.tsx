@@ -58,7 +58,7 @@ export const PrivateRoute = () => {
           >
             <div
               className={cn(
-                "flex h-[56px] items-center justify-center ",
+                "flex h-[56px] items-center justify-evenly ",
                 isCollapsed ? "h-[56px]" : "px-2"
               )}
             >
@@ -77,7 +77,7 @@ export const PrivateRoute = () => {
                   {
                     title: "Home",
                     icon: User,
-                    variant: "default",
+                    variant: "ghost",
                     route: "/",
                   },
                   {
@@ -102,7 +102,6 @@ export const PrivateRoute = () => {
               />
               <Separator />
               <Nav
-                withLogout
                 currentLink={currentTab}
                 setCurrentLink={setCurrentTab}
                 isCollapsed={isCollapsed}
@@ -110,7 +109,7 @@ export const PrivateRoute = () => {
                   {
                     title: "Saved Schedules",
                     icon: BookMarked,
-                    variant: "default",
+                    variant: "ghost",
                     route: "/saved-schedules",
                   },
 

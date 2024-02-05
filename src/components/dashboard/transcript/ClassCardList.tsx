@@ -9,8 +9,8 @@ interface MailListProps {
 
 export function ClassCardList({ items }: MailListProps) {
   return (
-    <ScrollArea className="h-[88vh] mb-1">
-      <div className="flex flex-col gap-2 p-4 pt-0">
+    <ScrollArea className="h-[88vh] mb-1 ">
+      <div className="flex flex-col gap-2 p-4 pt-0 ">
         {items.map((item, i) => (
           <ClassCard key={i * 46} item={item} />
         ))}
