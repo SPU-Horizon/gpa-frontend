@@ -1,0 +1,10 @@
+.textInput {
+  &::placeholder {
+    color: var(--mantine-color-red-5);
+  }
+  input:disabled::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: #e61c1c;
+  }
+  font-family: monospace;
+}

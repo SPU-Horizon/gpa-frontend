@@ -1,3 +1,4 @@
+import { useNavigationStore } from "@/stores/NavigationStore";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -12,10 +13,13 @@ import {
 } from "../ui/dropdown-menu";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
+import { set } from "date-fns";
 
 export function UserAvatar() {
   const { signOut } = useAuthStore();
+  const { setCurrentTab } = useNavigationStore();
   const navigate = useNavigate();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,12 +47,20 @@ export function UserAvatar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-black-base" />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => navigate("/profile")}>
+          <DropdownMenuItem
+            onClick={() => {
+              setCurrentTab("profile"), navigate("/profile");
+            }}
+          >
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
 
-          <DropdownMenuItem onClick={() => navigate("/settings")}>
+          <DropdownMenuItem
+            onClick={() => {
+              setCurrentTab("settings"), navigate("/settings");
+            }}
+          >
             Settings
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>

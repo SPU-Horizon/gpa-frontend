@@ -62,8 +62,10 @@ export const PrivateRoute = () => {
                 isCollapsed ? "h-[56px]" : "px-2"
               )}
             >
-              <UserAvatar />
-              {!isCollapsed && <>Dude</>}
+              <div className="flex justify-evenly w-[85%] items-center">
+                <UserAvatar />
+                {!isCollapsed && <div> Matthew Negasi</div>}
+              </div>
             </div>
             <Separator />
             <div className=" h-screen items-stretch">
@@ -80,7 +82,6 @@ export const PrivateRoute = () => {
                   },
                   {
                     title: "View Transcript",
-
                     icon: ListTodo,
                     variant: "ghost",
                     route: "/transcript",

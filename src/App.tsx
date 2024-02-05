@@ -1,6 +1,14 @@
 import "./App.css";
 import "@mantine/core/styles.css";
-import { LandingPage, LoginPage, RegisterPage, Dashboard } from "./pages";
+import {
+  LandingPage,
+  LoginPage,
+  RegisterPage,
+  Dashboard,
+  Page404,
+  ProfilePage,
+  SettingsPage,
+} from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./utils/ProtectedRoute";
 
@@ -18,10 +26,10 @@ function App() {
           <Route path="/register" element={<RegisterPage />}></Route>
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard/*" element={<Dashboard />} />
-            <Route path="/profile" element={<>Profile</>} />
-            <Route path="/settings" element={<>Settings</>} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/settings" element={<SettingsPage />} />
           </Route>
-          <Route path="*" element={<p>404</p>}></Route>
+          <Route path="*" element={<Page404 />}></Route>
         </Routes>
       </Router>
     </div>
