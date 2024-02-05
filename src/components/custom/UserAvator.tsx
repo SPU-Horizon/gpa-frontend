@@ -25,7 +25,7 @@ export function UserAvatar() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="" alt="@shadcn" />
+            <AvatarImage src={undefined} alt="@shadcn" />
             <AvatarFallback className="bg-black-base text-white-light">
               MN
             </AvatarFallback>
@@ -33,7 +33,7 @@ export function UserAvatar() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-56 bg-black-base text-white-light ml-2 border-none"
+        className="w-56 dark:bg-white-base bg-black-base text-white-light ml-2 border-none "
         align="end"
         forceMount
       >

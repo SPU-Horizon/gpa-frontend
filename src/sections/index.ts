@@ -9,3 +9,4 @@ export { default as FooterSection } from "./landingpage/FooterSection";
 
 export { default as ClassHistory } from "./dashboard/Transcript/ClassHistory";
 export { default as MenuOptions } from "../components/dashboard/home/MenuOption";
+export { default as IntegrationPage } from "./dashboard/integrate-banner/integration";

@@ -13,7 +13,7 @@ export default function VisionSectionTab({
         </div>
       </div>
       <div className="ml-4">
-        <h4 className="text-lg font-medium leadi dark:text-gray-50">
+        <h4 className="text-lg font-medium leading-5 dark:text-gray-50">
           {header}
         </h4>
         <p className="mt-2 dark:text-gray-400">{description}</p>

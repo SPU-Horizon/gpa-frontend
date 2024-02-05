@@ -6,6 +6,7 @@ export type customProps = {
   header: string;
   subheader: string;
   maxFiles: number;
+  icon: React.ReactNode;
 };
 
 export default function FileDropdown(
@@ -26,13 +27,14 @@ export default function FileDropdown(
         style={{ pointerEvents: "none" }}
       >
         <Dropzone.Accept>
-          <Upload
+          {/* <Upload
             style={{
               width: rem(52),
               height: rem(52),
               color: "var(--mantine-color-blue-6)",
             }}
-          />
+          /> */}
+          {props.icon}
         </Dropzone.Accept>
         <Dropzone.Reject>
           <X

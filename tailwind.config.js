@@ -9,6 +9,7 @@ export default {
         gold: {
           base: "#927c4e",
           light: "#927d4e8b",
+          bright: "#f5d061",
         },
         black: {
           base: "#000000",

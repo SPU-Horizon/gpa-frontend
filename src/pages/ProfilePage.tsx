@@ -22,6 +22,7 @@ import { Avatar, Select, TextInput, Modal } from "@mantine/core";
 import AvatarEditor from "react-avatar-editor";
 import { useDisclosure } from "@mantine/hooks";
 import { Label } from "@/components/ui/label";
+import { Upload } from "lucide-react";
 
 // This creates a Schema for the Form Component
 // Including features that are needed on the front end, according to the database schema
@@ -234,6 +235,7 @@ export default function Profile() {
                   setFile(URL.createObjectURL(files[0]));
                   setAcceptedImage(true);
                 }}
+                icon={<Upload size={52} />}
               />
               <Button className="mb-14" type="submit">
                 Submit
