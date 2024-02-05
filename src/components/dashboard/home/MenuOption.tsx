@@ -13,13 +13,14 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 
-import { Classes } from "@/constants/DashboardMenuOptions";
+import { DashboardOption } from "@/constants/DashboardMenuOptions";
+import './DashboardStyle.css';
 
 interface MenuOptionProps extends React.HTMLAttributes<HTMLDivElement> {
   aspectRatio?: "portrait" | "square";
   width?: number;
   height?: number;
-  option: Classes;
+  option: DashboardOption;
 }
 
 export default function MenuOption({
@@ -38,7 +39,7 @@ export default function MenuOption({
             <div className="overflow-hidden rounded-md">
               <Image
                 loading="lazy"
-                src={option.cover}
+                src={option.icon}
                 alt={option.name}
                 width={width}
                 height={height}
@@ -49,7 +50,7 @@ export default function MenuOption({
               />
             </div>
           </ContextMenuTrigger>
-          <ContextMenuContent className="w-40">
+          {/* <ContextMenuContent className="w-40">
             <ContextMenuItem>Add to Library</ContextMenuItem>
             <ContextMenuSub>
               <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
@@ -68,11 +69,11 @@ export default function MenuOption({
             <ContextMenuSeparator />
             <ContextMenuItem>Like</ContextMenuItem>
             <ContextMenuItem>Share</ContextMenuItem>
-          </ContextMenuContent>
+          </ContextMenuContent> */}
         </ContextMenu>
         <div className="space-y-1 text-sm text-start mt-1">
           <h3 className="font-medium leading-none">{option.name}</h3>
-          <p className="text-xs text-muted-foreground">{option.artist}</p>
+          <p className="text-xs text-muted-foreground">{option.description}</p>
         </div>
       </button>
     </div>
