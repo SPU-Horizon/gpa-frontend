@@ -17,6 +17,9 @@ import {
 } from "@/constants";
 
 import { useAuthStore } from "@/stores/AuthStore";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Select } from "@mantine/core";
+import majorOptions from "@/constants/MajorOptions";
 
 const registerSchema = z
   .object({
@@ -44,10 +47,13 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   });
 
+  const navigate = useNavigate();
+
   const { registerUser } = useAuthStore();
   const [value, setValue] = useState("");
   const [year, setYear] = useState("");
   const [isPassword, setInputType] = useState(true);
+  const majorOptions = MajorOptions.map((major) => major.name);
 
   const submitHandler = async () => {
     isSubmitting ? toast.loading("Loading...") : toast.dismiss();
@@ -67,6 +73,7 @@ export default function RegisterPage() {
       toast.success("Validation should be sent to your Email!");
     }
     console.log(getValues());
+    navigate("/sign-in");
     reset();
     setValue("");
     setYear("");
@@ -137,11 +144,16 @@ export default function RegisterPage() {
                 <label className="block text-md text-gray-600 dark:text-white-light">
                   Major or Field of Study
                 </label>
-                <OptionDropdown
-                  title="Major"
-                  value={value}
-                  setValue={setValue}
-                  optionList={MajorOptions}
+                <Select
+                  classNames={{
+                    input:
+                      "font-avenir w-full h-12 bg-gray-100 dark:bg-black-light dark:text-white-light dark:placeholder-white-light text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40",
+                  }}
+                  placeholder="Computer Science"
+                  data={majorOptions}
+                  comboboxProps={{
+                    transitionProps: { transition: "pop", duration: 200 },
+                  }}
                 />
               </div>
 
@@ -149,12 +161,25 @@ export default function RegisterPage() {
                 <label className="block text-md text-gray-600 dark:text-white-light ">
                   Current Year
                 </label>
-                <OptionDropdown
+                <Select
+                  classNames={{
+                    input:
+                      "font-avenir w-full h-12 bg-gray-100 dark:bg-black-light dark:text-white-light dark:placeholder-white-light text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40",
+                  }}
+                  placeholder="Sophomore"
+                  data={StudentYearOptions.map((year) => year.name)}
+                  value={year}
+                  comboboxProps={{
+                    transitionProps: { transition: "pop", duration: 200 },
+                  }}
+                  className="font-avenir"
+                />
+                {/* <OptionDropdown
                   title="Year"
                   value={year}
                   setValue={setYear}
                   optionList={StudentYearOptions}
-                />
+                /> */}
               </div>
 
               <button

@@ -83,7 +83,7 @@ export const useAuthStore = create<AuthStore>()(
           return false;
         } else {
           set({ isLoading: false });
-          return true;
+          return;
         }
       },
       registerUser: async ({
@@ -112,16 +112,10 @@ export const useAuthStore = create<AuthStore>()(
         if (error) {
           set({ isLoading: false });
           return false;
+        } else {
+          set({ isLoading: false });
+          return true;
         }
-
-        if (data?.user?.aud) {
-          set({ isAuthenticated: true });
-          set({ token: data?.session?.access_token });
-          set({ refreshToken: data?.session?.refresh_token });
-          set({ email: email });
-        }
-        set({ isLoading: false });
-        return true;
       },
     }),
 
