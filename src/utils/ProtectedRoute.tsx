@@ -58,12 +58,14 @@ export const PrivateRoute = () => {
           >
             <div
               className={cn(
-                "flex h-[56px] items-center justify-center ",
+                "flex h-[56px] items-center justify-evenly ",
                 isCollapsed ? "h-[56px]" : "px-2"
               )}
             >
-              <UserAvatar />
-              {!isCollapsed && <>Dude</>}
+              <div className="flex justify-evenly w-[85%] items-center">
+                <UserAvatar />
+                {!isCollapsed && <div> Matthew Negasi</div>}
+              </div>
             </div>
             <Separator />
             <div className=" h-screen items-stretch">
@@ -75,12 +77,11 @@ export const PrivateRoute = () => {
                   {
                     title: "Home",
                     icon: User,
-                    variant: "default",
+                    variant: "ghost",
                     route: "/",
                   },
                   {
                     title: "View Transcript",
-
                     icon: ListTodo,
                     variant: "ghost",
                     route: "/transcript",
@@ -101,7 +102,6 @@ export const PrivateRoute = () => {
               />
               <Separator />
               <Nav
-                withLogout
                 currentLink={currentTab}
                 setCurrentLink={setCurrentTab}
                 isCollapsed={isCollapsed}
@@ -109,7 +109,7 @@ export const PrivateRoute = () => {
                   {
                     title: "Saved Schedules",
                     icon: BookMarked,
-                    variant: "default",
+                    variant: "ghost",
                     route: "/saved-schedules",
                   },
 

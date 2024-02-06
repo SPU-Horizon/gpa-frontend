@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ClassHistory } from "@/sections";
+import { ClassHistory, IntegrationPage } from "@/sections";
 import { classes } from "@/constants";
 
 import { Routes, Route } from "react-router-dom";
@@ -10,11 +10,12 @@ export default function Dashboard() {
   return (
     <>
       <Routes>
+        <Route path="" element={<HomeOptions />} />
         <Route
-          path="transcript"
+          path="/transcript"
           element={<ClassHistory accounts={[]} Class={classes} />}
         />
-        <Route path="" element={<HomeOptions />} />
+        <Route path="integrate-banner" element={<IntegrationPage />} />
       </Routes>
     </>
   );

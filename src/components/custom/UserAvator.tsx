@@ -1,3 +1,4 @@
+import { useNavigationStore } from "@/stores/NavigationStore";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -12,16 +13,19 @@ import {
 } from "../ui/dropdown-menu";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
+import { set } from "date-fns";
 
 export function UserAvatar() {
   const { signOut } = useAuthStore();
+  const { setCurrentTab } = useNavigationStore();
   const navigate = useNavigate();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="" alt="@shadcn" />
+            <AvatarImage src={undefined} alt="@shadcn" />
             <AvatarFallback className="bg-black-base text-white-light">
               MN
             </AvatarFallback>
@@ -29,7 +33,7 @@ export function UserAvatar() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-56 bg-black-base text-white-light ml-2 border-none"
+        className="w-56 dark:bg-white-base bg-black-base text-white-light ml-2 border-none "
         align="end"
         forceMount
       >
@@ -43,12 +47,20 @@ export function UserAvatar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-black-base" />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => navigate("/profile")}>
+          <DropdownMenuItem
+            onClick={() => {
+              setCurrentTab("profile"), navigate("/profile");
+            }}
+          >
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
 
-          <DropdownMenuItem onClick={() => navigate("/settings")}>
+          <DropdownMenuItem
+            onClick={() => {
+              setCurrentTab("settings"), navigate("/settings");
+            }}
+          >
             Settings
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>

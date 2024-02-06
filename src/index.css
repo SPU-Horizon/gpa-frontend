@@ -1,13 +1,14 @@
+@import "@mantine/dropzone/styles.css";
+@import "@mantine/dates/styles.css";
 /* Mantine core */
 @import "@mantine/core/styles.css";
-
-@tailwind components;
-@tailwind utilities;
 
 @layer {
   @tailwind base;
 }
 
+@tailwind components;
+@tailwind utilities;
 .glass {
   background: rgba(255, 255, 255, 0.34);
   border-radius: 16px;
