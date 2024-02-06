@@ -1,13 +1,16 @@
 import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { Class } from "@/constants/CardData";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { Button } from "@/components/ui/button";
@@ -25,6 +28,27 @@ interface DashboardProps {
 }
 
 export default function ClassHistory({ Class }: DashboardProps) {
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+  const handleFilterChange = (value: string) => {
+    setSelectedFilter(value);
+  };
+
+  const filteredItems = useMemo(() => {
+    switch (selectedFilter) {
+      case "Completed":
+        return Class.filter((item) => item.completed);
+      case "In Progress":
+        return Class.filter((item) => !item.completed && !item.isRemaining);
+      case "Remaining":
+        return Class.filter((item) => item.isRemaining);
+      case "All Classes":
+        return Class;
+      default:
+        return Class;
+    }
+  }, [selectedFilter, Class]);
+
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
@@ -37,54 +61,43 @@ export default function ClassHistory({ Class }: DashboardProps) {
         className="h-full max-h-full items-stretch"
       >
         <ResizablePanel defaultSize={50} minSize={0} maxSize={100}>
-          <Tabs defaultValue="tab1">
-            <div className="flex items-center px-3 py-2">
-              <h1 className="text-xl font-bold">Your Class Transcript</h1>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild className="ml-auto mr-4">
-                  <Button variant="outline">Filter</Button>
-                </DropdownMenuTrigger>
+        <div className="flex items-center px-3 py-2">
+          <h1 className="text-xl font-bold ml-2">Your Classes</h1>
+          <h2 className = "text-base ml-auto">Current GPA: <span className="font-bold">{3.42}</span></h2>
+            <Select onValueChange={(value) => handleFilterChange(value)} defaultValue="All Classes">
+              <SelectTrigger className="ml-auto mr-2 w-auto text-base">
+                <SelectValue/>
+              </SelectTrigger>
+              <SelectContent className="bg-white-light border-none">
+                <SelectGroup>
+                  <SelectItem
+                    value="Completed"
+                  >
+                    Completed
+                  </SelectItem>
+                  <SelectItem
+                    value="In Progress"
+                  >
+                    In Progress
+                  </SelectItem>
+                  <SelectItem
+                    value="Remaining"
+                  >
+                    Remaining
+                  </SelectItem>
+                  <SelectItem
+                    value="All Classes"
+                  >
+                    All Classes
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+        </div>
+        <Separator />
 
-                <DropdownMenuContent className="bg-black-light border-none">
-                  <TabsList className="bg-black-light font-avenir text-white-light active:text-white-base  ">
-                    <TabsTrigger
-                      value="tab1"
-                      className="data-[state=active]:text-amber-200"
-                    >
-                      Completed
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="tab2"
-                      className="data-[state=active]:text-amber-200"
-                    >
-                      In Progress
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="tab3"
-                      className="data-[state=active]:text-amber-200"
-                    >
-                      Remaining
-                    </TabsTrigger>
-                  </TabsList>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            <Separator />
-            <SearchBar />
-            <TabsContent value="tab1" className="m-0">
-              <ClassCardList items={Class.filter((item) => item.completed)} />
-            </TabsContent>
-            <TabsContent value="tab2" className="m-0">
-              <ClassCardList
-                items={Class.filter(
-                  (item) => !item.completed && !item.isRemaining
-                )}
-              />
-            </TabsContent>
-            <TabsContent value="tab3" className="m-0">
-              <ClassCardList items={Class.filter((item) => item.isRemaining)} />
-            </TabsContent>
-          </Tabs>
+        <ClassCardList items={filteredItems}/>
+        
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
