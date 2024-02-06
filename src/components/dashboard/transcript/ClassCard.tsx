@@ -10,10 +10,9 @@ export type ClassCardProps = {
     name: string;
     subject: string;
     text: string;
-    date: string;
+    quarter: string;
     completed: boolean;
     isRemaining: boolean;
-    labels: string[];
   };
 };
 
@@ -28,34 +27,25 @@ export default function ClassCard({ item }: ClassCardProps) {
         <div className="flex items-center">
           <div className="flex items-center gap-2">
             <div className="font-semibold text-lg">{item.name}</div>
-            {!item.completed && (
-              <span className="flex h-2 w-2 rounded-full bg-blue-600" />
+
+            {(!item.completed && !item.isRemaining) && (
+              <span><Badge>In Progress</Badge></span>
             )}
             {item.isRemaining && (
-              <span className="flex h-2 w-2 rounded-full bg-red-600" />
+              <span><Badge>Remaining</Badge></span>
             )}
-          </div>
-          <div className={cn("ml-auto text-xs")}>
-            {formatDistanceToNow(new Date(item.date), {
-              addSuffix: true,
-            })}
+            {item.completed && (
+              <span><Badge>Completed</Badge></span>
+            )}
           </div>
         </div>
         <div className="text-md font-medium">{item.subject}</div>
       </div>
       <div className=" text-md text-muted-foreground">{item.text}</div>
-      {item.labels.length ? (
-        <div className="flex items-center gap-2">
-          {item.labels.map((label) => (
-            <Badge key={label} variant={getBadgeVariantFromLabel(label)}>
-              {label}
-            </Badge>
-          ))}
-        </div>
-      ) : null}
+      <div className="ml-auto text-xs mt-auto">{item.quarter}</div>
     </button>
   );
-}
+} 
 
 function getBadgeVariantFromLabel(
   label: string
