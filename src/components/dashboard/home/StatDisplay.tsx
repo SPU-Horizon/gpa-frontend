@@ -1,14 +1,6 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import './DashboardStyle.css';
+import { Chart as ChartJS, CategoryScale, LinearScale, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -67,28 +59,36 @@ const StatDisplay: React.FC<StatDisplayProps> = ({ label, value }) => {
   };
 
   if (label.toLowerCase() === 'major progress') {
-// Inside your StatDisplay component...
     return (
-        <div className="stat-display pie-chart-card">
-        <div className="pie-chart-wrapper">
-            <Pie data={data} options={options} />
-            <div className="percentage-label">
-            <span className="chart-value">{percentageCompleted}%</span>
-            <span className="chart-center-text">In-Progress</span>
+      <div className="flex-1 p-4 flex items-center justify-center border-l border-white border-opacity-50 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-900">
+        <div className="flex items-center">
+          <div className="w-20 h-20 relative">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Pie data={data} options={options} />
             </div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white font-bold">
+              <span className="block leading-none">{percentageCompleted}%</span>
+              <span className="block text-xs">In-Progress</span>
+            </div>
+          </div>
+          <div className="ml-4">
+            <div className="label">{label}</div>
+          </div>
         </div>
-        <div className="label">{label}</div>
-        </div>
+      </div>
     );
-    }
+  }
 
   return (
-    <div className="stat-display">
-      <div className="value">{value}</div>
-      <div className="label">{label}</div>
+    <div className="stat">
+      <div className="stat-figure text-primary">
+        {/* Include your icon or image here */}
+      </div>
+      <div className="stat-title">{label}</div>
+      <div className="stat-value">{value}</div>
+      <div className="stat-desc">More info about this stat</div>
     </div>
-  );
+  );   
 };
 
 export default StatDisplay;
-
