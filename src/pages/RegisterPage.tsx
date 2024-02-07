@@ -15,11 +15,11 @@ import {
   RegisterInputFields,
   StudentYearOptions,
 } from "@/constants";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import { useAuthStore } from "@/stores/AuthStore";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Select } from "@mantine/core";
 import majorOptions from "@/constants/MajorOptions";
+import { Select } from "@mantine/core";
 
 const registerSchema = z
   .object({
@@ -168,18 +168,11 @@ export default function RegisterPage() {
                   }}
                   placeholder="Sophomore"
                   data={StudentYearOptions.map((year) => year.name)}
-                  value={year}
                   comboboxProps={{
                     transitionProps: { transition: "pop", duration: 200 },
                   }}
                   className="font-avenir"
                 />
-                {/* <OptionDropdown
-                  title="Year"
-                  value={year}
-                  setValue={setYear}
-                  optionList={StudentYearOptions}
-                /> */}
               </div>
 
               <button
