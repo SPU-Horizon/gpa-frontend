@@ -18,13 +18,6 @@ const navigateToViewProgress = () => { /* ... */ };
 //https://images.collegexpress.com/article/How-Create-Your-Own-College-Major-Step-by-Step.jpg
 
 const DashboardMenuOptions: DashboardOption[] = [
-  // {
-  //   name: "Create A Path",
-  //   description: "Plan your academic journey",
-  //   // icon: PathIcon,
-  //   icon:"https://images.unsplash.com/photo-1615247001958-f4bc92fa6a4a?w=300&dpr=2&q=80",
-  //   action: navigateToCreatePath,
-  // },
   {
     name: "Import Transcript",
     description: "Upload your academic records",

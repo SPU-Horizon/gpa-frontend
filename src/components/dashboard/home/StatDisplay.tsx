@@ -34,7 +34,7 @@ const StatDisplay: React.FC<StatDisplayProps> = ({ label, value }) => {
         data: [Number(percentageCompleted), 100 - Number(percentageCompleted)],
         backgroundColor: ['#927C4E', 'white'],
         borderWidth: 0, // No border
-        cutout: '90%', // Adjust for doughnut thickness
+        cutout: '85%', // Adjust for doughnut thickness
       },
     ],
   };
@@ -55,40 +55,33 @@ const StatDisplay: React.FC<StatDisplayProps> = ({ label, value }) => {
         borderWidth: 0, // You can set the borderWidth to 0 if you don't want an outer border
       },
     },
-    cutout: '90%', // Increase this percentage to make the doughnut ring thinner
+    cutout: '85%', // Increase this percentage to make the doughnut ring thinner
   };
 
-  if (label.toLowerCase() === 'major progress') {
-    return (
-      <div className="flex-1 p-4 flex items-center justify-center border-l border-white border-opacity-50 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-900">
-        <div className="flex items-center">
-          <div className="w-20 h-20 relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Pie data={data} options={options} />
-            </div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white font-bold">
-              <span className="block leading-none">{percentageCompleted}%</span>
-              <span className="block text-xs">In-Progress</span>
-            </div>
-          </div>
-          <div className="ml-4">
-            <div className="label">{label}</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="stat">
-      <div className="stat-figure text-primary">
-        {/* Include your icon or image here */}
-      </div>
-      <div className="stat-title">{label}</div>
-      <div className="stat-value">{value}</div>
-      <div className="stat-desc">More info about this stat</div>
+    <div className="stat-container  bg-white p-4 items-center justify-center m-4">
+      {label.toLowerCase() === 'major progress' ? (
+        <div className="relative w-32 h-32">
+          <Pie data={data} options={options} />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-lg font-semibold">{percentageCompleted}%</span>
+            <div className="absolute inset-0 mt-8 flex items-center justify-center">
+                <span className="text-md">Completed</span>
+            </div>
+          </div>
+          <p className="text-sm text-center mt-2">{label}</p>
+        </div>
+      ) : (
+        <div className="text-center">
+          <p className="text-3xl font-semibold">{value}</p>
+          <p className="text-md text-gray-600 mt-1">{label}</p>
+        </div>
+      )}
     </div>
-  );   
+  );
 };
 
 export default StatDisplay;
+
+
+

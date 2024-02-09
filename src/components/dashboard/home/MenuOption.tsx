@@ -28,17 +28,15 @@ export default function MenuOption({
           <ContextMenuTrigger>
             <div
               className={cn(
-                "relative rounded-lg overflow-hidden shadow-lg p-8 bg-gold-base text-white",
-                aspectRatio === "portrait" ? "aspect-w-3 aspect-h-4" : "aspect-w-1 aspect-h-1",
+                "relative rounded-lg overflow-hidden shadow-lg p-8 bg-gray-100 dark:bg-slate-800 text-white",
+                aspectRatio === "portrait" ? "aspect-w-3 aspect-h-4" : "aspect-square",
               )}
             >
               <div className="flex items-center justify-center mb-6">
                 {isFontAwesomeIcon(option.icon) ? (
                   <FontAwesomeIcon
-                    icon={option.icon as any}
-                    className={cn(
-                      "h-16 w-16 text-white",
-                    )}
+                    icon={option.icon}
+                    className="h-16 w-16 text-white"
                   />
                 ) : (
                   <Image
@@ -47,9 +45,7 @@ export default function MenuOption({
                     alt={option.name}
                     width={width}
                     height={height}
-                    className={cn(
-                      "h-16 w-16 object-cover",
-                    )}
+                    className="h-16 w-16 object-cover"
                   />
                 )}
               </div>
@@ -69,3 +65,4 @@ export default function MenuOption({
 function isFontAwesomeIcon(icon: any): icon is React.ComponentType {
   return icon && typeof icon === 'object' && 'prefix' in icon && 'iconName' in icon;
 }
+

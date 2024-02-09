@@ -28,11 +28,11 @@ export interface DashboardStat {
     },
     {
       name: "Major",
-      value: "Computer Science",
+      value: "Biology",
       icon: "images/TotalCoursesIcon.png",
     },
     {
-      name: "Credits Until Graduation",
+      name: "Credits Remaining",
       value: 40,
       icon: "images/CompletedCoursesIcon.png",
     },
