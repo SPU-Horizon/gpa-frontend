@@ -19,5 +19,7 @@ export default function Dashboard() {
         </Routes>
       </div>
     </div>
+      </Routes>
+    </>
   );
 }

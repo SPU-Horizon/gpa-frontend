@@ -137,6 +137,6 @@ export const PrivateRoute = () => {
       </TooltipProvider>
     </div>
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/sign-in" />
   );
 };
