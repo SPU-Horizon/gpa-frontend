@@ -11,7 +11,6 @@ import { IntegrationStepData } from "@/constants/IntegrationStepData";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Dropzone } from "@mantine/dropzone";
 import { FileDropzone } from "@/components/custom";
 
 export default function IntegrationPage() {
