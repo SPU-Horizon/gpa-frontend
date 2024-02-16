@@ -18,7 +18,6 @@
     "@hookform/resolvers": "^3.3.2",
     "@mantine/core": "^7.3.2",
     "@mantine/dates": "^7.5.0",
-    "@mantine/dropzone": "^7.5.1",
     "@mantine/dropzone": "^7.5.0",
     "@mantine/form": "^7.3.2",
     "@mantine/hooks": "^7.3.2",
