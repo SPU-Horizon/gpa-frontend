@@ -1,25 +1,16 @@
-import { PlusCircleIcon } from "lucide-react";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Image } from "@mantine/core";
-
 import { cn } from "@/lib/utils";
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuSeparator,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-
-import { Classes } from "@/constants/DashboardMenuOptions";
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
+import { DashboardOption } from "@/constants/DashboardMenuOptions";
+import { PlusCircleIcon } from "lucide-react";
 
 interface MenuOptionProps extends React.HTMLAttributes<HTMLDivElement> {
   aspectRatio?: "portrait" | "square";
   width?: number;
   height?: number;
-  option: Classes;
+  option: DashboardOption;
 }
 
 export default function MenuOption({
@@ -35,46 +26,43 @@ export default function MenuOption({
       <button onClick={() => console.log("Heading Over.")}>
         <ContextMenu>
           <ContextMenuTrigger>
-            <div className="overflow-hidden rounded-md">
-              <Image
-                loading="lazy"
-                src={option.cover}
-                alt={option.name}
-                width={width}
-                height={height}
-                className={cn(
-                  "h-auto w-auto object-cover transition-all hover:scale-105 hover:cursor-pointer",
-                  aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
+            <div
+              className={cn(
+                "relative rounded-lg overflow-hidden shadow-lg p-8 bg-gray-100 dark:bg-slate-800 text-white",
+                aspectRatio === "portrait" ? "aspect-w-3 aspect-h-4" : "aspect-square",
+              )}
+            >
+              <div className="flex items-center justify-center mb-6">
+                {isFontAwesomeIcon(option.icon) ? (
+                  <FontAwesomeIcon
+                    icon={option.icon}
+                    className="h-16 w-16 text-white"
+                  />
+                ) : (
+                  <Image
+                    loading="lazy"
+                    src={option.icon}
+                    alt={option.name}
+                    width={width}
+                    height={height}
+                    className="h-16 w-16 object-cover"
+                  />
                 )}
-              />
+              </div>
+              <div className="text-center">
+                <h3 className="font-medium text-xl leading-tight mb-2">{option.name}</h3>
+                <p className="text-sm">{option.description}</p>
+              </div>
             </div>
           </ContextMenuTrigger>
-          <ContextMenuContent className="w-40">
-            <ContextMenuItem>Add to Library</ContextMenuItem>
-            <ContextMenuSub>
-              <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
-              <ContextMenuSubContent className="w-48">
-                <ContextMenuItem>
-                  <PlusCircleIcon className="mr-2 h-4 w-4" />
-                  New Playlist
-                </ContextMenuItem>
-                <ContextMenuSeparator />
-              </ContextMenuSubContent>
-            </ContextMenuSub>
-            <ContextMenuSeparator />
-            <ContextMenuItem>Play Next</ContextMenuItem>
-            <ContextMenuItem>Play Later</ContextMenuItem>
-            <ContextMenuItem>Create Station</ContextMenuItem>
-            <ContextMenuSeparator />
-            <ContextMenuItem>Like</ContextMenuItem>
-            <ContextMenuItem>Share</ContextMenuItem>
-          </ContextMenuContent>
         </ContextMenu>
-        <div className="space-y-1 text-sm text-start mt-1">
-          <h3 className="font-medium leading-none">{option.name}</h3>
-          <p className="text-xs text-muted-foreground">{option.artist}</p>
-        </div>
       </button>
     </div>
   );
 }
+
+// Helper function to check if the icon is a FontAwesomeIcon
+function isFontAwesomeIcon(icon: any): icon is React.ComponentType {
+  return icon && typeof icon === 'object' && 'prefix' in icon && 'iconName' in icon;
+}
+
