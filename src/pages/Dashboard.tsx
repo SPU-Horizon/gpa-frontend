@@ -7,19 +7,16 @@ import HomeOptions from "@/sections/dashboard/home/HomeOptions";
 export default function Dashboard() {
   return (
     <div className="flex h-screen">
-      
       <div className="flex-grow">
         <Routes>
           <Route path="" element={<HomeOptions />} />
           <Route
-          path="/transcript"
-          element={<ClassHistory accounts={[]} Class={classes} />}
-        />
-        <Route path="integrate-banner" element={<IntegrationPage />} />
+            path="/transcript"
+            element={<ClassHistory accounts={[]} Class={classes} />}
+          />
+          <Route path="integrate-banner" element={<IntegrationPage />} />
         </Routes>
       </div>
     </div>
-      </Routes>
-    </>
   );
 }
