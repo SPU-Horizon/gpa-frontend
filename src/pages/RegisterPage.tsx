@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Eye } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -7,19 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Laptop } from "@/images";
 import { ArrowRight } from "@/icons";
-import { OptionDropdown } from "@/components/custom";
 import RegisterPageHeader from "@/components/RegisterAndLogin/RegisterPageHeader";
 
-import {
-  MajorOptions,
-  RegisterInputFields,
-  StudentYearOptions,
-} from "@/constants";
-import { Navigate, useNavigate } from "react-router-dom";
-
-import { useAuthStore } from "@/stores/AuthStore";
-import majorOptions from "@/constants/MajorOptions";
-import { Select } from "@mantine/core";
+import { RegisterInputFields } from "@/constants";
+import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/stores/AuthStore";
+import { TextInput, PasswordInput } from "@mantine/core";
 
 const registerSchema = z
   .object({
@@ -50,10 +41,6 @@ export default function RegisterPage() {
   const navigate = useNavigate();
 
   const { registerUser } = useAuthStore();
-  const [value, setValue] = useState("");
-  const [year, setYear] = useState("");
-  const [isPassword, setInputType] = useState(true);
-  const majorOptions = MajorOptions.map((major) => major.name);
 
   const submitHandler = async () => {
     isSubmitting ? toast.loading("Loading...") : toast.dismiss();
@@ -62,43 +49,38 @@ export default function RegisterPage() {
       firstName: getValues().firstName,
       lastName: getValues().lastName,
       email: getValues().email,
-      password: getValues().password,
-      Major: value,
-      Year: year,
     });
 
     if (!res) {
-      toast.error("An Error Occured.");
+      toast.error("An Error Occured While Registering!");
+    } else if (
+      getValues().password === "" ||
+      getValues().confirmPassword === ""
+    ) {
+      toast.error("Please Complete Password Fields!");
     } else {
       toast.success("Validation should be sent to your Email!");
     }
-    console.log(getValues());
+
     navigate("/sign-in");
     reset();
-    setValue("");
-    setYear("");
   };
 
-  if (errors.password) {
-    toast.error("Password must be at least 9 characters.");
-  }
-
-  if (errors.email) {
-    toast.error("Invalid email address.");
-  }
-
   return (
-    <section className="">
+    <section>
       <div className="flex justify-center min-h-screen dark:bg-black-light ">
+        {/* Image on the Left Size */}
         <div
           className="md:hidden bg-cover bg-center block w-2/5"
           style={{ backgroundImage: `url(${Laptop})` }}
-        ></div>
+        />
 
+        {/* Form Section on the right side of the page */}
         <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2 ">
           <div className="w-full md:pt-12">
             <RegisterPageHeader />
 
+            {/* Form Component */}
             <form
               className="grid md:grid-cols-1 gap-6 mt-8 grid-cols-2"
               onSubmit={handleSubmit(() => {
@@ -114,66 +96,30 @@ export default function RegisterPage() {
                     </label>
 
                     {inputField.type === "password" ? (
-                      <div className="flex gap-4">
-                        <input
-                          {...register(inputField.zodTitle)}
-                          type={isPassword ? "password" : "text"}
-                          placeholder={inputField.placeholder}
-                          className="block w-full px-5 py-3 dark:text-white-light dark:placeholder-white-light text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                        />
-                        <div
-                          onClick={() => setInputType(!isPassword)}
-                          className="self-center pt-1"
-                        >
-                          <Eye className="opacity-75" />
-                        </div>
-                      </div>
+                      <PasswordInput
+                        {...register(inputField.zodTitle)}
+                        placeholder={inputField.placeholder}
+                        classNames={{
+                          input:
+                            "font-avenir text-md w-full h-12 bg-gray-100 dark:bg-black-light dark:text-white-light dark:placeholder-white-light text-gray-700 placeholder-gray-400 border border-gray-500 rounded-lg focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40",
+                          required: "text-red-400",
+                        }}
+                      />
                     ) : (
-                      <input
+                      <TextInput
                         {...register(inputField.zodTitle)}
                         type={inputField.type}
                         placeholder={inputField.placeholder}
-                        className="block w-full px-5 py-3 mt-2 dark:placeholder-white-light dark:text-white-light text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                        required
+                        classNames={{
+                          input:
+                            "font-avenir text-md w-full h-12 bg-gray-100 dark:bg-black-light dark:text-white-light dark:placeholder-gray-400 text-gray-700 placeholder-gray-500 border border-gray-500 rounded-lg focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40",
+                        }}
                       />
                     )}
                   </>
                 </div>
               ))}
-
-              <div className="flex flex-col gap-2">
-                <label className="block text-md text-gray-600 dark:text-white-light">
-                  Major or Field of Study
-                </label>
-                <Select
-                  classNames={{
-                    input:
-                      "font-avenir w-full h-12 bg-gray-100 dark:bg-black-light dark:text-white-light dark:placeholder-white-light text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40",
-                  }}
-                  placeholder="Computer Science"
-                  data={majorOptions}
-                  comboboxProps={{
-                    transitionProps: { transition: "pop", duration: 200 },
-                  }}
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label className="block text-md text-gray-600 dark:text-white-light ">
-                  Current Year
-                </label>
-                <Select
-                  classNames={{
-                    input:
-                      "font-avenir w-full h-12 bg-gray-100 dark:bg-black-light dark:text-white-light dark:placeholder-white-light text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40",
-                  }}
-                  placeholder="Sophomore"
-                  data={StudentYearOptions.map((year) => year.name)}
-                  comboboxProps={{
-                    transitionProps: { transition: "pop", duration: 200 },
-                  }}
-                  className="font-avenir"
-                />
-              </div>
 
               <button
                 type="submit"

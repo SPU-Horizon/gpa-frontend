@@ -143,23 +143,6 @@ export default function Profile() {
 
             <FormField
               control={form.control}
-              name="enrollmentDate"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex flex-col gap-3">
-                    <FormLabel htmlFor="enrollmentDate">
-                      Major Enrollment Date
-                    </FormLabel>
-                    <FormControl className="dark:bg-gray-500 dark:opacity-100">
-                      <DatePicker />
-                    </FormControl>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="graduationDate"
               render={({ field }) => (
                 <FormItem>
@@ -173,47 +156,7 @@ export default function Profile() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="declaredMajor"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Declared Major</FormLabel>
-                  <FormControl>
-                    <Select
-                      placeholder={userMajor}
-                      data={majorOptions}
-                      comboboxProps={{
-                        transitionProps: { transition: "pop", duration: 200 },
-                      }}
-                      className="font-avenir"
-                      style={{ fontFamily: "Avenir" }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="declaredMinor"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Declared Minor</FormLabel>
-                  <FormControl>
-                    <Select
-                      placeholder={userMinor}
-                      data={majorOptions}
-                      comboboxProps={{
-                        transitionProps: { transition: "pop", duration: 200 },
-                      }}
-                      className="font-avenir"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <div>
               <FormLabel>Avatar Upload</FormLabel>
               <FileDropzone
