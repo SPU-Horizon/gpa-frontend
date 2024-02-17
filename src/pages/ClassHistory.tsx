@@ -15,6 +15,9 @@ import { Class } from "@/constants/CardData";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { Button } from "@/components/ui/button";
 import { SearchBar } from "@/components/custom/SearchBar";
+import { useCourseStore } from "@/stores"; //Absolute imports
+import { get } from "http";
+import { useEffect } from "react";
 
 interface DashboardProps {
   accounts: {
@@ -28,6 +31,7 @@ interface DashboardProps {
 }
 
 export default function ClassHistory({ Class }: DashboardProps) {
+    {/*
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
   const handleFilterChange = (value: string) => {
@@ -48,6 +52,13 @@ export default function ClassHistory({ Class }: DashboardProps) {
         return Class;
     }
   }, [selectedFilter, Class]);
+ */}
+
+  const {classList, initializeClassList} = useCourseStore();
+
+  useEffect(() => {
+    initializeClassList();
+  }, [initializeClassList]);
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -64,7 +75,9 @@ export default function ClassHistory({ Class }: DashboardProps) {
         <div className="flex items-center px-3 py-2">
           <h1 className="text-xl font-bold ml-2">Your Classes</h1>
           <h2 className = "text-base ml-auto">Current GPA: <span className="font-bold">{3.42}</span></h2>
-            <Select onValueChange={(value) => handleFilterChange(value)} defaultValue="All Classes">
+            {/*<Select onValueChange={(value) => handleFilterChange(value)} defaultValue="All Classes">*/}
+            <Select defaultValue="All Classes">
+
               <SelectTrigger className="ml-auto mr-2 w-auto text-base">
                 <SelectValue/>
               </SelectTrigger>
@@ -96,7 +109,7 @@ export default function ClassHistory({ Class }: DashboardProps) {
         </div>
         <Separator />
 
-        <ClassCardList items={filteredItems}/>
+        <ClassCardList items={classList}/>
         
         </ResizablePanel>
       </ResizablePanelGroup>
