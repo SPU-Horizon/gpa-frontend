@@ -1,18 +1,20 @@
-import { create } from "zustand";
+import { StateCreator, create } from "zustand";
+import { PersistStorage, persist } from "zustand/middleware";
 
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
 
 type ThemeStore = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  theme: "light" | "dark";
+  setTheme: (theme: "light" | "dark" | undefined) => void;
 };
 
-const useThemeStore = create<ThemeStore>((set) => ({
-  theme: (localStorage.getItem("theme") as Theme) || "dark",
-  setTheme: (theme) => {
-    localStorage.setItem("theme", theme);
-    set({ theme });
-  },
+const initialState = {
+  theme: "light" as Theme,
+};
+
+export const useThemeStore = create<ThemeStore>((set) => ({
+  ...initialState,
+  setTheme: (theme: "light" | "dark" | undefined) => set({ theme }),
 }));
 
 export default useThemeStore;

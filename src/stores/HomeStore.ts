@@ -4,7 +4,7 @@
 // import { AuthSlice } from "./AuthStore";
 // import { NavSlice } from "./NavigationStore";
 
-// export const useBoundStore = create(
+// export const useHomeStore = create(
 //   persist(
 //     (set) => ({
 //       ...AuthSlice(set),

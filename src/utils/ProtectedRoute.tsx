@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/resizable";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { useAuthStore } from "@/stores/AuthStore";
+import useAuthStore from "@/stores/AuthStore";
 import { Separator } from "@/components/ui/separator";
 import {
   Castle,
@@ -42,11 +42,11 @@ export const PrivateRoute = () => {
           }}
         >
           <ResizablePanel
-            defaultSize={width < 768 ? 10 : 25}
+            defaultSize={5}
             collapsedSize={5}
             collapsible={true}
-            minSize={width < 768 ? 20 : 20}
-            maxSize={25}
+            minSize={5}
+            maxSize={5}
             onCollapse={() => setIsCollapsed(true)}
             className={cn(
               isCollapsed &&
@@ -129,8 +129,8 @@ export const PrivateRoute = () => {
               />
             </div>
           </ResizablePanel>
-          <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={width < 768 ? 90 : 75}>
+          <ResizableHandle />
+          <ResizablePanel defaultSize={95}>
             <Outlet />
           </ResizablePanel>
         </ResizablePanelGroup>

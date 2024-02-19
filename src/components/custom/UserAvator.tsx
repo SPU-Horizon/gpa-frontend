@@ -11,12 +11,12 @@ import {
   DropdownMenuItem,
   DropdownMenuShortcut,
 } from "../ui/dropdown-menu";
-import { useAuthStore } from "@/stores/AuthStore";
+import useAuthStore from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
 import { set } from "date-fns";
 
 export function UserAvatar() {
-  const { signOut } = useAuthStore();
+  const { signOut, email } = useAuthStore();
   const { setCurrentTab } = useNavigationStore();
   const navigate = useNavigate();
 
@@ -39,9 +39,9 @@ export function UserAvatar() {
       >
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Matthew Negasi</p>
+            <p className="text-sm font-medium leading-none">User's Name</p>
             <p className="text-xs leading-none text-muted-foreground">
-              m@example.com
+              {email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -54,15 +54,6 @@ export function UserAvatar() {
           >
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            onClick={() => {
-              setCurrentTab("settings"), navigate("/settings");
-            }}
-          >
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator className="bg-black-base" />

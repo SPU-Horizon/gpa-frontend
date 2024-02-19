@@ -3,11 +3,16 @@ import { GoogleIcon, GpaGold } from "@/icons";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useAuthStore } from "@/stores/AuthStore";
+import useAuthStore from "@/stores/AuthStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
 import { useCourseStore } from "@/stores";
+import { Switch } from "@/components/ui/switch";
+import { useThemeStore } from "@/stores";
+import { Theme } from "@/stores/ThemeStore";
+
 
 const signInSchema = z.object({
   email: z.string().email(),
@@ -26,7 +31,9 @@ export default function AuthenticationPage() {
   });
 
   const { signIn, isAuthenticated } = useAuthStore();
+
   const { initializeClassList } = useCourseStore();
+  const { setTheme } = useThemeStore();
   const navigate = useNavigate();
 
   const submitHandler = async () => {

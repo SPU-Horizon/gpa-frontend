@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+import useAuthStore from "./AuthStore";
+
 type NavigationStore = {
   currentTab: string;
   setCurrentTab: (tab: string) => void;
@@ -23,11 +25,3 @@ export const useNavigationStore = create<NavigationStore>()(
     }
   )
 );
-
-// export const NavSlice = (set) => {
-//   return {
-//     ...initialState,
-//     setCurrentTab: (tab: string) => set({ currentTab: tab }),
-//     resetState: () => set(initialState),
-//   };
-// };
