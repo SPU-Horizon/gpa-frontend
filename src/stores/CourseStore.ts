@@ -1,16 +1,14 @@
-import { StateCreator, create } from 'zustand';
-import axios from 'axios';
-import useAuthStore from './AuthStore';
-import { get } from 'http';
-import { persist } from 'zustand/middleware';
-
+import { StateCreator, create } from "zustand";
+import axios from "axios";
+import useAuthStore from "./AuthStore";
+import { persist } from "zustand/middleware";
 
 type CourseStore = {
-    getEnrollments: () => Promise<[]>;
-    initializeClassList: () => void;
-    classList : [];
+  getEnrollments: () => Promise<[]>;
+  postCourses: (file: FormData) => Promise<boolean>;
+  initializeClassList: () => void;
+  classList: [];
 };
-
 
 const useCourseStoreTemplate: StateCreator<
   CourseStore,
@@ -36,6 +34,26 @@ const useCourseStoreTemplate: StateCreator<
       return res;
     },
 
+    postCourses: async (file) => {
+      try {
+        const res = await axios.post(
+          "http://localhost:3000/course/parseCourses",
+          file, // Pass formData directly as the second argument
+
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        // Handle the response from the API
+        return true; // Return a boolean value indicating success
+      } catch (error) {
+        // Handle any errors that occurred during the request
+        return false; // Return a boolean value indicating failure
+      }
+    },
+
     // Initialize classList with an empty array
     classList: [],
 
@@ -47,7 +65,7 @@ const useCourseStoreTemplate: StateCreator<
   }),
   // Add options object as the second argument
   {
-    name: 'courseStore', // Specify a name for the persistor
+    name: "courseStore", // Specify a name for the persistor
   }
 );
 

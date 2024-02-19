@@ -1,36 +1,33 @@
-// import React from 'react';
-
-// const Footer: React.FC = () => {
-//     return (
-//         <footer>
-//             <div className="mt-auto flex justify-between items-center p-4 bg-gray-900 text-white">
-//                 <div>
-//                     <p>&copy; 2024</p>
-//                 </div>
-//                 <div>
-//                     <p>Privacy Policy</p>
-//                 </div>
-//             </div>
-//         </footer>
-//     );
-// };
-
-
 // Footer.tsx
-import React from "react";
+import { useThemeStore } from "@/stores";
+
+import { Button } from "@/components/ui/button";
 
 function Footer() {
+  const { setTheme, theme } = useThemeStore();
   return (
-    <footer className="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+    <div className="col-span-3 row-start-6 ">
+      <footer className="flex justify-between p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
         <div>
-            <p>&copy;GPA 2024</p>
+          <p>&copy; GPA 2024</p>
+          <p>Privacy Policy</p>
         </div>
-        <div>
-            <p>Privacy Policy</p>
+
+        <div className=" flex flex-col text-center justify-center items-center">
+          <h3 className="font-bold">Theme</h3>
+          <Button
+            className=""
+            onClick={() => {
+              setTheme(theme === "dark" ? "light" : "dark");
+            }}
+          >
+            {" "}
+            Change Theme
+          </Button>
         </div>
-    </footer>
+      </footer>
+    </div>
   );
 }
 
 export default Footer;
-
