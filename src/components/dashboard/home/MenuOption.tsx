@@ -1,5 +1,5 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Image } from "@mantine/core";
 import { cn } from "@/lib/utils";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
@@ -22,16 +22,11 @@ export default function MenuOption({
   ...props
 }: MenuOptionProps) {
   return (
-    <div className={cn("space-y-3", className)} {...props}>
+    <div className={cn("", className)} {...props}>
       <button onClick={() => console.log("Heading Over.")}>
         <ContextMenu>
           <ContextMenuTrigger>
-            <div
-              className={cn(
-                "relative rounded-lg overflow-hidden shadow-lg p-8 bg-gray-100 dark:bg-slate-800 text-white",
-                aspectRatio === "portrait" ? "aspect-w-3 aspect-h-4" : "aspect-square",
-              )}
-            >
+            <div className="relative rounded-sm overflow-hidden shadow-lg p-8 bg-gray-100 dark:bg-slate-800 text-white">
               <div className="flex items-center justify-center mb-6">
                 {isFontAwesomeIcon(option.icon) ? (
                   <FontAwesomeIcon
@@ -50,7 +45,9 @@ export default function MenuOption({
                 )}
               </div>
               <div className="text-center">
-                <h3 className="font-medium text-xl leading-tight mb-2">{option.name}</h3>
+                <h3 className="font-medium text-xl leading-tight mb-2">
+                  {option.name}
+                </h3>
                 <p className="text-sm">{option.description}</p>
               </div>
             </div>
@@ -63,6 +60,7 @@ export default function MenuOption({
 
 // Helper function to check if the icon is a FontAwesomeIcon
 function isFontAwesomeIcon(icon: any): icon is React.ComponentType {
-  return icon && typeof icon === 'object' && 'prefix' in icon && 'iconName' in icon;
+  return (
+    icon && typeof icon === "object" && "prefix" in icon && "iconName" in icon
+  );
 }
-

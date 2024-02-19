@@ -17,8 +17,11 @@ import { useThemeStore } from "./stores";
 function App() {
   const { theme } = useThemeStore();
 
+  const themeClass = theme === "dark" ? "dark" : "light";
+  console.log(themeClass);
+
   return (
-    <div className={`${theme.toString()}`}>
+    <div className={`${themeClass}`}>
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />}></Route>
