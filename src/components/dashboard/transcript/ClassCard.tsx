@@ -6,17 +6,18 @@ import { Badge } from "../../ui/badge";
 import { cn } from "@/lib/utils";
 
 export type ClassCardProps = {
-  item: {
-    name: string;
-    subject: string;
-    text: string;
-    quarter: string;
-    completed: boolean;
-    isRemaining: boolean;
-  };
+    student_id: number,
+    course_id: string,
+    name: string,
+    description: string,
+    credits: string,
+    attributes: string,
+    year: number,
+    quarter: string,
+    grade: string
 };
 
-export default function ClassCard({ item }: ClassCardProps) {
+export default function ClassCard( item : ClassCardProps) {
   return (
     <button
       className={cn(
@@ -26,8 +27,10 @@ export default function ClassCard({ item }: ClassCardProps) {
       <div className="flex w-full flex-col gap-1">
         <div className="flex items-center">
           <div className="flex items-center gap-2">
-            <div className="font-semibold text-lg">{item.name}</div>
 
+
+            <div className="font-semibold text-lg">{item.course_id}</div>
+            {/*
             {(!item.completed && !item.isRemaining) && (
               <span><Badge>In Progress</Badge></span>
             )}
@@ -37,11 +40,13 @@ export default function ClassCard({ item }: ClassCardProps) {
             {item.completed && (
               <span><Badge>Completed</Badge></span>
             )}
+             */}
           </div>
+
         </div>
-        <div className="text-md font-medium">{item.subject}</div>
+        <div className="text-md font-medium">{item.name}</div>
       </div>
-      <div className=" text-md text-muted-foreground">{item.text}</div>
+      <div className=" text-md text-muted-foreground">{item.description}</div>
       <div className="ml-auto text-xs mt-auto">{item.quarter}</div>
     </button>
   );
