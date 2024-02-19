@@ -7,6 +7,7 @@ import { useAuthStore } from "@/stores/AuthStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useCourseStore } from "@/stores";
 
 const signInSchema = z.object({
   email: z.string().email(),
@@ -25,6 +26,7 @@ export default function AuthenticationPage() {
   });
 
   const { signIn, isAuthenticated } = useAuthStore();
+  const { initializeClassList } = useCourseStore();
   const navigate = useNavigate();
 
   const submitHandler = async () => {
@@ -33,6 +35,7 @@ export default function AuthenticationPage() {
       toast.error("Invalid credentials.");
     } else {
       toast.success("Signing In - Welcome!");
+      initializeClassList();
     }
     reset();
   };

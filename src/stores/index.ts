@@ -1,2 +1,2 @@
 export { default as useThemeStore } from "./ThemeStore";
-export { useCourseStore } from "./CourseStore";
+export { default as useCourseStore } from "./CourseStore";

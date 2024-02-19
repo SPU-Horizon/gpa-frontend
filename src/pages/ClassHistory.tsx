@@ -31,34 +31,9 @@ interface DashboardProps {
 }
 
 export default function ClassHistory({ Class }: DashboardProps) {
-    {/*
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
-  const handleFilterChange = (value: string) => {
-    setSelectedFilter(value);
-  };
+  const {classList} = useCourseStore(); //Destructuring
 
-  const filteredItems = useMemo(() => {
-    switch (selectedFilter) {
-      case "Completed":
-        return Class.filter((item) => item.completed);
-      case "In Progress":
-        return Class.filter((item) => !item.completed && !item.isRemaining);
-      case "Remaining":
-        return Class.filter((item) => item.isRemaining);
-      case "All Classes":
-        return Class;
-      default:
-        return Class;
-    }
-  }, [selectedFilter, Class]);
- */}
-
-  const {classList, initializeClassList} = useCourseStore();
-
-  useEffect(() => {
-    initializeClassList();
-  }, [initializeClassList]);
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -110,6 +85,7 @@ export default function ClassHistory({ Class }: DashboardProps) {
         <Separator />
 
         <ClassCardList items={classList}/>
+        // Still need to update the GPA displayed on this page*******
         
         </ResizablePanel>
       </ResizablePanelGroup>

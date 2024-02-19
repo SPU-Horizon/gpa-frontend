@@ -6,7 +6,6 @@ import { Badge } from "../../ui/badge";
 import { cn } from "@/lib/utils";
 
 export type ClassCardProps = {
-  item: {
     student_id: number,
     course_id: string,
     name: string,
@@ -16,10 +15,9 @@ export type ClassCardProps = {
     year: number,
     quarter: string,
     grade: string
-  };
 };
 
-export default function ClassCard({ item }: ClassCardProps) {
+export default function ClassCard( item : ClassCardProps) {
   return (
     <button
       className={cn(
