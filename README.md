@@ -1,6 +1,4 @@
-# The Graduation Planning App
-
-[Build and run GPA]([url](https://github.com/SPU-Horizon/gpa/blob/main/README.md))
+# [The Graduation Planning App](https://github.com/SPU-Horizon/gpa/blob/main/README.md)
 
 > [!CAUTION]
 > Do not share the contents of `.env` with *anyone*. Doing so may expose private user data to unauthorized persons and violate federal FERPA regulations. Do not share your screen with non-members or engage in reckless acts that may cause the contents of `.env` to be discovered.
