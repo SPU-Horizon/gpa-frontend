@@ -69,7 +69,6 @@ export default function ClassHistory({ Class }: DashboardProps) {
             <h1 className="text-xl font-bold ml-2">Completed Classes</h1>
             <ClassCardList items={completedClassList} completion="Completed"/>
           </div>
-
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
