@@ -49,6 +49,7 @@ export default function RegisterPage() {
       firstName: getValues().firstName,
       lastName: getValues().lastName,
       email: getValues().email,
+      password: getValues().password,
     });
 
     if (!res) {
