@@ -67,7 +67,7 @@ export default function IntegrationPage() {
             acceptedFile ? "File Accepted" : "Drag or click to select files"
           }
           subheader={
-            acceptedFile ? "Youre Good To Go!" : " ONLY .hmtl accepted "
+            acceptedFile ? "Youre Good To Go!" : " ONLY .html & .htm accepted "
           }
           className="mt-16 mb-7"
           icon={
