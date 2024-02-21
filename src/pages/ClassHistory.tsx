@@ -14,18 +14,9 @@ import { Class } from "@/constants/CardData";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { useCourseStore } from "@/stores"; //Absolute imports
 
-interface DashboardProps {
-  accounts: {
-    label: string;
-    email: string;
-    icon: React.ReactNode;
-  }[];
-  Class: Class[];
-  defaultLayout?: number[] | undefined;
-  defaultCollapsed?: boolean;
-}
 
-export default function ClassHistory({ Class }: DashboardProps) {
+
+export default function ClassHistory() {
   const { classList } = useCourseStore(); //Destructuring
 
   return (
