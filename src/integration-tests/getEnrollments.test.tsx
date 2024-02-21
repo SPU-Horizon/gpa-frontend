@@ -3,9 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { render } from "@/testconfig/renderMock";
 import { ClassHistory } from "@/sections";
 import axios from "axios";
-import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import {waitFor } from '@testing-library/react';
-import useAuthStore from "@/stores/AuthStore";
 
 
 
