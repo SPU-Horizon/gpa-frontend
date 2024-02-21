@@ -21,7 +21,6 @@ it("should connect to the API that parses courses", async () => {
   formData.append("file", file);
 
   type resData = {
-    student_id: any;
     enrollment_year: string;
     enrollment_quarter: string;
     graduation_year: string;
@@ -42,7 +41,6 @@ it("should connect to the API that parses courses", async () => {
 
   expect(response.status).toBe(200);
   expect(response.data.data).toMatchObject<resData>({
-    student_id: expect.anything(),
     enrollment_year: expect.any(String),
     enrollment_quarter: expect.any(String),
     graduation_year: expect.any(String),
@@ -50,4 +48,6 @@ it("should connect to the API that parses courses", async () => {
     field: expect.any(Array),
     classes_taken: expect.any(Array),
   });
+
+  expect(response.data.data.student_id).toBeNull();
 });
