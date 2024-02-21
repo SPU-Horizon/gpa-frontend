@@ -12,18 +12,23 @@ describe("IntegrationPage", () => {
 });
 
 it("should connect to the API that parses courses", async () => {
-  const responseBlob = await fetch(
-    "http://localhost:5173/Alex's UG Degree Check.html"
-  );
-  const file = new File(
-    [await responseBlob.blob()],
-    "Alex's UG Degree Check.html"
-  );
+  const responseBlob = await fetch("http://localhost:5173/M&MReqsPage.html");
 
-  console.log(file.size);
-
-  let formData = new FormData();
+  const k = await responseBlob.blob();
+  const text = await k.text();
+  const formData = new FormData();
+  const file = new File([text], "M&MReqsPage.html", { type: "text/html" });
   formData.append("file", file);
+
+  type resData = {
+    student_id: any;
+    enrollment_year: string;
+    enrollment_quarter: string;
+    graduation_year: string;
+    graduation_quarter: string;
+    field: any[][];
+    classes_taken: any[];
+  };
 
   const response = await axios.post(
     "http://localhost:3000/course/parseCourses",
@@ -36,4 +41,13 @@ it("should connect to the API that parses courses", async () => {
   );
 
   expect(response.status).toBe(200);
+  expect(response.data.data).toMatchObject<resData>({
+    student_id: expect.anything(),
+    enrollment_year: expect.any(String),
+    enrollment_quarter: expect.any(String),
+    graduation_year: expect.any(String),
+    graduation_quarter: expect.any(String),
+    field: expect.any(Array),
+    classes_taken: expect.any(Array),
+  });
 });
