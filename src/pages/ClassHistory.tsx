@@ -9,12 +9,8 @@ import {
 } from "@/components/ui/select";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
-import React from "react";
-import { Class } from "@/constants/CardData";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { useCourseStore } from "@/stores"; //Absolute imports
-
-
 
 export default function ClassHistory() {
   const { classList } = useCourseStore(); //Destructuring
@@ -53,7 +49,7 @@ export default function ClassHistory() {
           </div>
           <Separator />
           <ClassCardList items={classList} />
-          // Still need to update the GPA displayed on this page*******
+          {/* // Still need to update the GPA displayed on this page******* */}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

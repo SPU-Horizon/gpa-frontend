@@ -8,5 +8,4 @@ export { default as FooterSection } from "./landingpage/FooterSection";
 /* ----------------- Dashboard Sections --------------------- */
 
 export { default as ClassHistory } from "../pages/ClassHistory";
-export { default as MenuOptions } from "../components/dashboard/home/MenuOption";
 export { default as IntegrationPage } from "./dashboard/integrate-banner/integration";

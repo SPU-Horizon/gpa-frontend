@@ -48,6 +48,7 @@ const useCourseStoreTemplate: StateCreator<
         );
         // Handle the response from the API
         console.log(res.data);
+
         return true; // Return a boolean value indicating success
       } catch (error) {
         // Handle any errors that occurred during the request
