@@ -18,7 +18,7 @@ function App() {
   const { theme } = useThemeStore();
 
   const themeClass = theme === "dark" ? "dark" : "light";
-  console.log(themeClass);
+  // console.log(themeClass);
 
   return (
     <div className={`${themeClass}`}>

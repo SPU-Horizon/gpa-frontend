@@ -10,10 +10,7 @@ export default function Dashboard() {
       <div className="flex-grow">
         <Routes>
           <Route path="" element={<HomeOptions />} />
-          <Route
-            path="/transcript"
-            element={<ClassHistory accounts={[]} Class={classes} />}
-          />
+          <Route path="/transcript" element={<ClassHistory />} />
           <Route path="integrate-banner" element={<IntegrationPage />} />
         </Routes>
       </div>

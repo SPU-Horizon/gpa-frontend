@@ -7,9 +7,9 @@ import { Toaster } from "./components/ui/sonner.tsx";
 import { useThemeStore } from "./stores";
 
 const retVal = useThemeStore.getState().theme;
-console.log(retVal);
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <MantineProvider defaultColorScheme={retVal === "dark" ? "dark" : "light"}>
+  <MantineProvider>
     <div>
       <App />
       <Toaster richColors />

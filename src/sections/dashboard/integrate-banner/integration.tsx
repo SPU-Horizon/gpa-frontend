@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { FileDropzone } from "@/components/custom";
 import { useCourseStore } from "@/stores";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 export default function IntegrationPage() {
   const [value, setValue] = useState<File | null>(null);
@@ -20,23 +20,33 @@ export default function IntegrationPage() {
       const formData = new FormData();
       formData.append("file", value);
       const res = await postCourses(formData);
+
+      if (res) {
+        toast.success("File Uploaded Successfully");
+        setValue(null);
+        setAcceptedFile(false);
+      } else {
+        toast.error("An Error Occured While Uploading File");
+        setValue(null);
+        setAcceptedFile(false);
+      }
     }
   };
 
-  function readFileToArrayBuffer(file: any) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
+  // function readFileToArrayBuffer(file: any) {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
 
-      // Register callback function when file reading is complete
-      reader.onload = function (event) {
-        const arrayBuffer = event?.target?.result;
-        resolve(arrayBuffer);
-      };
+  //     // Register callback function when file reading is complete
+  //     reader.onload = function (event) {
+  //       const arrayBuffer = event?.target?.result;
+  //       resolve(arrayBuffer);
+  //     };
 
-      // Read file content to ArrayBuffer
-      reader.readAsArrayBuffer(file);
-    });
-  }
+  //     // Read file content to ArrayBuffer
+  //     reader.readAsArrayBuffer(file);
+  //   });
+  // }
 
   return (
     <ScrollArea className="mt-6 h-full w-full">
@@ -57,7 +67,6 @@ export default function IntegrationPage() {
 
         <FileDropzone
           onDrop={(files) => {
-            console.log(files);
             setValue(files[0]);
             setAcceptedFile(true);
           }}
