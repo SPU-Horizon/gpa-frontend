@@ -1,10 +1,12 @@
 // Footer.tsx
 import { useThemeStore } from "@/stores";
-
-import { Button } from "@/components/ui/button";
+import { SunMoon } from  "lucide-react";
+import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
 
 function Footer() {
   const { setTheme, theme } = useThemeStore();
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
   return (
     <div className="col-span-3 row-start-6 ">
       <footer className="flex justify-between p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-black-base">
@@ -14,16 +16,14 @@ function Footer() {
         </div>
 
         <div className=" flex flex-col text-center justify-center items-center">
-          <h3 className="font-bold">Theme</h3>
-          <Button
-            className=""
-            onClick={() => {
-              setTheme(theme === "dark" ? "light" : "dark");
-            }}
+          <ActionIcon
+            onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+            variant="default"
+            size="xl"
+            aria-label="Toggle color scheme"
           >
-            {" "}
-            Change Theme
-          </Button>
+            <SunMoon  />
+          </ActionIcon>
         </div>
       </footer>
     </div>

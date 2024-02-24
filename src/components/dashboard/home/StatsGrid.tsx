@@ -29,7 +29,7 @@ export function StatsGrid() {
 
     return (
       <Paper
-        className=" dark:text-white-base hover:scale-[1.01] transition-all duration-200 ease-in-out"
+        className="hover:scale-[1.01] transition-all duration-200 ease-in-out"
         withBorder
         p="lg"
         radius="md"
@@ -43,7 +43,7 @@ export function StatsGrid() {
         </Group>
 
         <Group align="flex-end" gap="xs" mt={35}>
-          <p className="text-black-base dark:text-white-base text-lg">
+          <p className=" text-lg">
             {stat.value}
           </p>
         </Group>
@@ -77,10 +77,10 @@ export function StatsGrid() {
 
             <div className="flex justify-between items-center">
               <RingProgress
-                size={90}
+                size={140}
                 sections={[{ value: 40, color: "#927c4e" }]}
                 label={
-                  <p className="dark:text-white-base font-semibold text-black-light text-center text-sm font-avenir ">
+                  <p className="font-semibold text-black-light text-center text-sm font-avenir ">
                     40%
                   </p>
                 }
