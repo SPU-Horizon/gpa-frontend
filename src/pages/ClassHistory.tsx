@@ -12,8 +12,19 @@ import { Separator } from "@/components/ui/separator";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { useCourseStore } from "@/stores"; //Absolute imports
 
-export default function ClassHistory() {
-  const { classList } = useCourseStore(); //Destructuring
+interface DashboardProps {
+  accounts: {
+    label: string;
+    email: string;
+    icon: React.ReactNode;
+  }[];
+  Class: Class[];
+  defaultLayout?: number[] | undefined;
+  defaultCollapsed?: boolean;
+}
+
+export default function ClassHistory({ Class }: DashboardProps) {
+  const { completedClassList, inProgressClassList, gpa } = useCourseStore(); //Destructuring
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -30,9 +41,9 @@ export default function ClassHistory() {
           <div className="flex items-center px-3 py-2">
             <h1 className="text-xl font-bold ml-2">Your Classes</h1>
             <h2 className="text-base ml-auto">
-              Current GPA: <span className="font-bold">{3.42}</span>
+              Current GPA: <span className="font-bold mr-4">{gpa}</span>
             </h2>
-            {/*<Select onValueChange={(value) => handleFilterChange(value)} defaultValue="All Classes">*/}
+            {/*<Select onValueChange={(value) => handleFilterChange(value)} defaultValue="All Classes"> 
             <Select defaultValue="All Classes">
               <SelectTrigger className="ml-auto mr-2 w-auto text-base">
                 <SelectValue />
@@ -45,11 +56,17 @@ export default function ClassHistory() {
                   <SelectItem value="All Classes">All Classes</SelectItem>
                 </SelectGroup>
               </SelectContent>
-            </Select>
+            </Select> */}
           </div>
           <Separator />
-          <ClassCardList items={classList} />
-          {/* // Still need to update the GPA displayed on this page******* */}
+          <div className="flex flex-col bg-red-700">
+            <h1 className="text-xl font-bold ml-2">In Progress Classes</h1>
+            <ClassCardList items={inProgressClassList} completion="In Progress"/>
+          </div>
+          <div className="flex flex-col bg-blue-700">
+            <h1 className="text-xl font-bold ml-2">Completed Classes</h1>
+            <ClassCardList items={completedClassList} completion="Completed"/>
+          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

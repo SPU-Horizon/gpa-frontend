@@ -4,10 +4,12 @@ import useAuthStore from "./AuthStore";
 import { persist } from "zustand/middleware";
 
 type CourseStore = {
-  getEnrollments: () => Promise<[]>;
+  getEnrollments: () => Promise<Record<string, any>>;
   postCourses: (file: FormData) => Promise<boolean>;
   initializeClassList: () => void;
-  classList: [];
+  inProgressClassList: [];
+  completedClassList:  [];
+  gpa: number;
 };
 
 const useCourseStoreTemplate: StateCreator<
@@ -28,7 +30,7 @@ const useCourseStoreTemplate: StateCreator<
         })
         .catch((err) => {
           console.log(err);
-          return [];
+          return {};
         });
 
       return res;
@@ -57,17 +59,28 @@ const useCourseStoreTemplate: StateCreator<
     },
 
     // Initialize classList with an empty array
-    classList: [],
+    inProgressClassList: [],
+    completedClassList: [],
+    gpa: 0,
+
 
     // Call getEnrollments and set classList
     initializeClassList: async () => {
       const enrollments = await useCourseStore.getState().getEnrollments();
-      set({ classList: enrollments });
+
+      // Destructure the enrollments object
+      const { current, past, gpa } = enrollments;
+
+      // Set the values for inProgressClassList, completedClassList, and gpa
+      set({
+        inProgressClassList: current || [], // Set to an empty array if 'current' is undefined
+        completedClassList: past || [],     // Set to an empty array if 'past' is undefined
+        gpa: gpa || 0,                      // Set to 0 if 'gpa' is undefined
+      });
     },
   }),
-  // Add options object as the second argument
   {
-    name: "courseStore", // Specify a name for the persistor
+    name: "courseStore",
   }
 );
 

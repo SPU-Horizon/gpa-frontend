@@ -17,7 +17,7 @@ export type ClassCardProps = {
     grade: string
 };
 
-export default function ClassCard( item : ClassCardProps) {
+export default function ClassCard({ item, completion }: { item: ClassCardProps, completion: string }) {
   return (
     <button
       className={cn(
@@ -30,17 +30,14 @@ export default function ClassCard( item : ClassCardProps) {
 
 
             <div className="font-semibold text-lg">{item.course_id}</div>
-            {/*
-            {(!item.completed && !item.isRemaining) && (
+            
+            {(completion == "Completed") && (
+              <span><Badge>Completed</Badge></span>
+              )}
+            {completion == "In Progress" && (
               <span><Badge>In Progress</Badge></span>
             )}
-            {item.isRemaining && (
-              <span><Badge>Remaining</Badge></span>
-            )}
-            {item.completed && (
-              <span><Badge>Completed</Badge></span>
-            )}
-             */}
+
           </div>
 
         </div>
