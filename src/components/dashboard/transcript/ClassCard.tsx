@@ -1,5 +1,4 @@
 import React from "react";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { ComponentProps } from "react";
 import { Badge } from "../../ui/badge";
 
@@ -49,6 +48,7 @@ export default function ClassCard({ item, completion }: { item: ClassCardProps, 
   );
 } 
 
+/*
 function getBadgeVariantFromLabel(
   label: string
 ): ComponentProps<typeof Badge>["variant"] {
@@ -62,3 +62,4 @@ function getBadgeVariantFromLabel(
 
   return "secondary";
 }
+*/

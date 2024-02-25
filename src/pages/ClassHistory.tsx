@@ -18,12 +18,11 @@ interface DashboardProps {
     email: string;
     icon: React.ReactNode;
   }[];
-  Class: Class[];
   defaultLayout?: number[] | undefined;
   defaultCollapsed?: boolean;
 }
 
-export default function ClassHistory({ Class }: DashboardProps) {
+export default function ClassHistory() {
   const { completedClassList, inProgressClassList, gpa } = useCourseStore(); //Destructuring
 
   return (
