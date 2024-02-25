@@ -21,7 +21,7 @@ import classes from "@/lib/modules/MenuOptions.module.css";
 const mockdata = [
   { title: "Create a Plan", icon: BookMarked, color: "violet", link: "/create-plan" },
   { title: "Submit your Courses", icon: FolderSync, color: "indigo", link: "/create-plan" },
-  { title: "Majors and Requirements", icon: Search, color: "blue", link: "/create-plan" },
+  { title: "Majors and Requirements", icon: Search, color: "blue", link: "src/pages/ClassHistory.tsx" },
   { title: "Request Admin Access", icon: Send, color: "green", link: "/create-plan" },
   { title: "Build a Schedule", icon: Building, color: "teal", link: "/create-plan" },
   { title: "Saved Schedules", icon: SaveAll, color: "cyan", link: "/create-plan" },
@@ -33,11 +33,9 @@ export function ActionsGrid() {
   const theme = useMantineTheme();
 
   const items = mockdata.map((item) => (
-    <UnstyledButton
-      key={item.title}
-      className="flex flex-col items-center justify-center text-center rounded-md h-[180px] hover:scale-[1.03] hover:shadow-md transition-all duration-200 ease-in-out"
-    >
-      <item.icon color={theme.colors[item.color][6]} size="2rem" />
+    <UnstyledButton 
+     key={item.title} className={classes.item}>
+      <item.icon color={theme.colors[item.color][9]} size="2rem" />
       <Text size="md" mt={8}>
         {item.title}
       </Text>

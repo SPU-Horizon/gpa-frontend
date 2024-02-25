@@ -80,7 +80,7 @@ export function StatsGrid() {
                 size={140}
                 sections={[{ value: 40, color: "#927c4e" }]}
                 label={
-                  <p className="font-semibold text-black-light text-center text-sm font-avenir ">
+                  <p className="font-semibold text-center text-sm font-avenir ">
                     40%
                   </p>
                 }
