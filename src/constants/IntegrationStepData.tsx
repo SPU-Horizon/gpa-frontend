@@ -31,7 +31,7 @@ export const IntegrationStepData: StepProps[] = [
   {
     title: "4. Course Summary",
     description:
-      "Near the Top of the Page, you will notice in the UI a Radio Group, Click on the Circle that's labeled Course Summary.",
+      "Near the Top of the Page, you will notice in the UI a Radio Group, Click on the Circle that's labeled Major/Minor Requirements.",
     icon: <CircleDot height={20} width={25} />,
   },
   {

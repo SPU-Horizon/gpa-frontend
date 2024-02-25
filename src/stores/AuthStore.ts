@@ -2,12 +2,12 @@ import { create, StateCreator } from "zustand";
 import supabase from "@/Authenticator";
 import { persist } from "zustand/middleware";
 import { useNavigationStore } from "./NavigationStore";
-import axios from "axios";
 
 type RegisterType = {
   firstName: string;
   lastName: string;
   email: string;
+  password: string;
 };
 
 const initialState = {
@@ -27,6 +27,7 @@ type AuthStore = {
     firstName,
     lastName,
     email,
+    password,
   }: RegisterType) => Promise<boolean>;
   isAuthenticated: boolean;
   token: string;
@@ -43,10 +44,16 @@ const useAuthStoreTemplate: StateCreator<
   (set) => ({
     signIn: async (email, password) => {
       set({ isLoading: true });
+
       const { data, error } = await supabase().auth.signInWithPassword({
         email: email,
         password: password,
       });
+
+      if (!data) {
+        set({ isLoading: false });
+        return false;
+      }
 
       if (error) {
         set({ isLoading: false });
@@ -79,49 +86,45 @@ const useAuthStoreTemplate: StateCreator<
         return true;
       }
     },
-    registerUser: async ({ firstName, lastName, email }) => {
+    registerUser: async ({ firstName, lastName, email, password }) => {
       set({ isLoading: true });
 
-      // const { data, error } = await supabase().auth.signUp({
-      //   email: email,
-      //   password: password,
-      //   options: {
-      //     emailRedirectTo: `http://${window.origin}/sign-in`,
-      //   },
-      // });
-
-      /*
-        if (error) {
-          set({ isLoading: false });
-          console.log(error);
-          return false;
-        } else {
-          // Add user to the database
-
-        
-        } */
-
-      const data = {
-        first_name: firstName,
-        last_name: lastName,
+      const { error } = await supabase().auth.signUp({
         email: email,
-      };
-
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
+        password: password,
+        options: {
+          emailRedirectTo: `http://${window.origin}/sign-in`,
         },
-        body: JSON.stringify(data),
-        method: "POST",
-      };
+      });
 
-      const response = await fetch(
-        "http://localhost:3000/user/register",
-        options
-      );
+      if (error) {
+        set({ isLoading: false });
+        console.log(error);
+        return false;
+      } else {
+        // Add user to the database
+        const data = {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+        };
 
-      const res = await response.json();
-      console.log(res);
+        const options = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+          method: "POST",
+        };
+
+        const response = await fetch(
+          "http://localhost:3000/user/register",
+          options
+        );
+
+        const res = await response.json();
+        console.log(res);
+      }
 
       set({ isAuthenticated: false });
       set({ isLoading: false });
