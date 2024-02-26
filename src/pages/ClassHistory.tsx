@@ -29,7 +29,10 @@ export default function ClassHistory() {
           </div>
           <Separator />
 
-          <Tabs defaultValue="In Progress" className=" ml-16 mr-16 mt-6">
+          <Tabs
+            defaultValue="In Progress"
+            className=" mx-20 sm:mx-2 lg:mx-12 xl:mx-16 mt-4"
+          >
             <TabsList className="grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-stone-700">
               <TabsTrigger
                 value="In Progress"
