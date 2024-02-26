@@ -31,8 +31,6 @@ export default function ClassHistory() {
             <h2 className="text-base ml-auto">
               Current GPA: <span className="font-bold mr-4">{gpa.toFixed(2)}</span>
             </h2>
-
-
           </div>
           <Separator />
 
