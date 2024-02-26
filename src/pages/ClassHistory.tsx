@@ -1,26 +1,15 @@
 import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { useCourseStore } from "@/stores"; //Absolute imports
 
-interface DashboardProps {
-  accounts: {
-    label: string;
-    email: string;
-    icon: React.ReactNode;
-  }[];
-  defaultLayout?: number[] | undefined;
-  defaultCollapsed?: boolean;
-}
 
 export default function ClassHistory() {
   const { completedClassList, inProgressClassList, gpa } = useCourseStore(); //Destructuring
@@ -40,32 +29,28 @@ export default function ClassHistory() {
           <div className="flex items-center px-3 py-2">
             <h1 className="text-xl font-bold ml-2">Your Classes</h1>
             <h2 className="text-base ml-auto">
-              Current GPA: <span className="font-bold mr-4">{gpa}</span>
+              Current GPA: <span className="font-bold mr-4">{gpa.toFixed(2)}</span>
             </h2>
-            {/*<Select onValueChange={(value) => handleFilterChange(value)} defaultValue="All Classes"> 
-            <Select defaultValue="All Classes">
-              <SelectTrigger className="ml-auto mr-2 w-auto text-base">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-white-light border-none">
-                <SelectGroup>
-                  <SelectItem value="Completed">Completed</SelectItem>
-                  <SelectItem value="In Progress">In Progress</SelectItem>
-                  <SelectItem value="Remaining">Remaining</SelectItem>
-                  <SelectItem value="All Classes">All Classes</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select> */}
+
+
           </div>
           <Separator />
-          <div className="flex flex-col bg-red-700">
-            <h1 className="text-xl font-bold ml-2">In Progress Classes</h1>
-            <ClassCardList items={inProgressClassList} completion="In Progress"/>
-          </div>
-          <div className="flex flex-col bg-blue-700">
-            <h1 className="text-xl font-bold ml-2">Completed Classes</h1>
-            <ClassCardList items={completedClassList} completion="Completed"/>
-          </div>
+
+          <Tabs defaultValue="In Progress" className=" ml-2 mr-2">
+            <TabsList className="grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-stone-700">
+              <TabsTrigger value="In Progress" className="border border-solid border-grey-dark ml-2">In Progress</TabsTrigger>
+              <TabsTrigger value="Completed" className="border border-solid border-grey-dark mr-2">Completed</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="In Progress">
+              <ClassCardList items={inProgressClassList} completion="In Progress"/>
+            </TabsContent>
+
+            <TabsContent value="Completed">
+              <ClassCardList items={completedClassList} completion="Completed"/>
+            </TabsContent>
+          </Tabs>
+
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
