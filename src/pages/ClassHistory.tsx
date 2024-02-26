@@ -37,7 +37,7 @@ export default function ClassHistory() {
           <Separator />
 
           <Tabs defaultValue="In Progress" className=" ml-2 mr-2">
-            <TabsList className="grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-stone-700">
+            <TabsList className="grid w-full grid-cols-2 gap-2 bg-white-light">
               <TabsTrigger value="In Progress" className="border border-solid border-grey-dark ml-2">In Progress</TabsTrigger>
               <TabsTrigger value="Completed" className="border border-solid border-grey-dark mr-2">Completed</TabsTrigger>
             </TabsList>
