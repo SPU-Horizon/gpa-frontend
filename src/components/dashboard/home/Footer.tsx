@@ -15,9 +15,10 @@ function Footer() {
           <p>Privacy Policy</p>
         </div>
 
-        <div className=" flex flex-col text-center justify-center items-center">
+        <div className="lex flex-col text-center justify-center items-center">
           <ActionIcon
-            onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+            className="dark:bg-black-light dark:text-white-base bg-white text-black-base shadow-md transition-all ease-in-out duration-200"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             variant="default"
             size="xl"
             aria-label="Toggle color scheme"
