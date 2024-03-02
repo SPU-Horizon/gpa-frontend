@@ -5,8 +5,19 @@ import { Separator } from "@/components/ui/separator";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { useCourseStore } from "@/stores"; //Absolute imports
 
+interface Course {
+  id: string;
+  name: string;
+  credits: string; // or number, depending on your actual data structure
+}
+
 export default function ClassHistory() {
   const { completedClassList, inProgressClassList, gpa } = useCourseStore(); //Destructuring
+
+  let totalCredits = completedClassList.reduce((total, course: Course) => {
+    return total + parseFloat(course.credits);
+  }, 0);
+  
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -26,6 +37,7 @@ export default function ClassHistory() {
               Current GPA:{" "}
               <span className="font-bold mr-4">{gpa.toFixed(2)}</span>
             </h2>
+            <button onClick={()=> console.log(totalCredits)}>Test</button>
           </div>
           <Separator />
 
@@ -67,3 +79,4 @@ export default function ClassHistory() {
     </TooltipProvider>
   );
 }
+
