@@ -37,6 +37,7 @@ export default function ClassHistory() {
               Current GPA:{" "}
               <span className="font-bold mr-4">{gpa.toFixed(2)}</span>
             </h2>
+            <button onClick={()=> console.log(totalCredits)}>Test</button>
           </div>
           <Separator />
 
