@@ -58,7 +58,7 @@ const useCourseStoreTemplate: StateCreator<
       }
     },
 
-    // Initialize classList with an empty array
+    // Initialize classLists and gpa
     inProgressClassList: [],
     completedClassList: [],
     gpa: 0,
