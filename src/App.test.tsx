@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import App from "./App";
-import { render } from "./testconfig/renderMock";
+import { render } from "./testconfiguration/renderMock";
 
 // Arrange the Test
 

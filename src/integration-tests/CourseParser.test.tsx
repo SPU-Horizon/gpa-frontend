@@ -1,7 +1,6 @@
-
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { render } from "@/testconfig/renderMock";
+import { render } from "@/testconfiguration/renderMock";
 import { IntegrationPage } from "@/sections";
 import axios from "axios";
 
@@ -11,8 +10,6 @@ describe("IntegrationPage", () => {
     expect(screen.getByText("Banner Integration")).toBeInTheDocument();
   });
 });
-
-
 
 it("should connect to the API that parses courses", async () => {
   const responseBlob = await fetch("http://localhost:5173/M&MReqsPage.html");
@@ -54,4 +51,3 @@ it("should connect to the API that parses courses", async () => {
 
   expect(response.data.data.student_id).toBeNull();
 });
-

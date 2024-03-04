@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { render } from "@/testconfig/renderMock";
+import { render } from "@/testconfiguration/renderMock";
 import { ClassHistory } from "@/sections";
 import axios from "axios";
 import { waitFor } from "@testing-library/react";
