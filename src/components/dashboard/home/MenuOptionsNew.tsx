@@ -18,21 +18,69 @@ import {
 } from "lucide-react";
 import classes from "@/lib/modules/MenuOptions.module.css";
 
-const mockdata = [
-  { title: "Create a Plan", icon: BookMarked, color: "violet", link: "/create-plan" },
-  { title: "Submit your Courses", icon: FolderSync, color: "indigo", link: "/create-plan" },
-  { title: "Majors and Requirements", icon: Search, color: "blue", link: "src/pages/ClassHistory.tsx" },
-  { title: "Request Admin Access", icon: Send, color: "green", link: "/create-plan" },
-  { title: "Build a Schedule", icon: Building, color: "teal", link: "/create-plan" },
-  { title: "Saved Schedules", icon: SaveAll, color: "cyan", link: "/create-plan" },
-  { title: "Meet with an Advisor", icon: SmilePlus, color: "pink", link: "/create-plan" },
-  { title: "View Your Profile", icon: CircleUserRound, color: "red" , link: "/create-plan"},
+const menuButtons = [
+  {
+    title: "Build Your Schedule",
+    icon: BookMarked,
+    color: "violet",
+    link: "/dashboard/plan",
+    tab: "Build Schedule",
+  },
+  {
+    title: "Submit your Courses",
+    icon: FolderSync,
+    color: "indigo",
+    link: "/dashboard/integrate-banner",
+    tab: "Integrate with Banner",
+  },
+  {
+    title: "Majors and Requirements",
+    icon: Search,
+    color: "blue",
+    link: "/dashboard/majors",
+    tab: "Majors",
+  },
+  {
+    title: "Request Admin Access",
+    icon: Send,
+    color: "green",
+    link: "/dashboard/admin",
+    tab: "Admin",
+  },
+  {
+    title: "Build a Schedule",
+    icon: Building,
+    color: "teal",
+    link: "/dashboard/schedule",
+    tab: "Build Schedule",
+  },
+  {
+    title: "Saved Schedules",
+    icon: SaveAll,
+    color: "cyan",
+    link: "/dashboard/saved-schedules",
+    tab: "Saved Schedules",
+  },
+  {
+    title: "Meet with an Advisor",
+    icon: SmilePlus,
+    color: "pink",
+    link: "/dashboard/advisor",
+    tab: "Advisor",
+  },
+  {
+    title: "View Your Profile",
+    icon: CircleUserRound,
+    color: "red",
+    link: "/dashboard/profile",
+    tab: "Profile",
+  },
 ];
 
 export function ActionsGrid() {
   const theme = useMantineTheme();
 
-  const items = mockdata.map((item) => (
+  const items = menuButtons.map((item) => (
     <UnstyledButton 
      key={item.title} className={classes.item}>
       <item.icon color={theme.colors[item.color][9]} size="2rem" />

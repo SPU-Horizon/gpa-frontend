@@ -29,7 +29,7 @@ export function StatsGrid() {
     return total + parseFloat(course.credits);
   }, 0);
 
-  const completionPercentage = (completedCredits / totalCreditsRequired) * 100;
+  const completionPercentage = Math.ceil((completedCredits / totalCreditsRequired) * 100);
 
   const data = [
     { title: "Completed Courses", icon: "receipt", value: completedClassList.length, diff: 34 },
@@ -94,18 +94,18 @@ export function StatsGrid() {
 
               <Group align="flex-end" gap="xs" mt={35}>
                 <Text className="text-black-base dark:text-white-base text-2xl font-semibold">
-                {completionPercentage.toFixed(2)}% Complete
+                {completionPercentage}% Complete
                 </Text>
               </Group>
             </div>
 
             <div className="flex justify-between items-center">
               <RingProgress
-                size={115}
+                size={125}
                 sections={[{ value: completionPercentage, color: "#927c4e" }]}
                 label={
                   <p className="font-semibold text-center text-sm font-avenir ">
-                    {completionPercentage.toFixed(2)}%
+                    {completionPercentage}%
                   </p>
                 }
               />
