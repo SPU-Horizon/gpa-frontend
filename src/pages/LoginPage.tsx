@@ -34,7 +34,7 @@ export default function AuthenticationPage() {
 
   const { signIn, isAuthenticated } = useAuthStore();
 
-  const { initializeClassList } = useCourseStore();
+  const { initializeCourseInfo } = useCourseStore();
   const { initializeUserInfo } = useUserStore();
   const { setTheme } = useThemeStore();
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ export default function AuthenticationPage() {
     } else {
       toast.success("Signing In - Welcome!");
       initializeUserInfo();
-      initializeClassList();
+      initializeCourseInfo();
     }
     reset();
   };

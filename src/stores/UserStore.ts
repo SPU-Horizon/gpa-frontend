@@ -2,7 +2,6 @@ import useAuthStore from "./AuthStore";
 import { StateCreator, create } from "zustand";
 import { StateStorage, persist } from "zustand/middleware";
 import axios from "axios";
-//import { del, get, set } from "idb-keyval"; //DO WE WNAT THIS?******************
  
 // Define your store's state
 type UserState = {
@@ -12,8 +11,9 @@ type UserState = {
     avatar: string;
     graduationYear: number;
     graduationQuarter: string;
+    fieldRequirements: [];
 
-    getUserInfo: () => Promise<Record<string, any>>; //Correct returtn???***********************************************
+    getUserInfo: () => Promise<Record<string, any>>;
     initializeUserInfo: () => void;
     uploadProfilePicture: (file: FormData) => Promise<void>;
 };
@@ -27,12 +27,11 @@ const UserStoreTemplate: StateCreator<
   (set) => ({
     getUserInfo: async () => {
         const email = useAuthStore.getState().email;
-        console.log("Made it inside getUserInfo")
+        console.log("Called getUserInfo")
 
         const res = await axios
             .get(`http://localhost:3000/user/getUserInfo?email=${email}`)
             .then((response) => {
-            console.log("Response from getUserInfo:" + response.data); //TESTING CONSOLE.LOG
             return response.data;
             })
             .catch((err) => {
@@ -67,21 +66,22 @@ const UserStoreTemplate: StateCreator<
     avatar: "",
     graduationYear: 0,
     graduationQuarter: "",
+    fieldRequirements: [],
 
     //Call getUserInfo and set user info
     initializeUserInfo: async () => {
         const userInfo = await useUserStore.getState().getUserInfo();
 
-        //Do we need to get email? If db response changes we must change this as Well
-        const { studentId, firstName, lastName, email, avatar, graduationYear, graduationQuarter } = userInfo;
+        const { student_id, first_name, last_name, avatar, graduation_year, graduation_quarter, field_requirements } = userInfo;
 
         set({
-            studentId: studentId,
-            firstName: firstName,
-            lastName: lastName,
+            studentId: student_id,
+            firstName: first_name,
+            lastName: last_name,
             avatar: avatar,
-            graduationYear: graduationYear,
-            graduationQuarter: graduationQuarter,
+            graduationYear: graduation_year,
+            graduationQuarter: graduation_quarter,
+            fieldRequirements: field_requirements
         
         });
         
@@ -93,13 +93,7 @@ const UserStoreTemplate: StateCreator<
  
   {
     name: "user-storage",
-    /*
-    getStorage: () => ({
-      getItem: get, // async (key) => any
-      setItem: set, // async (key, value) => undefined
-      removeItem: del,
-    }),
-    */
+
   }
 );
  
