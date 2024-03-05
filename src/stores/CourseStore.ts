@@ -6,7 +6,7 @@ import { persist } from "zustand/middleware";
 type CourseStore = {
   getEnrollments: () => Promise<Record<string, any>>;
   postCourses: (file: FormData) => Promise<boolean>;
-  initializeClassList: () => void;
+  initializeCourseInfo: () => void;
   inProgressClassList: [];
   completedClassList:  [];
   gpa: number;
@@ -58,14 +58,14 @@ const useCourseStoreTemplate: StateCreator<
       }
     },
 
-    // Initialize classList with an empty array
+    // Initialize classLists and gpa
     inProgressClassList: [],
     completedClassList: [],
     gpa: 0,
 
 
     // Call getEnrollments and set classList
-    initializeClassList: async () => {
+    initializeCourseInfo: async () => {
       const enrollments = await useCourseStore.getState().getEnrollments();
 
       // Destructure the enrollments object
