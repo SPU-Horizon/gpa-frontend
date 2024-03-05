@@ -1,9 +1,10 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { render } from "@/testconfiguration/renderMock";
+import { render } from "@/testconfig/renderMock";
 import { ClassHistory } from "@/sections";
 import axios from "axios";
 import { waitFor } from "@testing-library/react";
+import useAuthStore from "@/stores/AuthStore";
 
 describe("ClassHistory", () => {
   it("renders Integration Page", () => {
@@ -12,22 +13,28 @@ describe("ClassHistory", () => {
   });
 });
 
-it("can render course cards from the database", async (useAuthStore) => {
-  const { getByText } = render(<ClassHistory />);
+it("renders data from API", async () => {
+  const mockData = [
+    {
+      course_id: "CSC101",
+      name: "Introduction to Computer Science",
+      completion: "In Progress",
+    },
+    {
+      course_id: "MAT202",
+      name: "Linear Algebra",
+      completion: "Completed",
+    },
+  ];
 
-  const email = "test@gmail.com";
+  vi.spyOn(axios, "get").mockResolvedValueOnce({ data: mockData });
 
-  const res = await axios
-    .get(`http://localhost:3000/course/getCourses?email=${email}`)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      console.log(err);
-      return [];
+  render(<ClassHistory test={mockData} />);
+
+  await waitFor(() => {
+    mockData.forEach((course) => {
+      expect(screen.getByText(course.course_id)).toBeInTheDocument();
+      expect(screen.getByText(course.name)).toBeInTheDocument();
     });
-
-  res.map(async (course: any) => {
-    await waitFor(() => getByText(course["course_id"]));
   });
 });

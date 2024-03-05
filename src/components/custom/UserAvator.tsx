@@ -13,7 +13,6 @@ import {
 } from "../ui/dropdown-menu";
 import useAuthStore from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
-import { set } from "date-fns";
 
 export function UserAvatar() {
   const { signOut, email } = useAuthStore();
@@ -27,7 +26,7 @@ export function UserAvatar() {
           <Avatar className="h-8 w-8">
             <AvatarImage src={undefined} alt="@shadcn" />
             <AvatarFallback className="bg-black-base text-white-light">
-              MN
+              UN
             </AvatarFallback>
           </Avatar>
         </Button>

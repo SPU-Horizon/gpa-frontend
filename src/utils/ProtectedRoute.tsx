@@ -1,5 +1,5 @@
 import { UserAvatar } from "@/components/custom/UserAvator";
-import { Nav } from "@/components/custom/NavBar";
+import { Nav } from "@/components/custom/Navbar";
 import {
   ResizableHandle,
   ResizablePanel,

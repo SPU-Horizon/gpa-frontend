@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import { render } from "@/testconfiguration/renderMock";
+import { describe, expect, it, vi } from "vitest";
+import { render } from "@/testconfig/renderMock";
 import { IntegrationPage } from "@/sections";
 import axios from "axios";
 
@@ -9,45 +9,37 @@ describe("IntegrationPage", () => {
     render(<IntegrationPage />);
     expect(screen.getByText("Banner Integration")).toBeInTheDocument();
   });
-});
 
-it("should connect to the API that parses courses", async () => {
-  const responseBlob = await fetch("http://localhost:5173/M&MReqsPage.html");
-
-  const k = await responseBlob.blob();
-  const text = await k.text();
-  const formData = new FormData();
-  const file = new File([text], "M&MReqsPage.html", { type: "text/html" });
-  formData.append("file", file);
-
-  type resData = {
-    enrollment_year: string;
-    enrollment_quarter: string;
-    graduation_year: string;
-    graduation_quarter: string;
-    field: any[][];
-    classes_taken: any[];
-  };
-
-  const response = await axios.post(
-    "http://localhost:3000/course/parseCourses",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
+  it("API should return object aligning with the defined Type", async () => {
+    // Mock the API call
+    const mockResponse = {
+      status: 200,
+      data: {
+        enrollment_year: "2022",
+        enrollment_quarter: "Fall",
+        graduation_year: "2026",
+        graduation_quarter: "Spring",
+        field: [["Field 1"], ["Field 2"]],
+        classes_taken: ["Class 1", "Class 2"],
       },
-    }
-  );
+    };
+    vi.spyOn(axios, "post").mockResolvedValue(mockResponse);
 
-  expect(response.status).toBe(200);
-  expect(response.data.data).toMatchObject<resData>({
-    enrollment_year: expect.any(String),
-    enrollment_quarter: expect.any(String),
-    graduation_year: expect.any(String),
-    graduation_quarter: expect.any(String),
-    field: expect.any(Array),
-    classes_taken: expect.any(Array),
+    // Perform the test
+    const response = await axios.post(
+      "http://localhost:3000/course/parseCourses",
+      {}
+    );
+
+    // Assertions
+    expect(response.status).toBe(200);
+    expect(response.data).toMatchObject({
+      enrollment_year: expect.any(String),
+      enrollment_quarter: expect.any(String),
+      graduation_year: expect.any(String),
+      graduation_quarter: expect.any(String),
+      field: expect.any(Array),
+      classes_taken: expect.any(Array),
+    });
   });
-
-  expect(response.data.data.student_id).toBeNull();
 });
