@@ -1,11 +1,4 @@
-import {
-  Card,
-  Text,
-  SimpleGrid,
-  UnstyledButton,
-  Group,
-  useMantineTheme,
-} from "@mantine/core";
+import { Card, Text, SimpleGrid, UnstyledButton, Group } from "@mantine/core";
 import {
   BookMarked,
   CircleUserRound,
@@ -17,6 +10,8 @@ import {
   FolderSync,
 } from "lucide-react";
 import classes from "@/lib/modules/MenuOptions.module.css";
+import { useNavigate } from "react-router-dom";
+import { useNavigationStore } from "@/stores/NavigationStore";
 
 const menuButtons = [
   {
@@ -78,20 +73,31 @@ const menuButtons = [
 ];
 
 export function ActionsGrid() {
-  const theme = useMantineTheme();
+  const navigate = useNavigate();
+  const { setCurrentTab } = useNavigationStore();
 
   const items = menuButtons.map((item) => (
-    <UnstyledButton 
-     key={item.title} className={classes.item}>
-      <item.icon color={theme.colors[item.color][9]} size="2rem" />
-      <Text size="md" mt={8}>
+    <UnstyledButton
+      key={item.title}
+      className=" bg-gray-100 dark:bg-black-light dark:border-none flex flex-col items-center justify-center text-center rounded-md h-[180px] hover:scale-[1.03] hover:shadow-md transition-all duration-200 ease-in-out"
+      onClick={() => {
+        navigate(item.link);
+        item.tab ? setCurrentTab(item.tab) : setCurrentTab("none");
+      }}
+    >
+      <item.icon color={"blue"} size="2rem" />
+      <Text className=" dark:text-white-light" size="md" mt={8}>
         {item.title}
       </Text>
     </UnstyledButton>
   ));
 
   return (
-    <Card withBorder radius="md" className={classes.card}>
+    <Card
+      withBorder
+      radius="md"
+      className="bg-transparent dark:bg-transparent p-2 border-none text-black-light"
+    >
       <Group justify="space-between">
         <Text className={classes.title}>Menu Options</Text>
       </Group>

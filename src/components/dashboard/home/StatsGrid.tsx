@@ -46,25 +46,23 @@ export function StatsGrid() {
 
   const stats = data.map((stat) => {
     const Icon = icons[stat.icon];
-    const DiffIcon = stat.diff > 0 ? ArrowUpRight : ArrowUpRight;
-
     return (
       <Paper
-        className="hover:scale-[1.01] transition-all duration-200 ease-in-out"
+        className="dark:bg-black-light dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out"
         withBorder
         p="lg"
         radius="md"
         key={stat.title}
       >
         <Group justify="space-between">
-          <Text size="xs" c="dimmed" className={classes.title}>
+          <Text size="md" c="dimmed" className={classes.title}>
             {stat.title}
           </Text>
           <Icon className={classes.icon} size="1.4rem" />
         </Group>
 
         <Group align="flex-end" gap="xs" mt={35}>
-          <p className=" text-lg">
+          <p className="text-black-base dark:text-white-base text-2xl font-semibold">
             {stat.value}
           </p>
         </Group>
@@ -82,12 +80,12 @@ export function StatsGrid() {
           p="lg"
           radius="md"
           key={0}
-          className="hover:scale-[1.01] transition-all duration-200 ease-in-out"
+          className=" dark:bg-black-light dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out"
         >
           <div className="flex justify-between items-center">
             <div className="flex flex-col self-start">
               <Group>
-                <Text size="xs" c="dimmed" className={classes.title}>
+                <Text size="md" c="dimmed" className={classes.title}>
                   Major Status
                 </Text>
               </Group>
@@ -117,3 +115,4 @@ export function StatsGrid() {
     </div>
   );
 }
+
