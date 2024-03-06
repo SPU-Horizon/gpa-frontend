@@ -68,7 +68,7 @@ export default function IntegrationPage() {
           subheader={
             acceptedFile ? "Youre Good To Go!" : " ONLY .html & .htm accepted "
           }
-          className="mt-16 mb-7"
+          className="dark:bg-black-light text-black-base dark:text-white-base dark:hover:bg-gray-600 mt-16 mb-7"
           icon={
             acceptedFile ? <CheckCircle2 size={52} /> : <BookCheck size={52} />
           }
@@ -76,7 +76,7 @@ export default function IntegrationPage() {
         <Button
           onClick={onSubmission}
           type="submit"
-          className="dark:bg-white-base dark:text-black-base rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16"
+          className="dark:bg-black-light dark:text-white-base dark:hover:bg-gray-600 rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16"
         >
           Submit
         </Button>

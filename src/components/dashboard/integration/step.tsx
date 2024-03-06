@@ -21,7 +21,7 @@ export default function Step({ title, description, icon, link }: StepProps) {
         {link && (
           <a
             href={link}
-            className="hover:text-red-400 dark:text-gold-bright transition-all ease-in-out text-blue-500"
+            className="hover:text-red-400 dark:hover:text-gold-bright transition-all ease-in-out text-blue-500 dark:text-blue-400"
           >
             {link}
           </a>
