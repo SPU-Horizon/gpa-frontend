@@ -4,7 +4,6 @@ import { render } from "@/testconfig/renderMock";
 import { ClassHistory } from "@/sections";
 import axios from "axios";
 import { waitFor } from "@testing-library/react";
-import useAuthStore from "@/stores/AuthStore";
 
 describe("ClassHistory", () => {
   it("renders Integration Page", () => {
