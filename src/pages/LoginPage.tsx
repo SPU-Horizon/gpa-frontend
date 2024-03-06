@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import { useCourseStore } from "@/stores";
+
+import { useUserStore } from "@/stores"; //Might need to replace with index store like kaddija did?
+import { Switch } from "@/components/ui/switch";
 import { useThemeStore } from "@/stores";
 
 const signInSchema = z.object({
@@ -29,7 +32,8 @@ export default function AuthenticationPage() {
 
   const { signIn, isAuthenticated } = useAuthStore();
 
-  const { initializeClassList } = useCourseStore();
+  const { initializeCourseInfo } = useCourseStore();
+  const { initializeUserInfo } = useUserStore();
   const { setTheme } = useThemeStore();
   const navigate = useNavigate();
 
@@ -39,7 +43,8 @@ export default function AuthenticationPage() {
       toast.error("Invalid credentials.");
     } else {
       toast.success("Signing In - Welcome!");
-      initializeClassList();
+      initializeUserInfo();
+      initializeCourseInfo();
     }
     reset();
   };
