@@ -13,11 +13,13 @@ import {
 } from "../ui/dropdown-menu";
 import useAuthStore from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@/stores";
 
 export function UserAvatar() {
   const { signOut, email } = useAuthStore();
   const { setCurrentTab } = useNavigationStore();
   const navigate = useNavigate();
+  const { firstName, lastName } = useUserStore();
 
   return (
     <DropdownMenu>
@@ -38,7 +40,7 @@ export function UserAvatar() {
       >
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">User's Name</p>
+            <p className="text-sm font-medium leading-none">{firstName + " " + lastName}</p>
             <p className="text-xs leading-none text-muted-foreground">
               {email}
             </p>

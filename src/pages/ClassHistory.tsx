@@ -18,10 +18,6 @@ type ClassHistoryProps = {
 export default function ClassHistory({ test = [] }: ClassHistoryProps) {
   const { completedClassList, inProgressClassList, gpa } = useCourseStore(); //Destructuring
 
-  let totalCredits = completedClassList.reduce((total, course: Course) => {
-    return total + parseFloat(course.credits);
-  }, 0);
-
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
@@ -40,7 +36,6 @@ export default function ClassHistory({ test = [] }: ClassHistoryProps) {
               Current GPA:{" "}
               <span className="font-bold mr-4">{gpa.toFixed(2)}</span>
             </h2>
-            <button onClick={() => console.log(totalCredits)}>Test</button>
           </div>
           <Separator />
 
@@ -48,16 +43,16 @@ export default function ClassHistory({ test = [] }: ClassHistoryProps) {
             defaultValue="In Progress"
             className=" mx-20 sm:mx-2 lg:mx-12 xl:mx-16 mt-4"
           >
-            <TabsList className="grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-stone-700">
+            <TabsList className="grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-black-light">
               <TabsTrigger
                 value="In Progress"
-                className="border-none border-grey-dark ml-2 data-[state=active]:bg-gold-light data-[state=active]:text-white-light transition-all ease-in-out duration-200 shadow-md"
+                className="data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
               >
                 In Progress
               </TabsTrigger>
               <TabsTrigger
                 value="Completed"
-                className="border-none border-grey-dark mr-2 data-[state=active]:bg-gold-light data-[state=active]:text-white-light transition-all ease-in-out duration-200 shadow-md"
+                className="data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
               >
                 Completed
               </TabsTrigger>
