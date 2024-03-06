@@ -26,16 +26,7 @@ export default function FileDropdown(
         mih={220}
         style={{ pointerEvents: "none" }}
       >
-        <Dropzone.Accept>
-          {/* <Upload
-            style={{
-              width: rem(52),
-              height: rem(52),
-              color: "var(--mantine-color-blue-6)",
-            }}
-          /> */}
-          {props.icon}
-        </Dropzone.Accept>
+        <Dropzone.Accept>{props.icon}</Dropzone.Accept>
         <Dropzone.Reject>
           <X
             style={{

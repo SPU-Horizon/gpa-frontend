@@ -1,5 +1,4 @@
 import { FormEvent, useState, useRef } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,8 +15,7 @@ import {
 } from "@/components/ui/form";
 import { DatePicker, FileDropzone } from "@/components/custom";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MajorOptions } from "@/constants";
-import { Avatar, Select, TextInput, Modal } from "@mantine/core";
+import { Avatar, TextInput, Modal } from "@mantine/core";
 
 import AvatarEditor from "react-avatar-editor";
 import { useDisclosure } from "@mantine/hooks";
@@ -28,23 +26,7 @@ import { Upload } from "lucide-react";
 // Including features that are needed on the front end, according to the database schema
 const formSchema = z.object({
   graduationDate: z.date({ required_error: "Please enter a valid date." }),
-  enrollmentDate: z.string({ required_error: "Please enter a valid date." }),
-  declaredMajor: z.string().min(5, { message: "Major selection is Required." }),
-  declaredMinor: z
-    .string()
-    .min(5, { message: "Minor selection is Required." })
-    .optional(),
-  email: z.string().email().optional(),
 });
-
-// Expect these to be deleted...
-const userMajor = "Computer Science"; // This will be fetched from the user's profile
-const userMinor = "Mathematics"; // This will be fetched from the user's profile
-
-// For now, some areas in the form field are set with a placeholder, but when we are able to pull the data from the user's profile
-// we will replace these with the user's data. If they have no data, we will keep the placeholders there for first time use.
-
-const majorOptions = MajorOptions.map((major) => major.name);
 
 export default function Profile() {
   const [acceptedImage, setAcceptedImage] = useState(false);
@@ -62,9 +44,7 @@ export default function Profile() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      declaredMajor: userMajor,
-      declaredMinor: userMinor,
-      email: "",
+      graduationDate: new Date(),
     },
   });
 
@@ -161,7 +141,6 @@ export default function Profile() {
               <FormLabel>Avatar Upload</FormLabel>
               <FileDropzone
                 maxFiles={1}
-                // header="Drag images here or click to select files"
                 header={
                   acceptedImage
                     ? "Image Accepted"

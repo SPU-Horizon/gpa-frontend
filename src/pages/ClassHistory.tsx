@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { useCourseStore } from "@/stores"; //Absolute imports
 
+
 interface Course {
   id: string;
   name: string;
@@ -12,6 +13,13 @@ interface Course {
 }
 
 export default function ClassHistory() {
+
+type ClassHistoryProps = {
+  test?: any;
+};
+
+export default function ClassHistory({ test = [] }: ClassHistoryProps) {
+
   const { completedClassList, inProgressClassList, gpa } = useCourseStore(); //Destructuring
 
   let totalCredits = completedClassList.reduce((total, course: Course) => {
@@ -62,7 +70,7 @@ export default function ClassHistory() {
 
             <TabsContent value="In Progress">
               <ClassCardList
-                items={inProgressClassList}
+                items={test ? test : inProgressClassList}
                 completion="In Progress"
               />
             </TabsContent>

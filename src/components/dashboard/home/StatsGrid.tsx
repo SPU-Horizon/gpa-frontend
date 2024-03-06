@@ -46,6 +46,7 @@ export function StatsGrid() {
 
   const stats = data.map((stat) => {
     const Icon = icons[stat.icon];
+
     return (
       <Paper
         className="dark:bg-black-light dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out"
