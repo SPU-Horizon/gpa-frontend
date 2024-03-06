@@ -8,4 +8,4 @@ export { default as FooterSection } from "./landingpage/FooterSection";
 /* ----------------- Dashboard Sections --------------------- */
 
 export { default as ClassHistory } from "../pages/ClassHistory";
-export { default as IntegrationPage } from "./dashboard/integrate-banner/integration";
+export { default as IntegrationPage } from "../pages/BannerIntegration";

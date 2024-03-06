@@ -35,7 +35,7 @@ export default function ClassHistory({ test = [] }: ClassHistoryProps) {
       >
         <ResizablePanel defaultSize={50} minSize={0} maxSize={100}>
           <div className="flex items-center px-3 py-[.88rem]">
-            <h1 className="text-xl font-bold ml-2">Your Classes</h1>
+            <h1 className="text-xl font-bold ml-2">Your Transcript</h1>
             <h2 className="text-base ml-auto">
               Current GPA:{" "}
               <span className="font-bold mr-4">{gpa.toFixed(2)}</span>
@@ -65,7 +65,7 @@ export default function ClassHistory({ test = [] }: ClassHistoryProps) {
 
             <TabsContent value="In Progress">
               <ClassCardList
-                items={test ? test : inProgressClassList}
+                items={test.length > 0 ? test : inProgressClassList}
                 completion="In Progress"
               />
             </TabsContent>

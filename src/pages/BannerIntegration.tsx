@@ -7,24 +7,29 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { FileDropzone } from "@/components/custom";
-import { useCourseStore } from "@/stores";
+import { useCourseStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
 
 export default function IntegrationPage() {
   const [value, setValue] = useState<File | null>(null);
   const [acceptedFile, setAcceptedFile] = useState(false);
-  const { postCourses } = useCourseStore();
+  const { postCourses, initializeCourseInfo } = useCourseStore();
+  const { studentId, initializeUserInfo } = useUserStore();
 
   const onSubmission = async () => {
     if (value) {
       const formData = new FormData();
       formData.append("file", value);
+      formData.append("student_id", studentId.toString());
+
       const res = await postCourses(formData);
 
       if (res) {
         toast.success("File Uploaded Successfully");
         setValue(null);
         setAcceptedFile(false);
+        initializeCourseInfo();
+        initializeUserInfo();
       } else {
         toast.error("An Error Occured While Uploading File");
         setValue(null);
@@ -33,25 +38,10 @@ export default function IntegrationPage() {
     }
   };
 
-  // function readFileToArrayBuffer(file: any) {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-
-  //     // Register callback function when file reading is complete
-  //     reader.onload = function (event) {
-  //       const arrayBuffer = event?.target?.result;
-  //       resolve(arrayBuffer);
-  //     };
-
-  //     // Read file content to ArrayBuffer
-  //     reader.readAsArrayBuffer(file);
-  //   });
-  // }
-
   return (
     <ScrollArea className="mt-6 h-full w-full">
       <div className="max-w-[90%] mx-auto">
-        <h1 className="text-3xl font-bold">Banner Integration</h1>
+        <h1 className="text-3xl font-bold">Sync with Banner</h1>
         <Separator className="mt-4 mb-8" />
         <Timeline bulletSize={40} className="mr-8 ">
           {IntegrationStepData.map((step, index) => (

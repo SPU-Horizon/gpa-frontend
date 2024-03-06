@@ -11,39 +11,39 @@ import {
 
 export const IntegrationStepData: StepProps[] = [
   {
-    title: `1. SPU Online Web App Center`,
-    description:
-      "Navigate to the SPU Suite of Applications - Where you will find easy access to Banner.",
+    title: `1. SPU Web Apps`,
+    description: "Navigate to the SPU suite of Web Applications.",
     icon: <Search height={20} width={20} />,
     link: WebAppLink,
   },
   {
     title: "2. Select Banner",
-    description: "Select Banner - If needed enter in your SPU credentials.",
+    description:
+      "Select Banner. If prompted to sign in, enter your SPU Microsoft365 credentials.",
     icon: <MousePointerClick height={20} width={20} />,
   },
   {
     title: "3. Student Menu",
     description:
-      "Click on the Student Menu, Followed by Academic Records, and then Click on UG Degree Check.",
+      "Select Student Menu, then Academic Records, and, finally, UG Degree Check.",
     icon: <School height={20} width={20} />,
   },
   {
-    title: "4. Course Summary",
+    title: "4. Major/Minor Requirements",
     description:
-      "Near the Top of the Page, you will notice in the UI a Radio Group, Click on the Circle that's labeled Major/Minor Requirements.",
+      "Select the link starting with 'Admitted' under Major(s) or Minor(s).",
     icon: <CircleDot height={20} width={25} />,
   },
   {
-    title: "5. Right Click on the Page",
+    title: "5. Save the Page",
     description:
-      "Right Click on the Page, then select 'Save Page As' on Safari or 'Save As' on Chrome.",
+      "In your browser, right-click the Page and select 'Save Page As'.",
     icon: <ArrowDownToLine height={20} width={25} />,
   },
   {
     title: "6. That's It!",
     description:
-      "Now, simply upload the file here and we'll take care of the rest!",
+      "Now, simply drop or select the saved file from your file system and upload it here. We'll take care of the rest!",
     icon: <ArrowUpFromLine height={20} width={25} />,
   },
 ];

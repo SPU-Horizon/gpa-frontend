@@ -8,7 +8,7 @@ type CourseStore = {
   postCourses: (file: FormData) => Promise<boolean>;
   initializeCourseInfo: () => void;
   inProgressClassList: [];
-  completedClassList:  [];
+  completedClassList: [];
   gpa: number;
 };
 
@@ -20,12 +20,10 @@ const useCourseStoreTemplate: StateCreator<
   (set) => ({
     getEnrollments: async () => {
       const email = useAuthStore.getState().email;
-      console.log(email);
 
       const res = await axios
         .get(`http://localhost:3000/course/getCourses?email=${email}`)
         .then((response) => {
-          console.log(response.data);
           return response.data;
         })
         .catch((err) => {
@@ -41,7 +39,6 @@ const useCourseStoreTemplate: StateCreator<
         const res = await axios.post(
           "http://localhost:3000/course/parseCourses",
           file, // Pass formData directly as the second argument
-
           {
             headers: {
               "Content-Type": "multipart/form-data",
@@ -63,7 +60,6 @@ const useCourseStoreTemplate: StateCreator<
     completedClassList: [],
     gpa: 0,
 
-
     // Call getEnrollments and set classList
     initializeCourseInfo: async () => {
       const enrollments = await useCourseStore.getState().getEnrollments();
@@ -74,8 +70,8 @@ const useCourseStoreTemplate: StateCreator<
       // Set the values for inProgressClassList, completedClassList, and gpa
       set({
         inProgressClassList: current || [], // Set to an empty array if 'current' is undefined
-        completedClassList: past || [],     // Set to an empty array if 'past' is undefined
-        gpa: gpa || 0,                      // Set to 0 if 'gpa' is undefined
+        completedClassList: past || [], // Set to an empty array if 'past' is undefined
+        gpa: gpa || 0, // Set to 0 if 'gpa' is undefined
       });
     },
   }),

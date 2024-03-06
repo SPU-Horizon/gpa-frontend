@@ -7,7 +7,7 @@ interface Course {
   id: string;
   name: string;
   credits: string; // or number, depending on your actual data structure
-}  
+}
 
 const icons = {
   user: ArrowUpRight,
@@ -22,26 +22,53 @@ export function StatsGrid() {
   const totalCreditsRequired = 180;
 
   let completedCredits = completedClassList.reduce((total, course: Course) => {
+    course.credits = course.credits || "0";
     return total + parseFloat(course.credits);
   }, 0);
 
-  let inProgressCredits = inProgressClassList.reduce((total, course: Course) => {
-    return total + parseFloat(course.credits);
-  }, 0);
+  let inProgressCredits = inProgressClassList.reduce(
+    (total, course: Course) => {
+      course.credits = course.credits || "0";
+      return total + parseFloat(course.credits);
+    },
+    0
+  );
 
-  const completionPercentage = Math.ceil((completedCredits / totalCreditsRequired) * 100);
+  const completionPercentage = Math.ceil(
+    (completedCredits / totalCreditsRequired) * 100
+  );
 
   const data = [
-    { title: "Completed Courses", icon: "receipt", value: completedClassList.length, diff: 34 },
-    { title: "Credits Until Graduation", icon: "coin", value: totalCreditsRequired - completedCredits, diff: -13 },
+    {
+      title: "Completed Courses",
+      icon: "receipt",
+      value: completedClassList.length,
+      diff: 34,
+    },
+    {
+      title: "Credits Until Graduation",
+      icon: "coin",
+      value: totalCreditsRequired - completedCredits,
+      diff: -13,
+    },
     {
       title: "Current Major",
       icon: "discount",
       value: "Computer Science",
       diff: 18,
     },
-    { title: "Credits In Progress", icon: "user", value: inProgressCredits, diff: -30 },
-    { title: "Total Credits Earned", icon: "user", value: completedCredits, diff: -30 },
+    {
+      title: "Credits In Progress",
+      icon: "user",
+      value: inProgressCredits,
+      diff: -30,
+    },
+    {
+      title: "Total Credits Earned",
+      icon: "user",
+      value: completedCredits,
+      diff: -30,
+    },
   ] as const;
 
   const stats = data.map((stat) => {
@@ -67,7 +94,6 @@ export function StatsGrid() {
             {stat.value}
           </p>
         </Group>
-        
       </Paper>
     );
   });
@@ -93,7 +119,7 @@ export function StatsGrid() {
 
               <Group align="flex-end" gap="xs" mt={35}>
                 <Text className="text-black-base dark:text-white-base text-2xl font-semibold">
-                {completionPercentage}% Complete
+                  {completionPercentage}% Complete
                 </Text>
               </Group>
             </div>
@@ -112,8 +138,6 @@ export function StatsGrid() {
           </div>
         </Paper>
       </SimpleGrid>
-      
     </div>
   );
 }
-

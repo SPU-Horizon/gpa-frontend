@@ -1,5 +1,5 @@
 import { UserAvatar } from "@/components/custom/UserAvator";
-import { Nav } from "@/components/custom/NavBar";
+import { Nav } from "@/components/custom/Navbar";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -12,11 +12,11 @@ import { Separator } from "@/components/ui/separator";
 import {
   Castle,
   Search,
-  User,
   Speech,
   BookMarked,
   Unplug,
   ListTodo,
+  Home,
 } from "lucide-react";
 import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
@@ -75,19 +75,19 @@ export const PrivateRoute = () => {
                 isCollapsed={isCollapsed}
                 links={[
                   {
-                    title: "Home",
-                    icon: User,
+                    title: "Dashboard",
+                    icon: Home,
                     variant: "ghost",
                     route: "/",
                   },
                   {
-                    title: "View Transcript",
+                    title: "Transcript",
                     icon: ListTodo,
                     variant: "ghost",
                     route: "/transcript",
                   },
                   {
-                    title: "Majors & Reqs",
+                    title: "Graduation Requirments",
                     icon: Search,
                     variant: "ghost",
                     route: "/majors",
@@ -100,7 +100,7 @@ export const PrivateRoute = () => {
                   },
                 ]}
               />
-              <Separator />
+
               <Nav
                 currentLink={currentTab}
                 setCurrentLink={setCurrentTab}
@@ -120,7 +120,7 @@ export const PrivateRoute = () => {
                     route: "/meet-advisor",
                   },
                   {
-                    title: "Integrate with Banner",
+                    title: "BannerSync",
                     icon: Unplug,
                     variant: "ghost",
                     route: "/integrate-banner",
