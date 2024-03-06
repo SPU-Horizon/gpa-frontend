@@ -1,4 +1,3 @@
-import { UserAvatar } from "@/components/custom/UserAvator";
 import { Nav } from "@/components/custom/NavBar";
 import {
   ResizableHandle,
@@ -18,6 +17,7 @@ import {
   Unplug,
   ListTodo,
 } from "lucide-react";
+import { UserAvatar } from "@/components/custom/UserAvatar";
 import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useWindowSize } from "usehooks-ts";
