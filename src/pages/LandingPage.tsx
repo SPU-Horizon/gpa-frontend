@@ -1,11 +1,9 @@
-import { Switch } from "@/components/ui/switch";
 import {
   HeroSection,
   VisionSection,
   FeatureSection,
   FooterSection,
 } from "@/sections";
-import { useThemeStore } from "@/stores";
 
 import useAuthStore from "@/stores/AuthStore";
 

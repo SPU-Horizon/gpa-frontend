@@ -25,7 +25,6 @@ const data = [
 export function StatsGrid() {
   const stats = data.map((stat) => {
     const Icon = icons[stat.icon];
-    const DiffIcon = stat.diff > 0 ? ArrowUpRight : ArrowUpRight;
 
     return (
       <Paper
