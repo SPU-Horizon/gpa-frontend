@@ -1,15 +1,21 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useUserStore, useCourseStore } from "@/stores"; 
-import { Paper, Portal, Text, Badge, Group, Select, Button, List, Container} from "@mantine/core";
+import { Paper, Portal, Text, Badge, Group, Select, Button, List, Container, Grid, Card, rem} from "@mantine/core";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MonthPickerInput } from '@mantine/dates';
 
+interface Course {
+    id: string;
+    name: string;
+    credits: string; // or number, depending on your actual data structure
+  }
 
 const CreatePlan: React.FC = () => {
     const { firstName, lastName, studentId, fieldRequirements, initializeUserInfo } = useUserStore(); // Provide a default empty array
     const { completedClassList, inProgressClassList } = useCourseStore();
     const [selectedField, setSelectedField] = useState('');
-    const [remainingCourses, setRemainingCourses] = useState([]);
+    const [remainingCourses, setRemainingCourses] = useState<string[]>([]);
     const [value, setValue] = useState<Date | null>(null);
     const [showManualModal, setShowManualModal] = useState(false);
     const [showAutomatedModal, setShowAutomatedModal] = useState(false);
@@ -25,30 +31,33 @@ const CreatePlan: React.FC = () => {
     
     // This example assumes you have a function to get all courses for a major
     // For demonstration, using a static mapping
-    const allCoursesForMajor = {
-        "Computer Science": ["CS101", "CS102", "CS201", "CS202"],
-        // Add other majors and their courses as necessary
+    const requiredCoursesForMajor = {
+        // Example structure
+        "Computer Science": ["CSC 1130", "CSC 1230", "CSC 2430", "CSC 3150", "..."],
+        // Populate according to actual program requirements
     };
 
-    // Update the remaining courses whenever the selected field or class lists change
     useEffect(() => {
         if (!selectedField) return;
 
-        const allCoursesForMajor: { [key: string]: string[] } = {
-            "Computer Science": ["CS101", "CS102", "CS201", "CS202"],
-            // Implement majors and their courses required for graduation
+        // Retrieve the list of required courses for the selected major/minor.
+        const requiredCoursesForMajor: { [key: string]: string[] } = {
+            "Computer Science": ["CSC 1130", "CSC 1230", "CSC 2430", "CSC 3150", "..."],
+            // Populate according to actual program requirements
         };
 
-        const allCourses = allCoursesForMajor[selectedField] || [];
-        const completedCourses = new Set((completedClassList as { name: string }[]).map(course => course.name));
-        const inProgressCourses = new Set((inProgressClassList as { name: string }[]).map(course => course.name));
+        const requiredCourses = requiredCoursesForMajor[selectedField] || [];
+        const completedCourseIds = new Set(completedClassList.map((course: { course_id: string }) => course.course_id));
+        const inProgressCourseIds = new Set(inProgressClassList.map((course: { course_id: string }) => course.course_id));
 
-        const remaining = allCourses.filter(course => 
-            !completedCourses.has(course) && !inProgressCourses.has(course)
+        // Filter out courses that are completed or in progress.
+        const remainingCourses = requiredCourses.filter(courseId => 
+            !completedCourseIds.has(courseId) && !inProgressCourseIds.has(courseId)
         );
 
-        setRemainingCourses(remaining as never[]);
-    }, [selectedField, completedClassList, inProgressClassList, allCoursesForMajor]);
+        setRemainingCourses(remainingCourses);
+    }, [selectedField, completedClassList, inProgressClassList]);
+
 
     const fieldOptions = fieldRequirements?.map((field) => ({
         value: field,
@@ -60,74 +69,73 @@ const CreatePlan: React.FC = () => {
     };
 
     return (
-        <>
-        <Container size="sm" style={{ marginTop: 20, marginBottom: 20 }}>
-            <Paper 
-                className="dark:bg-black-light dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out flex justify-center flex-col items-center"
-                withBorder
-                p="lg"
-                radius="md">
+        <div className="flex h-screen">
+            {/* Main content area */}
+            <Container size="lg" className="flex-grow">
+                <Text size="xl" mb="md" className="mt-4">Build Schedule</Text>
+                <Grid columns={24} gutter={{ base: 5, xs: 'md', md: 'xl', xl: 50 }} justify="flex-start" align="stretch">
+                    <Grid.Col span={15} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                        {/* Left column for building schedule */}
+                        <Card withBorder p="lg" className="flex flex-col ">
+                            <Text size="xl"  mb="md">Create a Plan</Text>
+                            <form onSubmit={handleSavePlan} className="flex flex-col gap-4 mt-4">
+                            <MonthPickerInput
+                                label="Admitted Quarter (e.g., June 2024)"
+                                placeholder="Pick date"
+                                value={value}
+                                onChange={setValue}
+                            />
+                            <Select
+                                label="Select your field of study"
+                                placeholder="Field of study"
+                                data={fieldOptions}
+                                value={selectedField}
+                                onChange={(value) => setSelectedField(value || '')}
+                                required
+                            />
+                            <div className="my-4 text-center"> 
+                                <button type="submit" className="btn btn-primary bg-gray-200 text-white capitalize rounded-lg hover:bg-gold-base " style={{ padding: '10px 20px' }}>Submit</button>
+                            </div>
+                                
 
-                <Badge className="bg-gray-200 text-gray-800 hover:bg-gray-300"  size="xl" radius="md">Plan your schedule</Badge>
+                            </form>
+                        </Card>
+                    </Grid.Col>
+                    <Grid.Col span={9}>
+                    {/* Right column for registered courses */}
+                        <Card withBorder p="lg" className="flex flex-col items-center">
+                            <Text size="xl" mb="md">Registered Courses</Text>
+                            {/* List of registered courses */}
+                            <List spacing="sm" size="sm" center>
+                                {/* Use a .map to render this list based on your inProgressClassList */}
+                                {inProgressClassList.map((course: Course) => (
+                                    <Card key={course.id} className="my-2 p-4 bg-gray-100">
+                                        {course.name} 
+                                        <Badge color="teal" className="ml-2">{course.credits}</Badge>
+                                    </Card>
+                                ))}
+                            </List>
+                        </Card>
+                    </Grid.Col>
+                </Grid>
+            </Container>
 
-                <form onSubmit={handleSavePlan} className="flex flex-col gap-4 mt-4">
-                    <MonthPickerInput
-                        label="Admitted Quarter (e.g., Spring 2024)"
-                        placeholder="Pick date"
-                        value={value}
-                        onChange={setValue}
-                    />
-                    <Select
-                        label="Select your field of study"
-                        placeholder="Field of study"
-                        data={fieldOptions}
-                        value={selectedField}
-                        onChange={(value) => setSelectedField(value || '')}
-                        required
-                    />
+            {/* Manual Entry Modal */}
+            <Portal>
+                <div className={`fixed inset-0 bg-white ${!showManualModal && 'hidden'}`}>
+                    {/* Modal content */}
+                    <Button onClick={() => setShowManualModal(false)}>Close</Button>
+                </div>
+            </Portal>
 
-                    <Text>Remaining Courses:</Text>
-                    <List>
-                        {remainingCourses.map((course, index) => (
-                            <List.Item key={index}>{course}</List.Item>
-                        ))}
-                    </List>
-
-                    <Group mt="md">
-                        <Button className="bg-gray-200 text-gray-800 hover:bg-gray-300"  type="submit">Save Schedule</Button>
-                    </Group>
-                </form>
-
-                <Group mt="md">
-                        <Button 
-                            className="bg-gray-200 text-gray-800 hover:bg-gray-300" 
-                            onClick={() => setShowManualModal(true)} 
-                            variant="outline">Manual Entry
-                        </Button>
-                </Group>
-                
-            </Paper>
-        </Container>
-        {showManualModal && (
-                <Portal>
-                    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'white' }}>
-                        {/* Place your Manual Entry content here */}
-                        <Text>Manual Entry Content</Text>
-                        <Button onClick={() => setShowManualModal(false)}>Close</Button>
-                    </div>
-                </Portal>
-                )}
-
-            {showAutomatedModal && (
-                    <Portal>
-                        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'white' }}>
-                            {/* Place your Automated Entry content here */}
-                            <Text>Automated Entry Content</Text>
-                            <Button onClick={() => setShowAutomatedModal(false)}>Close</Button>
-                        </div>
-                    </Portal>
-            )}
-        </>
+            {/* Automated Entry Modal */}
+            <Portal>
+                <div className={`fixed inset-0 bg-white ${!showAutomatedModal && 'hidden'}`}>
+                    {/* Modal content */}
+                    <Button onClick={() => setShowAutomatedModal(false)}>Close</Button>
+                </div>
+            </Portal>
+        </div>
     );
 };
 
