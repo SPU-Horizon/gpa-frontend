@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MonthPickerInput } from '@mantine/dates';
 
 interface Course {
-    id: string;
+    course_id: string;
     name: string;
     credits: string; // or number, depending on your actual data structure
   }
@@ -72,7 +72,7 @@ const CreatePlan: React.FC = () => {
         <div className="flex h-screen">
             {/* Main content area */}
             <Container size="lg" className="flex-grow">
-                <Text size="xl" mb="md" className="mt-4">Build Schedule</Text>
+                <Text size="xl" mb="md" className="mt-4 font-bold text-gray-800">Build Schedule</Text>
                 <Grid columns={24} gutter={{ base: 5, xs: 'md', md: 'xl', xl: 50 }} justify="flex-start" align="stretch">
                     <Grid.Col span={15} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                         {/* Left column for building schedule */}
@@ -97,8 +97,6 @@ const CreatePlan: React.FC = () => {
                             <div className="my-4 text-center"> 
                                 <button type="submit" className="btn btn-primary bg-gray-200 text-white capitalize rounded-lg hover:bg-gold-base " style={{ padding: '10px 20px' }}>Submit</button>
                             </div>
-                                
-
                             </form>
                         </Card>
                     </Grid.Col>
@@ -110,8 +108,9 @@ const CreatePlan: React.FC = () => {
                             <List spacing="sm" size="sm" center>
                                 {/* Use a .map to render this list based on your inProgressClassList */}
                                 {inProgressClassList.map((course: Course) => (
-                                    <Card key={course.id} className="my-2 p-4 bg-gray-100">
-                                        {course.name} -  <Badge color="gray" className="ml-2">{course.credits} credits</Badge> 
+                                    <Card key={course.course_id} className="my-2 p-4 bg-gray-100">
+                                        {course.course_id} - {course.name} 
+                                        <Badge color="gray" className="ml-2">{course.credits} credits</Badge> 
                                     </Card>
                                 ))}
                             </List>
