@@ -84,6 +84,7 @@ const CreatePlan: React.FC = () => {
                                 placeholder="Pick date"
                                 value={value}
                                 onChange={setValue}
+                                required
                             />
                             <Select
                                 label="Select your field of study"
@@ -110,8 +111,7 @@ const CreatePlan: React.FC = () => {
                                 {/* Use a .map to render this list based on your inProgressClassList */}
                                 {inProgressClassList.map((course: Course) => (
                                     <Card key={course.id} className="my-2 p-4 bg-gray-100">
-                                        {course.name} 
-                                        <Badge color="teal" className="ml-2">{course.credits}</Badge>
+                                        {course.name} -  <Badge color="gray" className="ml-2">{course.credits} credits</Badge> 
                                     </Card>
                                 ))}
                             </List>
