@@ -19,9 +19,6 @@ const BuildSchedule: React.FC = () => {
     const [selectedField, setSelectedField] = useState('');
     const [remainingCourses, setRemainingCourses] = useState<string[]>([]);
     const [value, setValue] = useState<Date | null>(null);
-    const [showManualModal, setShowManualModal] = useState(false);
-    const [showAutomatedModal, setShowAutomatedModal] = useState(false);
-    const [opened, setOpened] = useState(false);
 
     useEffect(() => {
         initializeUserInfo();
