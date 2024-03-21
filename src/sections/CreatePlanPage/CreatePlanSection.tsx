@@ -1,8 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import  BuildSchedule  from "@/components/CreatePlan/BuildSchedule";
+import  SaveSchedule  from "@/components/CreatePlan/SaveSchedule";
 import  Header from "@/components/CreatePlan/Header";
-import  Footer from "@/components/CreatePlan/Footer";
-
 
 export default function CreatePlanSection() {
   
@@ -10,7 +9,10 @@ export default function CreatePlanSection() {
       <div className="flex flex-col h-screen">
         <Header />
         <ScrollArea>
-            <BuildSchedule />
+            <div className="space-y-8">
+                <BuildSchedule />
+                <SaveSchedule />
+            </div>
         </ScrollArea>
       </div>
     );
