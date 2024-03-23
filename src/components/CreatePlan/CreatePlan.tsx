@@ -3,8 +3,7 @@ import { useUserStore, useCourseStore } from "@/stores";
 import { Paper, Modal, Text, Badge, Group, Select, Button, List, Container, SimpleGrid, Grid, Card,Skeleton, rem} from "@mantine/core";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MonthPickerInput } from '@mantine/dates';
-
-
+  
 
 const CreatePlan = () => {
 
@@ -17,6 +16,23 @@ const CreatePlan = () => {
     const [classesToRepeat, setClassesToRepeat] = useState([]);
     const [selectedField, setSelectedField] = useState('');
     const [value, setValue] = useState<Date | null>(null);
+
+    const handleCreatePlanSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const newPlan = {
+          fieldOfStudy,
+          planName,
+          maxCredit,
+          idealCredits,
+          classesToRepeat,
+          // ... any other necessary data
+        };
+      
+        // Pass newPlan to the SaveSchedule component's save function
+        // This could be done via context, props, or global state management
+        // savePlan(newPlan);
+      };
+      
 
     const fieldOptions = fieldRequirements?.map((field) => ({
         value: field,
@@ -34,7 +50,7 @@ const CreatePlan = () => {
 
                 <Tabs defaultValue="automated">
                 <TabsList className="bg-transparent">
-                    <TabsTrigger value="automated" className="text-lg  mr-4 bg-gray-100 hover:bg-gray-200 w-full">Automated Plan</TabsTrigger>
+                    <TabsTrigger value="automated" className="text-lg mr-4 bg-gray-100 hover:bg-gray-200 w-full">Automated Plan</TabsTrigger>
                     <TabsTrigger value="manual" className="text-lg bg-gray-100 hover:bg-gray-200 w-full">All Other Majors </TabsTrigger>
                 </TabsList>
                     <TabsContent value="automated">

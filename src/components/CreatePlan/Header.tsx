@@ -6,16 +6,18 @@ import  CreatePlan  from "@/components/CreatePlan/CreatePlan";
 export default function Header() {
     const [opened, { open, close }] = useDisclosure(false);
     return (
-    <header className="bg-white dark:bg-black-base p-[.88rem] flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Plan</h1>
+    <header className="bg-white dark:bg-black-base p-[.88rem] ml-8 mr-8 flex justify-between items-center">
+        <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Planner</h1>
 
         <div>
-        <Modal opened={opened} onClose={close} title="Automated">
-        {/* Modal content */}
-        <CreatePlan />
-
+        <Modal 
+            opened={opened} 
+            onClose={close} 
+            title="Automated">
+            {/* Modal content */}
+            <CreatePlan />
         </Modal>
-        <Button onClick={open} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Create a plan</Button>
+        <Button className="bg-gold-base hover:bg-gold-light text-white font-bold py-2 px-4 rounded-full" onClick={open}>Create a plan</Button>
         </div>
     </header>
     );

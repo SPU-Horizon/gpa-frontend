@@ -93,43 +93,29 @@ const BuildSchedule: React.FC = () => {
     const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`; // 50% of the primary column height
 
     return (
-
-        <div className="flex">
-            <Container size="lg" className="flex-grow">                
+        <div className="flex flex-grow ml-12 mr-12 mt-4">   
                     <Grid gutter="lg" className="flex w-full">
-                        <Grid.Col span={8} className="flex">
+                        <Grid.Col span={8} className="flex ">
                             {/* "Create a Plan" section, now larger */}
-                            <Card withBorder p="lg" className="flex flex-col w-full">
-                            <h1 className="text-xl font-bold ml-2 mt-4 ">Create a Plan</h1>
-    
-                            <Tabs defaultValue="automated">
-                            <TabsList className="bg-transparent">
-                                <TabsTrigger value="automated" className="text-lg  mr-4 bg-gray-100 hover:bg-gray-200 w-full">Automated Plan</TabsTrigger>
-                                <TabsTrigger value="manual" className="text-lg bg-gray-100 hover:bg-gray-200 w-full">All Other Majors </TabsTrigger>
-                            </TabsList>
-                                <TabsContent value="automated">
-                                </TabsContent>
-                                <TabsContent value="manual">
-                                </TabsContent>
-                            </Tabs>
+                            <Card className="flex flex-col w-full overflow-hidden border-t border-gray-100 shadow-lg dark:border-gray-700 dark:shadow-gray-700/50 dark:bg-black-light">
+                                <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">Plan Options</h1>
                             </Card>
                         </Grid.Col>
                         <Grid.Col span={4} className="flex">
                             {/* "Registered Courses" section, now smaller */}
-                            <Card withBorder p="lg" className="flex flex-col w-full">
-                                <Text size="xl" mb="md">Registered Courses</Text>
+                            <Card className="flex flex-col w-full overflow-hidden border-t border-gray-100 shadow-lg dark:border-gray-700 dark:shadow-gray-700/50 dark:bg-black-light">
+                                <Text size="xl" mb="md" className="dark:text-white-base">Registered Courses</Text>
                                 <List spacing="sm" size="sm" center>
                                     {inProgressClassList.map((course: Course) => (
-                                        <Card key={course.course_id} className="my-2 p-4 bg-gray-100">
+                                        <Card key={course.course_id} className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-gold-base dark:text-white-base">
                                             {course.course_id} - {course.name}
-                                            <Badge color="gray" className="ml-2">{course.credits} credits</Badge>
+                                            <Badge className="ml-2 bg-gold-base">{course.credits} credits</Badge>
                                         </Card>
                                     ))}
                                 </List>
                             </Card>
                         </Grid.Col>
                     </Grid>
-            </Container>
         </div>
     );    
     
