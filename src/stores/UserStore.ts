@@ -1,7 +1,7 @@
-import useAuthStore from "./AuthStore";
 import { StateCreator, create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
+import useAuthStore from "./AuthStore";
 
 // Define your store's state
 type UserState = {
@@ -12,7 +12,6 @@ type UserState = {
   graduationYear: number;
   graduationQuarter: string;
   fieldRequirements: [];
-
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
   uploadProfilePicture: (file: FormData) => Promise<void>;
@@ -52,6 +51,8 @@ const UserStoreTemplate: StateCreator<
             },
           }
         );
+
+        set({ avatar: file.get("file") as string });
       } catch (error) {
         console.error(error);
       }

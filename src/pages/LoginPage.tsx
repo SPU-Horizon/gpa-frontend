@@ -9,10 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import { useCourseStore } from "@/stores";
-
 import { useUserStore } from "@/stores"; //Might need to replace with index store like kaddija did?
-import { Switch } from "@/components/ui/switch";
-import { useThemeStore } from "@/stores";
 
 const signInSchema = z.object({
   email: z.string().email(),
@@ -34,7 +31,6 @@ export default function AuthenticationPage() {
 
   const { initializeCourseInfo } = useCourseStore();
   const { initializeUserInfo } = useUserStore();
-  const { setTheme } = useThemeStore();
   const navigate = useNavigate();
 
   const submitHandler = async () => {

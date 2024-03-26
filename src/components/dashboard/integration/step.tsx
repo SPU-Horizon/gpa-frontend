@@ -1,5 +1,6 @@
 import { Timeline, Text } from "@mantine/core";
 import React from "react";
+import { useThemeStore } from "@/stores";
 
 export type StepProps = {
   title: string;
@@ -9,9 +10,29 @@ export type StepProps = {
 };
 
 export default function Step({ title, description, icon, link }: StepProps) {
+  const { theme } = useThemeStore();
   return (
     <>
-      <Timeline.Item bullet={icon}>
+      <Timeline.Item
+        bullet={icon}
+        styles={{
+          itemBullet: {
+            backgroundColor: theme === "dark" ? "#222" : "#eee",
+            borderColor: theme === "dark" ? "#222" : "#eee",
+            color: theme === "dark" ? "white" : "black",
+            "::before": {
+              content: '""',
+              position: "absolute",
+              top: "50%",
+              left: "-4px",
+              transform: "translateY(-50%)",
+              width: "8px",
+              height: "8px",
+              borderRadius: "50%",
+            },
+          },
+        }}
+      >
         <h1 className="text-lg dark:text-white-light text-black-base">
           {title}
         </h1>

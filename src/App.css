@@ -13,3 +13,13 @@
     transform: rotate(360deg);
   }
 }
+
+[data-mantine-color-scheme="light"] .m-436178ff {
+  --_item-border-color: #999 !important;
+}
+[data-mantine-color-scheme="dark"] .m-436178ff {
+  --_item-border-color: #927c4e !important;
+}
+
+.m-436178ff {
+}

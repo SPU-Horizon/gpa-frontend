@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { FileDropzone } from "@/components/custom";
-import { useCourseStore, useUserStore } from "@/stores";
+import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
 
 export default function IntegrationPage() {
@@ -15,6 +15,7 @@ export default function IntegrationPage() {
   const [acceptedFile, setAcceptedFile] = useState(false);
   const { postCourses, initializeCourseInfo } = useCourseStore();
   const { studentId, initializeUserInfo } = useUserStore();
+  const { theme } = useThemeStore();
 
   const onSubmission = async () => {
     if (value) {
@@ -43,7 +44,11 @@ export default function IntegrationPage() {
       <div className="max-w-[90%] mx-auto">
         <h1 className="text-3xl font-bold">Sync with Banner</h1>
         <Separator className="mt-4 mb-8" />
-        <Timeline bulletSize={40} className="mr-8 ">
+        <Timeline
+          bulletSize={40}
+          color={theme === "dark" ? "#222" : "#bbb"}
+          className="mr-8"
+        >
           {IntegrationStepData.map((step, index) => (
             <Step
               key={index}
@@ -68,7 +73,7 @@ export default function IntegrationPage() {
           subheader={
             acceptedFile ? "Youre Good To Go!" : " ONLY .html & .htm accepted "
           }
-          className="dark:bg-black-light text-black-base dark:text-white-base dark:hover:bg-gray-600 mt-16 mb-7"
+          className="mt-16 mb-7 dark:bg-black-light dark:border-none dark:text-white-dark"
           icon={
             acceptedFile ? <CheckCircle2 size={52} /> : <BookCheck size={52} />
           }
@@ -76,7 +81,7 @@ export default function IntegrationPage() {
         <Button
           onClick={onSubmission}
           type="submit"
-          className="dark:bg-black-light dark:text-white-base dark:hover:bg-gray-600 rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16"
+          className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16"
         >
           Submit
         </Button>

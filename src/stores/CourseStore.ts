@@ -2,6 +2,7 @@ import { StateCreator, create } from "zustand";
 import axios from "axios";
 import useAuthStore from "./AuthStore";
 import { persist } from "zustand/middleware";
+import { del, get, set } from "idb-keyval";
 
 type CourseStore = {
   getEnrollments: () => Promise<Record<string, any>>;
@@ -77,6 +78,11 @@ const useCourseStoreTemplate: StateCreator<
   }),
   {
     name: "courseStore",
+    getStorage: () => ({
+      getItem: get, // async (key) => any
+      setItem: set, // async (key, value) => undefined
+      removeItem: del,
+    }),
   }
 );
 
