@@ -8,7 +8,10 @@ const links = [
 
 export default function FooterSection() {
   return (
-    <section className="min-h-screen bg-white dark:bg-black-light flex md:flex-col md:justify-between border-t-[3px] border-gold-ligh dark:border-black-base ">
+    <section
+      id="ContactUs"
+      className="min-h-screen bg-white dark:bg-black-light flex md:flex-col md:justify-between border-t-[3px] border-gold-ligh dark:border-black-base "
+    >
       <div className="sm:text-center sm:p-7 flex flex-col justify-center  w-full p-14  dark:bg-black-light lg:px-12 xl:px-32 lg:w-1/2 md:w-full">
         <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white-light lg:text-3xl">
           Get In Touch
