@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useUserStore, useCourseStore } from "@/stores"; 
-import { Paper, Modal, Text, Badge, Group, Select, Button, List, Container, SimpleGrid, Grid, Card,Skeleton, rem} from "@mantine/core";
+import { UnstyledButton, Text, Badge, Group, Select, Button, List, Container, SimpleGrid, Grid, Card,Skeleton, rem} from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MonthPickerInput } from '@mantine/dates';
+import {Blocks ,Orbit,} from "lucide-react";
+import classes from "@/lib/modules/MenuOptions.module.css";
 
 interface Course {
     course_id: string;
@@ -13,6 +15,11 @@ interface Course {
 }
 
 const PRIMARY_COL_HEIGHT = rem(400);
+
+const mockdata = [
+    { title: 'Automated Schedule Builder', icon: Blocks, color: 'green' },
+    { title: 'All Other Majors', icon: Orbit, color: 'yellow' },
+];
 
 const BuildSchedule: React.FC = () => {
     const { firstName, lastName, studentId, graduationQuarter, graduationYear, fieldRequirements, initializeUserInfo } = useUserStore(); // Provide a default empty array
@@ -92,13 +99,28 @@ const BuildSchedule: React.FC = () => {
 
     const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`; // 50% of the primary column height
 
+    const items = mockdata.map((item) => (
+        <UnstyledButton key={item.title} className="bg-gray-100 dark:bg-black-light dark:border-none flex flex-col items-center justify-center text-center rounded-md h-[180px] hover:scale-[1.03] hover:shadow-md transition-all duration-200 ease-in-out">
+          <item.icon color={"gray"} size="2rem" />
+            <Text className="dark:text-white-light" size="md" mt={8}>
+                {item.title}
+            </Text>
+        </UnstyledButton>
+      ));
+
     return (
         <div className="flex flex-grow ml-12 mr-12 mt-4">   
                     <Grid gutter="lg" className="flex w-full">
                         <Grid.Col span={8} className="flex ">
                             {/* "Create a Plan" section, now larger */}
                             <Card className="flex flex-col w-full overflow-hidden border-t border-gray-100 shadow-lg dark:border-gray-700 dark:shadow-gray-700/50 dark:bg-black-light">
-                                <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">Plan Options</h1>
+                                <Group justify="space-between">
+                                    <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">Plan Options</h1>
+                                </Group>
+                                <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }} spacing="lg" mt="md">
+                                    {items}
+                                </SimpleGrid>
+                                    
                             </Card>
                         </Grid.Col>
                         <Grid.Col span={4} className="flex">
