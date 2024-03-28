@@ -69,21 +69,29 @@ export default function ClassCard({
         </DialogHeader>
 
         <div className="mt-2 flex flex-col gap-3 text-lg">
-          <DialogDescription>{item.description}</DialogDescription>
-          <DialogDescription>
-            <b>Your Grade:</b> {item.grade || "N/A"}
-          </DialogDescription>
-          <DialogDescription>
-            <b>Quarter Taken:</b> {item.quarter?.toUpperCase() || "N/A"}
-          </DialogDescription>
-          <DialogDescription>
-            <b>Year Taken:</b> {item.year || "N/A"}
-          </DialogDescription>
-          <DialogDescription>
-            <b>Course Attributes:</b> {item.attributes || "N/A"}
-          </DialogDescription>
+          {completion == "Completed" ? (
+            <>
+              <DialogDescription>
+                <b>Your Grade:</b> {item.grade || "N/A"}
+              </DialogDescription>
+              <DialogDescription>
+                <b>Quarter Taken:</b> {item.quarter?.toUpperCase() || "N/A"}{" "}
+                {item.year || "N/A"}
+              </DialogDescription>
+            </>
+          ) : null}
+
+          <div className="flex w-full gap-2">
+            <DialogDescription>
+              <b>Course Attributes:</b>
+            </DialogDescription>
+            <Badge>{item.attributes || "None"}</Badge>
+          </div>
           <DialogDescription>
             <b>Total Credits:</b> {item.credits || "N/A"}
+          </DialogDescription>
+          <DialogDescription>
+            <b>Course Description:</b> {item.description}
           </DialogDescription>
         </div>
       </DialogContent>
