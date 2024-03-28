@@ -51,8 +51,6 @@ const UserStoreTemplate: StateCreator<
             },
           }
         );
-
-        set({ avatar: file.get("file") as string });
       } catch (error) {
         console.error(error);
       }

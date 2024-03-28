@@ -20,7 +20,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Label } from "@/components/ui/label";
 import { Upload } from "lucide-react";
 import UserStore from "@/stores/UserStore";
-import { useThemeStore, useUserStore } from "@/stores";
+import { useThemeStore } from "@/stores";
 
 // This creates a Schema for the Form Component
 // Including features that are needed on the front end, according to the database schema
@@ -40,7 +40,6 @@ const formSchema = z.object({
 
 export default function Profile() {
   const { theme } = useThemeStore();
-  const { firstName, lastName, avatar } = useUserStore();
 
   const [acceptedImage, setAcceptedImage] = useState(false);
   // When the Image is accepted, we need some type of 'state' to reflect that the image has been accepted
@@ -105,7 +104,7 @@ export default function Profile() {
           onClick={open}
         >
           <Avatar src={filePath} size={150}>
-            {firstName[0].toLocaleUpperCase() + lastName[0].toLocaleUpperCase()}
+            MN
           </Avatar>
         </div>
 
@@ -141,7 +140,7 @@ export default function Profile() {
           >
             <TextInput
               label="Your Name"
-              placeholder={`${firstName} ${lastName}`}
+              placeholder="Matthew Negasi"
               disabled
               classNames={{ wrapper: "mt-0" }}
               styles={{

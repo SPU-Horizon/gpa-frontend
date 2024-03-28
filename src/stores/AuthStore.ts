@@ -16,7 +16,7 @@ const initialState = {
   token: "",
   refreshToken: "",
   email: "",
-  isLoading: true,
+  isLoading: false,
 };
 
 type AuthStore = {
