@@ -56,9 +56,6 @@ export default function ClassCard({
               </div>
             </div>
             <div className="text-md font-medium">{item.name}</div>
-            <div className=" text-md text-muted-foreground line-clamp-2">
-              {item.description}
-            </div>
           </div>
         </button>
       </DialogTrigger>
