@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const links = [
   { link: "#", label: "Vision" },
   { link: "#", label: "Features" },
@@ -7,6 +9,10 @@ const links = [
 ];
 
 export default function FooterSection() {
+  const email = "graduationplanningapp@gmail.com";
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
   return (
     <section
       id="ContactUs"
@@ -27,23 +33,14 @@ export default function FooterSection() {
           <div className="-mx-2 md:items-center md:flex-col md:gap-4">
             <div className="flex-1 px-2">
               <label className="mb-2 text-sm text-gray-600 dark:text-gray-200">
-                Full Name
+                Subject
               </label>
               <input
+                id="mail-subject"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Subject"
                 className=" w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-600 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-50 dark:text-gray-800 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-              />
-            </div>
-
-            <div className="flex-1 px-2 mt-4 md:mt-0">
-              <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                Email address
-              </label>
-              <input
-                type="email"
-                placeholder="johndoe@example.com"
-                className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-50 dark:text-gray-800 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                onChange={(e) => setSubject(e.target.value)}
               />
             </div>
           </div>
@@ -53,14 +50,34 @@ export default function FooterSection() {
               Message
             </label>
             <textarea
+              id="mail-message"
               className="block w-full h-32 px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md md:h-56 dark:placeholder-gray-600 dark:bg-gray-50 dark:text-gray-800 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
               placeholder="Message"
+              onChange={(e) => setMessage(e.target.value)}
             ></textarea>
           </div>
 
-          <button className="w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white-light capitalize transition-colors duration-300 transform bg-black-light rounded-md hover:bg-black-base focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-            Submit
-          </button>
+          <div className="w-full mt-8">
+            <a
+              className="block w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white-light capitalize transition-colors duration-300 transform bg-black-light rounded-md hover:bg-black-base focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 text-center"
+              href={`mailto:${email}?subject=${encodeURIComponent(
+                subject
+              )}&body=${encodeURIComponent(message)}`}
+              onClick={(e) => {
+                const mailSubject = document.getElementById(
+                  "mail-subject"
+                ) as HTMLInputElement;
+                const mailMessage = document.getElementById(
+                  "mail-message"
+                ) as HTMLInputElement;
+
+                if (mailSubject) mailSubject.value = "";
+                if (mailMessage) mailMessage.value = "";
+              }}
+            >
+              Send Message
+            </a>
+          </div>
         </form>
         <div className=" md:mt-8 mt-16 mb-4 ">
           <h3 className="font-medium text-gray-600 dark:text-gray-100 text-center hover:text-gray-50 dark:hover:text-white-light">
