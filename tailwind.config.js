@@ -28,6 +28,7 @@ export default {
 
     fontFamily: {
       avenir: ["Avenir-Next", "Avenir", "sans-serif"],
+      poppins: ["Poppins", "sans-serif"],
     },
     screens: {
       xl: { max: "1300px" },

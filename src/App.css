@@ -1,7 +1,6 @@
 #root {
-  max-width: 2400px;
   margin: 0 auto;
-  font-family: Avenir, system-ui, Inter, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Poppins, system-ui, Inter, Helvetica, Arial, sans-serif;
   background-color: transparent;
 }
 
@@ -12,4 +11,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }

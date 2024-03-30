@@ -6,9 +6,9 @@ import { FeatureOne, FeatureThree, FeatureTwo } from "@/images";
 
 export default function FeatureSection() {
   return (
-    <div className="dark:bg-black-light dark:text-white-light">
+    <div id="KeyFeatures" className="dark:bg-black-light dark:text-white-light">
       {/* <!-- Features --> */}
-      <div className="max-w-[85rem] px-4 py-20 sm:px-6 md:py-[5rem] lg:px-8 lg:py-14 mx-auto">
+      <div className="max-w-[90rem] px-4 py-20 sm:px-6 md:py-[5rem] lg:px-8 lg:py-14 mx-auto">
         <div className="relative p-6 md:p-2">
           {/* <!-- Grid --> */}
           <div className="relative z-10 grid grid-cols-12 gap-16 lg:block ">
