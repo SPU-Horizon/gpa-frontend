@@ -35,7 +35,6 @@ export default function HeroSection() {
         backgroundImage: ` 
         linear-gradient(180deg, rgba(68,70,74,1) 0%, rgba(0,0,0,0.4458158263305322) 100%),
         url(${GPAHero})`,
-        fontFamily: "Avenir Next",
         zIndex: `-1`,
         width: "100vw",
       }}
