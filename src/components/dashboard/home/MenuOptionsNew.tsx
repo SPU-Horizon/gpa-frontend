@@ -12,6 +12,7 @@ import {
 import classes from "@/lib/modules/MenuOptions.module.css";
 import { useNavigate } from "react-router-dom";
 import { useNavigationStore } from "@/stores/NavigationStore";
+import { useThemeStore } from "@/stores";
 
 const menuButtons = [
   {
@@ -75,6 +76,7 @@ const menuButtons = [
 export function ActionsGrid() {
   const navigate = useNavigate();
   const { setCurrentTab } = useNavigationStore();
+  const { theme } = useThemeStore();
 
   const items = menuButtons.map((item) => (
     <UnstyledButton
@@ -85,7 +87,7 @@ export function ActionsGrid() {
         item.tab ? setCurrentTab(item.tab) : setCurrentTab("none");
       }}
     >
-      <item.icon color={"blue"} size="2rem" />
+      <item.icon color={theme === "dark" ? "white" : "gray"} size="2rem" />
       <Text className=" dark:text-white-light" size="md" mt={8}>
         {item.title}
       </Text>

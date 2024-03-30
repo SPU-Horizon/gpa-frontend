@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,6 @@ export function Nav({
   isCollapsed,
   setCurrentLink,
   currentLink,
-  withLogout,
 }: NavProps) {
   const navigate = useNavigate();
 
@@ -39,16 +38,15 @@ export function Nav({
           isCollapsed ? (
             <Tooltip key={index} delayDuration={0}>
               <TooltipTrigger asChild>
-                <Link
-                  href="#"
+                <Button
                   className={cn(
                     buttonVariants({
                       variant: currentLink === link.title ? "default" : "ghost",
                       size: "icon",
                     }),
-                    "h-9 w-9",
-                    link.variant === "default" &&
-                      "dark:bg-gold-light dark:text-muted-foreground dark:hover:bg-gold-light dark:hover:text-white"
+                    "h-9 w-9 p-0 bg-transparent dark:bg-transparent text-black-base dark:text-white-base dark:hover:bg-black-light ",
+                    currentLink === link.title &&
+                      " bg-gold-base  text-white-base dark:text-muted-foreground dark:hover:bg-black-light dark:hover:text-white"
                   )}
                   onClick={() => {
                     setCurrentLink(link.title);
@@ -57,7 +55,7 @@ export function Nav({
                 >
                   <link.icon className="h-4 w-4" />
                   <span className="sr-only">{link.title}</span>
-                </Link>
+                </Button>
               </TooltipTrigger>
               <TooltipContent
                 side="right"
@@ -73,8 +71,8 @@ export function Nav({
             </Tooltip>
           ) : (
             <Link
+              href={`dashboard${link.route}`}
               key={index}
-              href="#"
               className={cn(
                 buttonVariants({
                   variant: currentLink === link.title ? "default" : "ghost",
@@ -86,7 +84,7 @@ export function Nav({
               )}
               onClick={() => {
                 setCurrentLink(link.title);
-                navigate(`dashboard${link.route}`);
+                // navigate(`dashboard${link.route}`);
               }}
             >
               <link.icon className="mr-2 h-4 w-4" />
