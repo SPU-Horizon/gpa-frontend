@@ -8,9 +8,9 @@ import LandingSectionHeader from "@/components/landingpage/LandingSectionHeader"
 
 export default function VisionSection() {
   return (
-    <div>
+    <div id="Vision">
       <section className="dark:bg-black-light dark:text-gray-100">
-        <div className="container pb-[6rem] max-w-[70rem] p-6 pt-20  mx-auto space-y-24 lg:px-8 lg:max-w-7xl">
+        <div className="container pb-[6rem] max-w-[80rem] p-6 pt-20  mx-auto space-y-24 lg:px-8 lg:max-w-7xl">
           {/* Header */}
 
           <LandingSectionHeader

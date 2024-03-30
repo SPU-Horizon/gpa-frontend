@@ -10,12 +10,16 @@ import {
 import { LuMenu } from "react-icons/lu";
 import { Links } from "@/constants";
 
-export function MobileDrawer() {
+type DrawerProps = {
+  color?: string;
+};
+
+export function MobileDrawer({ color }: DrawerProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" className="hover:bg-transparent bg-transparent">
-          <LuMenu size={"2.5em"} />
+          <LuMenu size={"2.5em"} color={color} />
         </Button>
       </SheetTrigger>
       <SheetContent className="bg-black-base border-0 font-avenir text-white-light">

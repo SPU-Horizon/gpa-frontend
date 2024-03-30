@@ -1,7 +1,6 @@
 #root {
-  max-width: 2400px;
   margin: 0 auto;
-  font-family: Avenir, system-ui, Inter, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Poppins, system-ui, Inter, Helvetica, Arial, sans-serif;
   background-color: transparent;
 }
 
@@ -14,6 +13,7 @@
   }
 }
 
+
 [data-mantine-color-scheme="light"] .m-436178ff {
   --_item-border-color: #999 !important;
 }
@@ -22,4 +22,8 @@
 }
 
 .m-436178ff {
+}
+
+html {
+  scroll-behavior: smooth;
 }
