@@ -16,6 +16,7 @@ import {
   Unplug,
   ListTodo,
   Home,
+  User,
 } from "lucide-react";
 import { UserAvatar } from "@/components/custom/UserAvatar";
 import { useState } from "react";
@@ -81,22 +82,22 @@ export const PrivateRoute = () => {
                     route: "/",
                   },
                   {
-                    title: "Transcript",
-                    icon: ListTodo,
+                    title: "Plans",
+                    icon: Castle,
                     variant: "ghost",
-                    route: "/transcript",
+                    route: "/plans",
                   },
                   {
-                    title: "Graduation Requirments",
+                    title: "Graduation Requirements",
                     icon: Search,
                     variant: "ghost",
                     route: "/majors",
                   },
                   {
-                    title: "Build Schedule",
-                    icon: Castle,
+                    title: "Transcript",
+                    icon: ListTodo,
                     variant: "ghost",
-                    route: "/build-schedule",
+                    route: "/transcript",
                   },
                 ]}
               />
@@ -106,24 +107,23 @@ export const PrivateRoute = () => {
                 setCurrentLink={setCurrentTab}
                 isCollapsed={isCollapsed}
                 links={[
-                  {
-                    title: "Saved Schedules",
-                    icon: BookMarked,
-                    variant: "ghost",
-                    route: "/saved-schedules",
-                  },
-
-                  {
-                    title: "Meet an Advisor",
-                    icon: Speech,
-                    variant: "ghost",
-                    route: "/meet-advisor",
-                  },
+                  // {
+                  //   title: "Meet an Advisor",
+                  //   icon: Speech,
+                  //   variant: "ghost",
+                  //   route: "/meet-advisor",
+                  // },
                   {
                     title: "BannerSync",
                     icon: Unplug,
                     variant: "ghost",
                     route: "/integrate-banner",
+                  },
+                  {
+                    title: "Profile",
+                    icon: User,
+                    variant: "ghost",
+                    route: "/profile",
                   },
                 ]}
               />
