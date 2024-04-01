@@ -107,12 +107,6 @@ export const PrivateRoute = () => {
                 setCurrentLink={setCurrentTab}
                 isCollapsed={isCollapsed}
                 links={[
-                  // {
-                  //   title: "Meet an Advisor",
-                  //   icon: Speech,
-                  //   variant: "ghost",
-                  //   route: "/meet-advisor",
-                  // },
                   {
                     title: "BannerSync",
                     icon: Unplug,

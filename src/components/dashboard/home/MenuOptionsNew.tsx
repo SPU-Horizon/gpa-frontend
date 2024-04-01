@@ -51,20 +51,6 @@ const menuButtons = [
     tab: "Build Schedule",
   },
   {
-    title: "Saved Schedules",
-    icon: SaveAll,
-    color: "cyan",
-    link: "/dashboard/plans",
-    tab: "Saved Schedules",
-  },
-  {
-    title: "Meet with an Advisor",
-    icon: SmilePlus,
-    color: "pink",
-    link: "/dashboard/advisor",
-    tab: "Advisor",
-  },
-  {
     title: "View Your Profile",
     icon: CircleUserRound,
     color: "red",
