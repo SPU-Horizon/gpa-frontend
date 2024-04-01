@@ -1,12 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useUserStore, useCourseStore } from "@/stores"; 
-import { UnstyledButton, Text, Badge, Group, Select, Button, List, Container, SimpleGrid, Grid, Card,Skeleton, rem} from "@mantine/core";
-import { useDisclosure } from '@mantine/hooks';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MonthPickerInput } from '@mantine/dates';
+import { UnstyledButton, Text, Badge, Group,List, SimpleGrid, Grid, Card, rem} from "@mantine/core";
 import {Blocks ,Orbit,} from "lucide-react";
-import classes from "@/lib/modules/MenuOptions.module.css";
 
 interface Course {
     course_id: string;
@@ -112,21 +108,20 @@ const BuildSchedule: React.FC = () => {
         <div className="flex flex-grow ml-12 mr-12 mt-4">   
                     <Grid gutter="lg" className="flex w-full">
                         <Grid.Col span={8} className="flex ">
-                            {/* "Create a Plan" section, now larger */}
-                            <Card className="flex flex-col w-full overflow-hidden border-t border-gray-100 shadow-lg dark:border-gray-700 dark:shadow-gray-700/50 dark:bg-black-light">
+                            {/* "Create a Plan" section */}
+                            <Card className="flex flex-col w-full overflow-hidden border border-gray-100 dark:border-gray-700 dark:bg-black-light">
                                 <Group justify="space-between">
                                     <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">Plan Options</h1>
                                 </Group>
                                 <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }} spacing="lg" mt="md">
                                     {items}
                                 </SimpleGrid>
-                                    
                             </Card>
                         </Grid.Col>
                         <Grid.Col span={4} className="flex">
-                            {/* "Registered Courses" section, now smaller */}
-                            <Card className="flex flex-col w-full overflow-hidden border-t border-gray-100 shadow-lg dark:border-gray-700 dark:shadow-gray-700/50 dark:bg-black-light">
-                                <Text size="xl" mb="md" className="dark:text-white-base">Registered Courses</Text>
+                            {/* "Registered Courses" section */}
+                            <Card className="flex flex-col w-full overflow-hidden border border-gray-100 dark:border-gray-700 dark:bg-black-light">
+                                <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">Registered Courses</h1>
                                 <List spacing="sm" size="sm" center>
                                     {inProgressClassList.map((course: Course) => (
                                         <Card key={course.course_id} className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-gold-base dark:text-white-base">

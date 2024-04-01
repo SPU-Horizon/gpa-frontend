@@ -44,7 +44,7 @@ const CreatePlan = () => {
     };
 
     return (
-        <div>
+        <div className = 'font-avenir'>
            <Card withBorder p="lg" className="flex flex-col w-full">
                 <h1 className="text-xl font-bold ml-2 mt-4 ">Create a Plan</h1>
 

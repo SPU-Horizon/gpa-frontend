@@ -13,7 +13,7 @@ export default function Footer() {
           <p>Privacy Policy</p>
         </div>
 
-        <div className="lex flex-col text-center justify-center items-center">
+        <div className="flex flex-col text-center justify-center items-center">
           <ActionIcon
             className="dark:bg-black-light dark:text-white-base bg-white text-black-base shadow-md transition-all ease-in-out duration-200"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
