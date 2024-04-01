@@ -19,7 +19,7 @@ const menuButtons = [
     title: "Build Your Schedule",
     icon: BookMarked,
     color: "violet",
-    link: "/dashboard/plan",
+    link: "/dashboard/plans",
     tab: "Build Schedule",
   },
   {
@@ -47,22 +47,8 @@ const menuButtons = [
     title: "Build a Schedule",
     icon: Building,
     color: "teal",
-    link: "/dashboard/schedule",
+    link: "/dashboard/plans",
     tab: "Build Schedule",
-  },
-  {
-    title: "Saved Schedules",
-    icon: SaveAll,
-    color: "cyan",
-    link: "/dashboard/saved-schedules",
-    tab: "Saved Schedules",
-  },
-  {
-    title: "Meet with an Advisor",
-    icon: SmilePlus,
-    color: "pink",
-    link: "/dashboard/advisor",
-    tab: "Advisor",
   },
   {
     title: "View Your Profile",

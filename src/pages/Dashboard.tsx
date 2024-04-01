@@ -2,6 +2,7 @@ import * as React from "react";
 import { ClassHistory, IntegrationPage } from "@/sections";
 import { Routes, Route } from "react-router-dom";
 import HomeOptions from "@/sections/dashboard/home/HomeOptions";
+import { ProfilePage } from ".";
 
 export default function Dashboard() {
   return (
@@ -10,7 +11,8 @@ export default function Dashboard() {
         <Routes>
           <Route path="" element={<HomeOptions />} />
           <Route path="/transcript" element={<ClassHistory />} />
-          <Route path="integrate-banner" element={<IntegrationPage />} />
+          <Route path="/integrate-banner" element={<IntegrationPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </div>
     </div>
