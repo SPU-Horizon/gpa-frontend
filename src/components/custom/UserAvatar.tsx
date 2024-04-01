@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuShortcut,
 } from "../ui/dropdown-menu";
 import useAuthStore from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
@@ -40,26 +39,17 @@ export function UserAvatar() {
       >
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{firstName + " " + lastName}</p>
+            <p className="text-sm font-medium leading-none">
+              {firstName + " " + lastName}
+            </p>
             <p className="text-xs leading-none text-muted-foreground">
               {email}
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-black-base" />
-        <DropdownMenuGroup>
-          <DropdownMenuItem
-            onClick={() => {
-              setCurrentTab("profile"), navigate("/profile");
-            }}
-          >
-            Profile
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator className="bg-black-base" />
-        <DropdownMenuItem onClick={signOut}>
-          Sign Out
-        </DropdownMenuItem>
+        <DropdownMenuSeparator className="bg-black-light" />
+
+        <DropdownMenuItem onClick={signOut}>Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

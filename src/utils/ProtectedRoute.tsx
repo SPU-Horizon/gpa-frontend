@@ -8,27 +8,17 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import useAuthStore from "@/stores/AuthStore";
 import { Separator } from "@/components/ui/separator";
-import {
-  Castle,
-  Search,
-  Speech,
-  BookMarked,
-  Unplug,
-  ListTodo,
-  Home,
-  User,
-} from "lucide-react";
+import { Castle, Search, Unplug, ListTodo, Home, User } from "lucide-react";
 import { UserAvatar } from "@/components/custom/UserAvatar";
 import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useWindowSize } from "usehooks-ts";
+
 import { useNavigationStore } from "@/stores/NavigationStore";
 
 export const PrivateRoute = () => {
   const { isAuthenticated } = useAuthStore();
   const { currentTab, setCurrentTab } = useNavigationStore();
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const { width } = useWindowSize();
 
   return isAuthenticated ? (
     <div className="h-screen dark:bg-black-base dark:text-white-light">
@@ -101,7 +91,6 @@ export const PrivateRoute = () => {
                   },
                 ]}
               />
-
               <Nav
                 currentLink={currentTab}
                 setCurrentLink={setCurrentTab}
