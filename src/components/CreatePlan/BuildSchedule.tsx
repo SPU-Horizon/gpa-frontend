@@ -126,7 +126,7 @@ const BuildSchedule: React.FC = () => {
                                     {inProgressClassList.map((course: Course) => (
                                         <Card key={course.course_id} className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-grey-dark dark:text-white-base">
                                             {course.course_id} - {course.name}
-                                            <Badge className="ml-2 bg-gold-base">{course.credits} credits</Badge>
+                                            <Badge className="ml-2 bg-gold-light font-semibold">{course.credits} credits</Badge>
                                         </Card>
                                     ))}
                                 </List>

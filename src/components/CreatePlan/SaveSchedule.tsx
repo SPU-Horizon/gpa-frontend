@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Text, Select, Paper } from "@mantine/core";
+import { Card, Text, Select, Paper, Badge } from "@mantine/core";
  
 // Assuming a schedule looks like this:
 interface Schedule {
@@ -73,9 +73,8 @@ const SaveSchedule: React.FC = () => {
               <div className="grid grid-cols-3 gap-4">
                 {selectedSchedule.courses.map((course) => (
                   <Card key={course.code} className="bg-white-300 dark:bg-grey-dark p-2 dark:text-white-base">
-                    <div className="font-medium">{course.code}</div>
-                    <div>{course.title}</div>
-                    <div>{course.credits} Credits</div>
+                    <div className="font-medium">{course.code} - {course.title}</div>
+                    <Badge className="ml-2 bg-gold-light font-semibold">{course.credits} credits</Badge>
                   </Card>
                 ))}
               </div>
