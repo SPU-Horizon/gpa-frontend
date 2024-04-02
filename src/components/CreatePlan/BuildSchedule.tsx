@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useUserStore, useCourseStore } from "@/stores"; 
+import { useUserStore, useCourseStore, useThemeStore } from "@/stores"; 
 import { UnstyledButton, Text, Badge, Group,List, SimpleGrid, Grid, Card, rem} from "@mantine/core";
-import {Blocks ,Orbit,} from "lucide-react";
+import {Footprints ,Network,} from "lucide-react";
 
 interface Course {
     course_id: string;
@@ -13,8 +13,8 @@ interface Course {
 const PRIMARY_COL_HEIGHT = rem(400);
 
 const mockdata = [
-    { title: 'Automated Schedule Builder', icon: Blocks, color: 'green' },
-    { title: 'All Other Majors', icon: Orbit, color: 'yellow' },
+    { title: 'Automated Schedule Builder', icon: Network, color: 'black', darkColor: 'white'},
+    { title: 'All Other Majors', icon: Footprints, color: 'black', darkColor: 'white'},
 ];
 
 const BuildSchedule: React.FC = () => {
@@ -23,7 +23,7 @@ const BuildSchedule: React.FC = () => {
     const [selectedField, setSelectedField] = useState('');
     const [remainingCourses, setRemainingCourses] = useState<string[]>([]);
     const [value, setValue] = useState<Date | null>(null);
-    
+    const { theme } = useThemeStore();
 
     useEffect(() => {
         initializeUserInfo();
@@ -96,9 +96,9 @@ const BuildSchedule: React.FC = () => {
     const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`; // 50% of the primary column height
 
     const items = mockdata.map((item) => (
-        <UnstyledButton key={item.title} className="bg-gray-100 dark:bg-black-light dark:border-none flex flex-col items-center justify-center text-center rounded-md h-[180px] hover:scale-[1.03] hover:shadow-md transition-all duration-200 ease-in-out">
-          <item.icon color={"gray"} size="2rem" />
-            <Text className="dark:text-white-light" size="md" mt={8}>
+        <UnstyledButton key={item.title} className="bg-gray-100 dark:bg-grey-dark flex flex-col items-center justify-center text-center rounded-md h-full hover:scale-[1.03] hover:shadow-md transition-all duration-200 ease-in-out">
+          <item.icon color={theme === "dark" ? item.darkColor : item.color} size="2rem" />
+            <Text className="dark:text-white-light font-semibold" mt={8}>
                 {item.title}
             </Text>
         </UnstyledButton>
@@ -113,7 +113,7 @@ const BuildSchedule: React.FC = () => {
                                 <Group justify="space-between">
                                     <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">Plan Options</h1>
                                 </Group>
-                                <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }} spacing="lg" mt="md">
+                                <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }} spacing="lg" mt="md" className="h-full">
                                     {items}
                                 </SimpleGrid>
                             </Card>
@@ -122,9 +122,9 @@ const BuildSchedule: React.FC = () => {
                             {/* "Registered Courses" section */}
                             <Card className="flex flex-col w-full overflow-hidden border border-gray-100 dark:border-gray-700 dark:bg-black-light">
                                 <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">Registered Courses</h1>
-                                <List spacing="sm" size="sm" center>
+                                <List spacing="sm" size="sm" center className="overflow-scroll max-h-[20rem]">
                                     {inProgressClassList.map((course: Course) => (
-                                        <Card key={course.course_id} className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-gold-base dark:text-white-base">
+                                        <Card key={course.course_id} className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-grey-dark dark:text-white-base">
                                             {course.course_id} - {course.name}
                                             <Badge className="ml-2 bg-gold-base">{course.credits} credits</Badge>
                                         </Card>
