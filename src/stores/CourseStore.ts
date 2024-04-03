@@ -9,6 +9,7 @@ type CourseStore = {
   initializeCourseInfo: () => void;
   inProgressClassList: [];
   completedClassList: [];
+  registeredClassList: [];
   gpa: number;
 };
 
@@ -58,6 +59,7 @@ const useCourseStoreTemplate: StateCreator<
     // Initialize classLists and gpa
     inProgressClassList: [],
     completedClassList: [],
+    registeredClassList: [],
     gpa: 0,
 
     // Call getEnrollments and set classList
@@ -65,12 +67,13 @@ const useCourseStoreTemplate: StateCreator<
       const enrollments = await useCourseStore.getState().getEnrollments();
 
       // Destructure the enrollments object
-      const { current, past, gpa } = enrollments;
+      const { current, past, future, gpa } = enrollments;
 
       // Set the values for inProgressClassList, completedClassList, and gpa
       set({
         inProgressClassList: current || [], // Set to an empty array if 'current' is undefined
         completedClassList: past || [], // Set to an empty array if 'past' is undefined
+        registeredClassList: future || [], // Set to an empty array if 'future' is undefined
         gpa: gpa || 0, // Set to 0 if 'gpa' is undefined
       });
     },
