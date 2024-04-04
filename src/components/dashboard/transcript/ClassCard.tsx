@@ -56,6 +56,11 @@ export default function ClassCard({
               </div>
             </div>
             <div className="text-md font-medium">{item.name}</div>
+            {item.credits === "0" ? (
+              <>Credits unavailable</>
+            ) : (
+              <>{item.credits} Credits</>
+            )}
           </div>
         </button>
       </DialogTrigger>

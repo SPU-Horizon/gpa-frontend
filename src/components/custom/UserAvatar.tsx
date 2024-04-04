@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuShortcut,
 } from "../ui/dropdown-menu";
 import useAuthStore from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
@@ -25,9 +26,10 @@ export function UserAvatar() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={undefined} alt="@shadcn" />
+            <AvatarImage src={""} alt="@shadcn" />
             <AvatarFallback className="bg-black-base text-white-light">
-              UN
+              {firstName[0].toLocaleUpperCase() +
+                lastName[0].toLocaleUpperCase()}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -47,9 +49,22 @@ export function UserAvatar() {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-black-light" />
-
-        <DropdownMenuItem onClick={signOut}>Sign Out</DropdownMenuItem>
+        <DropdownMenuSeparator className="bg-black-base" />
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            onClick={() => {
+              setCurrentTab("profile"), navigate("/profile");
+            }}
+          >
+            Profile
+            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator className="bg-black-base" />
+        <DropdownMenuItem onClick={signOut}>
+          Sign Out
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
