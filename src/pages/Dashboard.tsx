@@ -11,7 +11,7 @@ export default function Dashboard() {
         <Routes>
           <Route path="" element={<HomeOptions />} />
           <Route path="/transcript" element={<ClassHistory />} />
-          <Route path="/build-schedule" element={<CreatePlan />} />
+          <Route path="/plans" element={<CreatePlan />} />
           <Route path="/integrate-banner" element={<IntegrationPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
