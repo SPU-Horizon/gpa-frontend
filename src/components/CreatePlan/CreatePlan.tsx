@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { useUserStore, useCourseStore } from "@/stores"; 
-import { Paper, Modal, Text, Badge, Group, Select, Button, List, Container, SimpleGrid, Grid, Card,Skeleton, rem} from "@mantine/core";
+import { Checkbox, TextInput, Select, Button, List, Container, SimpleGrid, Grid, Card,Skeleton, rem} from "@mantine/core";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MonthPickerInput } from '@mantine/dates';
   
+interface Course {
+    course_id: string;
+    name: string;
+    credits: string; // or number, depending on your actual data structure
+}
+interface CreatePlanProps {
+    onCompleted: () => void; 
+}
 
-const CreatePlan = () => {
-
+const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     const { firstName, lastName, studentId, graduationQuarter, graduationYear, fieldRequirements, initializeUserInfo } = useUserStore(); // Provide a default empty array
     const { completedClassList, inProgressClassList } = useCourseStore();
     const [fieldOfStudy, setFieldOfStudy] = useState('');
@@ -16,22 +23,49 @@ const CreatePlan = () => {
     const [classesToRepeat, setClassesToRepeat] = useState([]);
     const [selectedField, setSelectedField] = useState('');
     const [value, setValue] = useState<Date | null>(null);
+    const [selectedCoursesToRepeat, setSelectedCoursesToRepeat] = useState<string[]>([]);
+
+    // Function to handle checkbox changes
+    const handleCourseSelect = (courseId: string) => {
+        setSelectedCoursesToRepeat(prev => {
+            if (prev.includes(courseId)) {
+                return prev.filter(id => id !== courseId);
+            } else {
+                return [...prev, courseId];
+            }
+        });
+    };
+
+    // Function to render the list of checkboxes for classes
+    const renderClassCheckboxes = () => {
+        return inProgressClassList.map((course: Course) => (
+            <Checkbox
+                key={course.course_id}
+                label={`${course.name} (${course.credits} credits)`}
+                value={course.course_id}
+                checked={selectedCoursesToRepeat.includes(course.course_id)}
+                onChange={() => handleCourseSelect(course.course_id)}
+            />
+        ));
+    };
 
     const handleCreatePlanSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
         const newPlan = {
           fieldOfStudy,
           planName,
           maxCredit,
           idealCredits,
-          classesToRepeat,
+          classesToRepeat: selectedCoursesToRepeat, 
           // ... any other necessary data
         };
+    
+        // Logic to save the new plan
+        // After saving the plan successfully, call the onCompleted callback
+        onCompleted();
+    };
       
-        // Pass newPlan to the SaveSchedule component's save function
-        // This could be done via context, props, or global state management
-        // savePlan(newPlan);
-      };
       
 
     const fieldOptions = fieldRequirements?.map((field) => ({
@@ -62,16 +96,24 @@ const CreatePlan = () => {
                                 onChange={setValue}
                                 required
                             />
-                            <Select
-                                label="Select your field of study"
-                                placeholder="Field of study"
-                                data={fieldOptions}
-                                value={selectedField}
-                                onChange={(value) => setSelectedField(value || '')}
+                            <TextInput 
+                                label="Max Credit" 
+                                placeholder="Enter maximum credit"
+                                value={maxCredit}
+                                onChange={(event) => setMaxCredit(event.currentTarget.value)}
                                 required
                             />
+                            <TextInput 
+                                label="Ideal credits per quarter" 
+                                placeholder="Enter ideal credits"
+                                value={idealCredits}
+                                onChange={(event) => setIdealCredits(event.currentTarget.value)}
+                                required
+                            />
+                            {/* Render checkboxes for selecting classes to repeat */}
+  
                             <div className="my-4 text-center"> 
-                                <button type="submit" className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</button>
+                                <Button type="submit" variant="outline" className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</Button>
                             </div>
                         </form>
                     </TabsContent>
