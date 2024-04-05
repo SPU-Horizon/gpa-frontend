@@ -8,13 +8,11 @@ type UserState = {
   firstName: string;
   lastName: string;
   studentId: number;
-  avatar: string;
   graduationYear: number;
   graduationQuarter: string;
   fieldRequirements: [];
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
-  uploadProfilePicture: (file: FormData) => Promise<void>;
 };
 
 // Create the Zustand store
@@ -40,23 +38,7 @@ const UserStoreTemplate: StateCreator<
       return res;
     },
 
-    uploadProfilePicture: async (file: FormData) => {
-      try {
-        await axios.post(
-          "http://localhost:3000/user/upload-profile-photo",
-          file,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    //Initialie user info
+    //Initialize user info
     firstName: "",
     lastName: "",
     studentId: 0,
@@ -83,7 +65,6 @@ const UserStoreTemplate: StateCreator<
         studentId: student_id,
         firstName: first_name,
         lastName: last_name,
-        avatar: avatar,
         graduationYear: graduation_year,
         graduationQuarter: graduation_quarter,
         fieldRequirements: field_requirements,

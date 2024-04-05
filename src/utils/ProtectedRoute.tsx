@@ -12,7 +12,6 @@ import { Castle, Search, Unplug, ListTodo, Home, User } from "lucide-react";
 import { UserAvatar } from "@/components/custom/UserAvatar";
 import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-
 import { useNavigationStore } from "@/stores/NavigationStore";
 
 export const PrivateRoute = () => {
@@ -89,24 +88,11 @@ export const PrivateRoute = () => {
                     variant: "ghost",
                     route: "/transcript",
                   },
-                ]}
-              />
-              <Nav
-                currentLink={currentTab}
-                setCurrentLink={setCurrentTab}
-                isCollapsed={isCollapsed}
-                links={[
                   {
                     title: "BannerSync",
                     icon: Unplug,
                     variant: "ghost",
                     route: "/integrate-banner",
-                  },
-                  {
-                    title: "Profile",
-                    icon: User,
-                    variant: "ghost",
-                    route: "/profile",
                   },
                 ]}
               />
