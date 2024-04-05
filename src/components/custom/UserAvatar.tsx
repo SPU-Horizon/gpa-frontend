@@ -19,7 +19,12 @@ export function UserAvatar() {
   const { signOut, email } = useAuthStore();
   const { setCurrentTab } = useNavigationStore();
   const navigate = useNavigate();
-  const { firstName, lastName } = useUserStore();
+  let { firstName, lastName } = useUserStore();
+
+  if (!firstName || !lastName) {
+    firstName = "First";
+    lastName = "Last";
+  }
 
   return (
     <DropdownMenu>

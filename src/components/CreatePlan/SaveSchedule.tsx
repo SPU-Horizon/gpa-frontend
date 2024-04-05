@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Text, Select, Paper, Badge } from "@mantine/core";
- 
+
 // Assuming a schedule looks like this:
 interface Schedule {
   id: string;
@@ -31,20 +31,20 @@ const schedules: Schedule[] = [
   },
   // Add more schedules as needed
 ];
- 
+
 const SaveSchedule: React.FC = () => {
   // Initialize with empty array or fetch from local storage/api
   const [savedSchedules, setSavedSchedules] = useState<Schedule[]>([]);
   const [selectedScheduleId, setSelectedScheduleId] = useState<string | null>(
     null
   );
- 
+
   const selectedSchedule = schedules.find(
     (schedule) => schedule.id === selectedScheduleId
   );
- 
+
   return (
-    <div className="flex flex-grow  min-h-[500px] m-12 pb-4 ">
+    <div className="flex flex-grow  min-h-[500px] m-12 pb-4 md:my-4 md:mx-8 ">
       <Paper className="flex flex-col w-full rounded overflow-hidden bg-white-light dark:border-gray-700 dark:shadow-gray-700/50 dark:bg-black-light">
         <Text size="xl" mb="md" className="font-bold ml-4 mt-4">
           Saved Schedules
@@ -58,23 +58,29 @@ const SaveSchedule: React.FC = () => {
           }))}
           value={selectedScheduleId}
           onChange={(value: string | null) => setSelectedScheduleId(value)}
-          className="w-1/2 ml-4"
+          className="w-full pl-4"
         />
- 
+
         {/* Display the selected schedule */}
         {selectedSchedule && (
           <div className="mt-4">
             <Card
               withBorder
-              p="lg"
-              className="flex flex-col w-full bg-gray-100 dark:border-none dark:shadow-gray-700/50 dark:bg-black-light dark:text-white-base"
+              className="flex flex-col w-full bg-gray-100 dark:border-none dark:shadow-gray-700/50 dark:bg-black-light dark:text-white-base ml-4"
             >
               <div className="font-bold mb-2">{selectedSchedule.name}</div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4 pr-4 md:flex md:flex-col md:gap-3">
                 {selectedSchedule.courses.map((course) => (
-                  <Card key={course.code} className="bg-white-300 dark:bg-grey-dark p-2 dark:text-white-base">
-                    <div className="font-medium">{course.code} - {course.title}</div>
-                    <Badge className="ml-2 bg-gold-light font-semibold">{course.credits} credits</Badge>
+                  <Card
+                    key={course.code}
+                    className="bg-white-300 dark:bg-grey-dark p-2 dark:text-white-base "
+                  >
+                    <div className="font-medium">
+                      {course.code} - {course.title}
+                    </div>
+                    <Badge className="ml-2 bg-gold-light font-semibold">
+                      {course.credits} credits
+                    </Badge>
                   </Card>
                 ))}
               </div>
@@ -88,6 +94,5 @@ const SaveSchedule: React.FC = () => {
     </div>
   );
 };
- 
-export default SaveSchedule;
 
+export default SaveSchedule;
