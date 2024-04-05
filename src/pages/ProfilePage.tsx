@@ -28,8 +28,15 @@ const formSchema = z.object({
 export default function Profile() {
   const { email } = useAuthStore();
 
-  const { firstName, lastName, graduationQuarter, graduationYear } =
+  let { firstName, lastName, graduationQuarter, graduationYear } =
     useUserStore();
+
+  if (!firstName || !lastName || !graduationQuarter || !graduationYear) {
+    firstName = "First";
+    lastName = "Last";
+    graduationQuarter = "Quarter";
+    graduationYear = 2024;
+  }
 
   // This creates a component named form, following the schema declared above
   // There are some default values set below.
