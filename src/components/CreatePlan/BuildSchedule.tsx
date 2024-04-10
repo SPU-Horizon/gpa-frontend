@@ -155,7 +155,7 @@ const BuildSchedule: React.FC = () => {
 
   return (
     <div className="flex flex-grow ml-12 mr-12 mt-4  md:mx-8">
-      <div className="grid grid-cols-6 w-full h-[400px] md:flex md:flex-col md:gap-16 md:h-auto">
+      <div className="grid grid-cols-6 gap-4 w-full h-[400px] md:flex md:flex-col md:gap-16 md:h-auto">
         <div className="flex col-span-4 md:h-[400px]">
           {/* "Create a Plan" section */}
           <Card className="flex flex-col w-full overflow-hidden border border-gray-100 dark:border-gray-700 dark:bg-black-light">

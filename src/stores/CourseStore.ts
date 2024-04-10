@@ -1,6 +1,6 @@
 import { StateCreator, create } from "zustand";
 import axios from "axios";
-import useAuthStore from "./AuthStore";
+import { useUserStore } from ".";
 import { persist } from "zustand/middleware";
 
 type CourseStore = {
@@ -20,10 +20,11 @@ const useCourseStoreTemplate: StateCreator<
 > = persist(
   (set) => ({
     getEnrollments: async () => {
-      const email = useAuthStore.getState().email;
+      // Get the student ID from the user store
+      const studentId = useUserStore.getState().studentId;
 
       const res = await axios
-        .get(`http://localhost:3000/course/getCourses?email=${email}`)
+        .get(`http://localhost:3000/course/getCourses?id=${studentId}`)
         .then((response) => {
           return response.data;
         })

@@ -5,6 +5,9 @@ import Footer from "@/components/dashboard/home/Footer";
 import { StatsGrid } from "@/components/dashboard/home/StatsGrid";
 import { ActionsGrid } from "@/components/dashboard/home/MenuOptionsNew";
 import { Separator } from "@/components/ui/separator";
+import ContactAdvisors from "./ContactAdvisor";
+import { SimpleGrid } from "@mantine/core";
+import RegisteredCourseList from "./RegisteredCourses";
 
 export default function HomeOptions() {
   const navigate = useNavigate(); // React Router's useNavigate hook
@@ -21,9 +24,13 @@ export default function HomeOptions() {
       <Separator />
       <ScrollArea>
         <StatsGrid />
-        <div className="m-4">
-          <ActionsGrid />
-        </div>
+        <SimpleGrid className="my-8 mx-4" cols={{ base: 1, xs: 2, md: 3 }}>
+          <RegisteredCourseList />
+          <div>PlaceHolder</div>
+          <ContactAdvisors />
+          <div>PlaceHolder</div>
+          <div>PlaceHolder</div>
+        </SimpleGrid>
       </ScrollArea>
       <Footer />
     </div>
