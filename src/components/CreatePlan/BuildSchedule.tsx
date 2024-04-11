@@ -13,12 +13,17 @@ import {
   rem,
 } from "@mantine/core";
 import { Footprints, Network } from "lucide-react";
+import CreatePlan from "@/components/CreatePlan/CreatePlan";
 
 interface Course {
   course_id: string;
   name: string;
   credits: string; // or number, depending on your actual data structure
 }
+    // Function to handle the completion of creating a plan
+    const handleCreatePlanCompleted = () => {
+        
+    };
 
 const PRIMARY_COL_HEIGHT = rem(400);
 
@@ -159,19 +164,12 @@ const BuildSchedule: React.FC = () => {
         <div className="flex col-span-4 md:h-[400px]">
           {/* "Create a Plan" section */}
           <Card className="flex flex-col w-full overflow-hidden border border-gray-100 dark:border-gray-700 dark:bg-black-light">
-            <Group justify="space-between">
-              <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">
-                Plan Options
-              </h1>
-            </Group>
-            <SimpleGrid
-              cols={{ base: 1, xs: 1, md: 2 }}
-              spacing="lg"
-              mt="md"
-              className="h-full"
-            >
-              {items}
-            </SimpleGrid>
+            <div className="flex flex-col">
+              {/* <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">
+                Create a Plan
+              </h1> */}
+              <CreatePlan onCompleted={handleCreatePlanCompleted} />
+            </div>
           </Card>
         </div>
         <div className="flex col-span-2 md:h-[300px]">
@@ -192,7 +190,7 @@ const BuildSchedule: React.FC = () => {
                   className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-grey-dark dark:text-white-base"
                 >
                   {course.course_id} - {course.name}
-                  <Badge className="ml-2 bg-gold-light font-semibold">
+                  <Badge className="ml-2 bg-gold-base font-semibold">
                     {course.credits} credits
                   </Badge>
                 </Card>

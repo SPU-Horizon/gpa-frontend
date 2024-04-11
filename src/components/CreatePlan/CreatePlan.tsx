@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUserStore, useCourseStore } from "@/stores"; 
-import { Checkbox, TextInput, Select, Button, List, Container, SimpleGrid, Grid, Card,Skeleton, rem} from "@mantine/core";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MonthPickerInput } from '@mantine/dates';
+import { Card, NumberInput, Select, Button,Stepper, Group, Checkbox, Text} from "@mantine/core";
+import { TextCursorInput, ScanEye, Pocket} from "lucide-react"; 
   
 interface Course {
     course_id: string;
@@ -14,16 +13,28 @@ interface CreatePlanProps {
 }
 
 const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
-    const { firstName, lastName, studentId, graduationQuarter, graduationYear, fieldRequirements, initializeUserInfo } = useUserStore(); // Provide a default empty array
+    const { fieldRequirements } = useUserStore(); // Provide a default empty array
     const { completedClassList, inProgressClassList } = useCourseStore();
     const [fieldOfStudy, setFieldOfStudy] = useState('');
     const [planName, setPlanName] = useState('');
     const [maxCredit, setMaxCredit] = useState('');
-    const [idealCredits, setIdealCredits] = useState('');
-    const [classesToRepeat, setClassesToRepeat] = useState([]);
     const [selectedField, setSelectedField] = useState('');
-    const [value, setValue] = useState<Date | null>(null);
     const [selectedCoursesToRepeat, setSelectedCoursesToRepeat] = useState<string[]>([]);
+    const [reviewPlan, setReviewPlan] = useState(false); 
+    const [active, setActive] = useState(1);
+    const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
+    
+
+    useEffect(() => {
+        console.log('fieldRequirements:', fieldRequirements);
+    }, [fieldRequirements]); 
+
+    // Dummy data for fields and in-progress classes
+    const fieldsOptions = [
+        { value: 'science', label: 'Computer Science' },
+        { value: 'engineering', label: 'Computer Engineering' },
+        { value: 'biology', label: 'Biology' },
+    ];
 
     // Function to handle checkbox changes
     const handleCourseSelect = (courseId: string) => {
@@ -36,104 +47,128 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
         });
     };
 
-    // Function to render the list of checkboxes for classes
-    const renderClassCheckboxes = () => {
-        return inProgressClassList.map((course: Course) => (
-            <Checkbox
-                key={course.course_id}
-                label={`${course.name} (${course.credits} credits)`}
-                value={course.course_id}
-                checked={selectedCoursesToRepeat.includes(course.course_id)}
-                onChange={() => handleCourseSelect(course.course_id)}
-            />
-        ));
+    const handleFirstStepSubmit = () => {
+        nextStep();
     };
 
-    const handleCreatePlanSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        
-        const newPlan = {
-          fieldOfStudy,
-          planName,
-          maxCredit,
-          idealCredits,
-          classesToRepeat: selectedCoursesToRepeat, 
-          // ... any other necessary data
-        };
-    
-        // Logic to save the new plan
-        // After saving the plan successfully, call the onCompleted callback
-        onCompleted();
+    const handleSecondStepSubmit = () => {
+        // Logic for second step submission
+        setActive(2); // Go to third step
     };
-      
-      
+
+    const handleSavePlan = () => {
+    // Logic for saving the plan
+    onCompleted(); // Plan is saved, perform completion actions
+    };
+
+    // Function for discarding the plan
+    const handleDiscardPlan = () => {
+    // Logic for discarding the plan
+    setActive(0); // Return to the first step
+    };
+    
+    const handleReviewPlan = () => {
+    // Logic to handle review and save the plan
+    console.log('Plan reviewed and saved');
+    setReviewPlan(true);
+    onCompleted(); // This can be called after the plan is successfully saved
+    };      
 
     const fieldOptions = fieldRequirements?.map((field) => ({
         value: field,
         label: field
     })) || [];
 
-    const handleSavePlan = () => {
-        // Implement save plan logic here
-    };
-
     return (
         <div className = 'font-avenir'>
-           <Card withBorder p="lg" className="flex flex-col w-full">
-                <h1 className="text-xl font-bold ml-2 mt-4 ">Create a Plan</h1>
-
-                <Tabs defaultValue="automated">
-                <TabsList className="bg-transparent">
-                    <TabsTrigger value="automated" className="text-lg mr-4 bg-gray-100 hover:bg-gray-200 w-full">Automated Plan</TabsTrigger>
-                    <TabsTrigger value="manual" className="text-lg bg-gray-100 hover:bg-gray-200 w-full">All Other Majors </TabsTrigger>
-                </TabsList>
-                    <TabsContent value="automated">
-                        <form onSubmit={handleSavePlan} className="flex flex-col gap-4 mt-4">
-                            <MonthPickerInput
-                                label="Admitted Quarter (e.g., June 2024)"
-                                placeholder="Pick date"
-                                value={value}
-                                onChange={setValue}
-                                required
-                            />
-                            <TextInput 
-                                label="Max Credit" 
-                                placeholder="Enter maximum credit"
-                                value={maxCredit}
-                                onChange={(event) => setMaxCredit(event.currentTarget.value)}
-                                required
-                            />
-                            <TextInput 
-                                label="Ideal credits per quarter" 
-                                placeholder="Enter ideal credits"
-                                value={idealCredits}
-                                onChange={(event) => setIdealCredits(event.currentTarget.value)}
-                                required
-                            />
-                            {/* Render checkboxes for selecting classes to repeat */}
-  
-                            <div className="my-4 text-center"> 
-                                <Button type="submit" variant="outline" className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</Button>
-                            </div>
-                        </form>
-                    </TabsContent>
-                    <TabsContent value="manual">
-                        <form onSubmit={handleSavePlan} className="flex flex-col gap-4 mt-4">
+                <Stepper color="gray" active={active}>
+                    {/* Form to input preferences */}
+                    <Stepper.Step label="Input Preferences">
+                    <form onSubmit={handleSavePlan} className="flex flex-col gap-4 mt-4">
                             <Select
-                                label="Select your field of study"
-                                placeholder="Field of study"
-                                data={fieldOptions}
+                                required
+                                label="Selected field"
+                                placeholder="Select a field"
+                                data={fieldsOptions}
                                 value={selectedField}
                                 onChange={(value) => setSelectedField(value || '')}
-                                required
                             />
-                            <div className="my-4 text-center"> 
-                                <button type="submit" className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</button>
+                            <NumberInput
+                                required
+                                label="Max credits per quarter"
+                                placeholder="Enter max credits"
+                                value={maxCredit}
+                                onChange={(val) => setMaxCredit(val.toString())}
+                            />
+                            <div>
+                                <label className="block text-sm font-medium">
+                                    Select from the list below courses you'd like to retake:
+                                </label>
+                                <div className="border max-h-[100px] overflow-y-auto">
+                                    {inProgressClassList.map((course: Course) => (
+                                    <div key={course.course_id} className="px-4 py-2">
+                                    <Checkbox
+                                        
+                                        label={`${course.course_id} ${course.name} - ${course.credits} credits`}
+                                        checked={selectedCoursesToRepeat.includes(course.course_id)}
+                                        onChange={() => handleCourseSelect(course.course_id)}
+                                        color="gray"
+                                    />
+                                    </div>
+                                    ))}
+                                </div>
                             </div>
                         </form>
-                    </TabsContent>
-                </Tabs>
-            </Card>
+                        <div className="flex justify-center">
+                            <Button
+                                className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
+                                onClick={handleFirstStepSubmit}
+                            >
+                                Submit Preferences
+                            </Button>
+                        </div>
+                    </Stepper.Step>
+                    {/* Dynamic User Preference */}
+                    <Stepper.Step label="Customize Preferences">
+                    <div className="flex justify-center">
+                            <Button
+                                className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
+                                onClick={handleSecondStepSubmit}
+                            >
+                                Submit Preferences
+                            </Button>
+                    </div>
+                    
+                    </Stepper.Step>
+                    {/* Render review plan */}
+                    <Stepper.Step label="Review Plan">
+                        {reviewPlan && (
+                            <>
+                            <Card shadow="sm" p="lg" className="mb-4">
+                                {/* Display the plan summary for review */}
+                            </Card>
+                            <Button onClick={handleReviewPlan}>Save Plan</Button>
+                            <Button onClick={handleDiscardPlan} color="red">Discard Plan</Button>
+                            </>
+                        )}
+                        <div className="flex justify-center space-x-8">
+                            <Button 
+                            className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
+                            onClick={handleSavePlan}>Save Plan</Button>
+                            <Button
+                            className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"  
+                            onClick={handleDiscardPlan}>Discard Plan</Button>
+                        </div>
+                
+                    </Stepper.Step>
+                <Stepper.Completed>
+                    <div>Completed
+                    <Button
+                    className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"  
+                    onClick={handleDiscardPlan}>Create Another Plan</Button>
+                    </div>
+                </Stepper.Completed>
+            </Stepper>            
         </div>
     );
 };
