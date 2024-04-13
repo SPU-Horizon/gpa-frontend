@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useUserStore, useCourseStore } from "@/stores"; 
-import { Card, NumberInput, Select, Button,Stepper, Text, Checkbox, rem} from "@mantine/core";
-import { Check, TextCursorInput, ScanEye, Pocket} from "lucide-react"; //<Check />
+import { TextInput, Card, NumberInput, Select, Button,Stepper, Text, Checkbox, rem} from "@mantine/core";
+import { TextCursorInput, ScanEye, Pocket} from "lucide-react"; //<Check />
   
 interface Course {
     course_id: string;
@@ -14,7 +14,7 @@ interface CreatePlanProps {
 
 const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     const { fieldRequirements } = useUserStore(); // Provide a default empty array
-    const { completedClassList, inProgressClassList } = useCourseStore();
+    const { inProgressClassList } = useCourseStore();
     const [fieldOfStudy, setFieldOfStudy] = useState('');
     const [planName, setPlanName] = useState('');
     const [maxCredit, setMaxCredit] = useState('');
@@ -23,7 +23,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     const [reviewPlan, setReviewPlan] = useState(false); 
     const [active, setActive] = useState(1);
     const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-    
 
     useEffect(() => {
         console.log('fieldRequirements:', fieldRequirements);
@@ -46,7 +45,8 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             }
         });
     };
-
+    
+    // Logic for first step submission of student input
     const handleFirstStepSubmit = () => {
         nextStep();
     };
@@ -134,7 +134,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                                 className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
                                 onClick={handleFirstStepSubmit}
                             >
-                                Submit Preferences
+                                Submit
                             </Button>
                         </div>
                     </Stepper.Step>
@@ -161,13 +161,29 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                             <Button onClick={handleDiscardPlan} color="red">Discard Plan</Button>
                             </>
                         )}
-                        <div className="flex justify-center space-x-8">
+                        <div className="flex flex-col items-center mb-4">
+
+                        <div className="w-full max-w-md p-4 border rounded-lg shadow-sm">
+                            <TextInput
+                                label="Plan Name"
+                                placeholder="Enter your plan name"
+                                value={planName}
+                                onChange={(event) => setPlanName(event.currentTarget.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+                        <div className="flex justify-center space-x-4">
                             <Button 
-                            className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
-                            onClick={handleSavePlan}>Save Plan</Button>
+                                className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full"
+                                onClick={handleSavePlan}>
+                                Save Plan
+                            </Button>
                             <Button
-                            className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"  
-                            onClick={handleDiscardPlan}>Discard Plan</Button>
+                                className="bg-gold-base text-white font-bold px-4 py-2 rounded-full"
+                                onClick={handleDiscardPlan}>
+                                Discard Plan
+                            </Button>
                         </div>
                 
                     </Stepper.Step>
