@@ -159,7 +159,7 @@ const BuildSchedule: React.FC = () => {
   ));
 
   return (
-    <div className="flex flex-row-reverse space-x-4 space-x-reverse ml-12 mr-12 mt-4  md:mx-8">
+    <div className="flex  ml-12 mr-12 mt-4  md:mx-8">
       <div className="grid grid-cols-6 w-full h-[400px] md:flex md:flex-col md:gap-16 md:h-auto">
         <div className="flex col-span-4 md:h-[400px]">
           {/* "Create a Plan" section */}
