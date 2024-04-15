@@ -21,7 +21,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     const [selectedField, setSelectedField] = useState('');
     const [selectedCoursesToRepeat, setSelectedCoursesToRepeat] = useState<string[]>([]);
     const [reviewPlan, setReviewPlan] = useState(false); 
-    const [active, setActive] = useState(1);
+    const [active, setActive] = useState(0);
     const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
 
     useEffect(() => {
