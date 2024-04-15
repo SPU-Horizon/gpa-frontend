@@ -22,7 +22,7 @@ export default function MyRegisteredList() {
   let { registeredClassList } = useCourseStore();
 
   return (
-    <Card className="col-span-2 xl:col-span-full">
+    <Card className="col-span-2 md:col-span-2 xl:col-span-full">
       <CardHeader className="px-7 mb-2 flex flex-row justify-between items-center">
         <div>
           <CardTitle>My Courses</CardTitle>

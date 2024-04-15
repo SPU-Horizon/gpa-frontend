@@ -31,9 +31,9 @@ export default function Profile() {
   let { firstName, lastName, graduationQuarter, graduationYear } =
     useUserStore();
 
-  if (!firstName || !lastName || !graduationQuarter || !graduationYear) {
-    firstName = "First";
-    lastName = "Last";
+  console.log(firstName, lastName, graduationQuarter, graduationYear);
+
+  if (!graduationQuarter || !graduationYear) {
     graduationQuarter = "Quarter";
     graduationYear = 2024;
   }
@@ -49,7 +49,7 @@ export default function Profile() {
 
   return (
     <ScrollArea className="mt-6 h-full w-full">
-      <div className="max-w-[90%] mx-auto">
+      <div className="max-w-[90%] mx-auto mb-24">
         <h1 className="text-3xl font-bold">Profile</h1>
 
         <Separator className="my-4" />

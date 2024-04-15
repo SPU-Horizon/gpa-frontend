@@ -11,6 +11,13 @@ type UserState = {
   graduationYear: number;
   graduationQuarter: string;
   fieldRequirements: [];
+  counselor_email: string;
+  counselor_name: string;
+  counselor_phone: string;
+  counselor_id: number;
+  counselor_title: string;
+  counselor_meeting_link: string;
+  counselor_last_names_served: string;
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
 };
@@ -44,11 +51,20 @@ const UserStoreTemplate: StateCreator<
     studentId: 0,
     graduationYear: 0,
     graduationQuarter: "",
+    counselor_email: "",
+    counselor_name: "",
+    counselor_phone: "",
+    counselor_id: 0,
+    counselor_title: "",
+    counselor_meeting_link: "",
+    counselor_last_names_served: "",
     fieldRequirements: [],
 
     //Call getUserInfo and set user info
     initializeUserInfo: async () => {
       const userInfo = await useUserStore.getState().getUserInfo();
+
+      console.log(userInfo);
 
       const {
         student_id,
@@ -57,7 +73,24 @@ const UserStoreTemplate: StateCreator<
         graduation_year,
         graduation_quarter,
         field_requirements,
+        counselor_email,
+        counselor_name,
+        counselor_phone,
+        counselor_id,
+        counselor_title,
+        counselor_meeting_link,
+        counselor_last_names_served,
       } = userInfo;
+
+      console.log(
+        counselor_email,
+        counselor_name,
+        counselor_phone,
+        counselor_id,
+        counselor_title,
+        counselor_meeting_link,
+        counselor_last_names_served
+      );
 
       set({
         studentId: student_id,
@@ -66,6 +99,13 @@ const UserStoreTemplate: StateCreator<
         graduationYear: graduation_year,
         graduationQuarter: graduation_quarter,
         fieldRequirements: field_requirements,
+        counselor_email,
+        counselor_name,
+        counselor_phone,
+        counselor_id,
+        counselor_title,
+        counselor_meeting_link,
+        counselor_last_names_served,
       });
     },
   }),
