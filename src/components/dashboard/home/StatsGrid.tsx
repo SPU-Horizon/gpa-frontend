@@ -107,7 +107,7 @@ export function StatsGrid() {
           p="lg"
           radius="md"
           key={0}
-          className=" dark:bg-black-light dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out"
+          className=" dark:bg-[#030712] dark:border-gray-700 hover:scale-[1.01] transition-all duration-200 ease-in-out"
         >
           <div className="flex justify-between items-center">
             <div className="flex flex-col self-start">

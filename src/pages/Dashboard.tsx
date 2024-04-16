@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ClassHistory, IntegrationPage, CreatePlan } from "@/sections";
 import { Routes, Route } from "react-router-dom";
-import HomeOptions from "@/sections/dashboard/home/HomeOptions";
+import HomeOptions from "@/sections/dashboard/HomeOptions";
 import { ProfilePage } from ".";
 
 export default function Dashboard() {

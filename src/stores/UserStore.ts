@@ -10,7 +10,16 @@ type UserState = {
   studentId: number;
   graduationYear: number;
   graduationQuarter: string;
+  enrollmentQuarter: string;
+  enrollmentYear: string;
   fieldRequirements: [];
+  counselorEmail: string;
+  counselorName: string;
+  counselorPhone: string;
+  counselorId: number;
+  counselorTitle: string;
+  counselorMeetingLink: string;
+  counselorLastnamesServed: string;
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
 };
@@ -42,23 +51,41 @@ const UserStoreTemplate: StateCreator<
     firstName: "",
     lastName: "",
     studentId: 0,
-    avatar: "",
     graduationYear: 0,
     graduationQuarter: "",
+    enrollmentYear: "",
+    enrollmentQuarter: "",
+    counselorEmail: "",
+    counselorName: "",
+    counselorPhone: "",
+    counselorId: 0,
+    counselorTitle: "",
+    counselorMeetingLink: "",
+    counselorLastnamesServed: "",
     fieldRequirements: [],
 
     //Call getUserInfo and set user info
     initializeUserInfo: async () => {
       const userInfo = await useUserStore.getState().getUserInfo();
 
+      console.log(userInfo);
+
       const {
         student_id,
         first_name,
         last_name,
-        avatar,
         graduation_year,
         graduation_quarter,
+        enrollment_quarter,
+        enrollment_year,
         field_requirements,
+        counselor_email,
+        counselor_name,
+        counselor_phone,
+        counselor_id,
+        counselor_title,
+        counselor_meeting_link,
+        counselor_last_names_served,
       } = userInfo;
 
       set({
@@ -68,6 +95,15 @@ const UserStoreTemplate: StateCreator<
         graduationYear: graduation_year,
         graduationQuarter: graduation_quarter,
         fieldRequirements: field_requirements,
+        enrollmentQuarter: enrollment_quarter,
+        enrollmentYear: enrollment_year,
+        counselorEmail: counselor_email,
+        counselorName: counselor_name,
+        counselorPhone: counselor_phone,
+        counselorId: counselor_id,
+        counselorTitle: counselor_title,
+        counselorMeetingLink: counselor_meeting_link,
+        counselorLastnamesServed: counselor_last_names_served,
       });
     },
   }),

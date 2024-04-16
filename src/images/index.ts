@@ -7,3 +7,8 @@ export { default as Laptop } from "./LandingPage/laptop.jpg";
 export { default as DontStress } from "./LandingPage/dontstress.jpg";
 export { default as VisionOne } from "./LandingPage/VisionPhoto1.jpg";
 export { default as VisionTwo } from "./LandingPage/VisionPhoto2.jpg";
+export { default as HowardSZ } from "./advisors/1.jpg";
+export { default as KrienenHM } from "./advisors/2.jpg";
+export { default as MorrisCG } from "./advisors/3.jpg";
+export { default as RendahlAB } from "./advisors/4.jpg";
+export { default as VogelMS } from "./advisors/5.jpg";

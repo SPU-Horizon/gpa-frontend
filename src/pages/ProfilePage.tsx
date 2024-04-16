@@ -28,14 +28,20 @@ const formSchema = z.object({
 export default function Profile() {
   const { email } = useAuthStore();
 
-  let { firstName, lastName, graduationQuarter, graduationYear } =
-    useUserStore();
+  let {
+    firstName,
+    lastName,
+    graduationQuarter,
+    graduationYear,
+    enrollmentQuarter,
+    enrollmentYear,
+  } = useUserStore();
 
-  if (!firstName || !lastName || !graduationQuarter || !graduationYear) {
-    firstName = "First";
-    lastName = "Last";
-    graduationQuarter = "Quarter";
-    graduationYear = 2024;
+  console.log(enrollmentQuarter, enrollmentYear);
+
+  if (!graduationQuarter || !graduationYear) {
+    graduationQuarter = "N/A";
+    graduationYear = 0;
   }
 
   // This creates a component named form, following the schema declared above
@@ -49,7 +55,7 @@ export default function Profile() {
 
   return (
     <ScrollArea className="mt-6 h-full w-full">
-      <div className="max-w-[90%] mx-auto">
+      <div className="max-w-[90%] mx-auto mb-24">
         <h1 className="text-3xl font-bold">Profile</h1>
 
         <Separator className="my-4" />
@@ -80,11 +86,16 @@ export default function Profile() {
               />
             </div>
             <div className="grid w-full  items-center gap-1.5">
-              <Label htmlFor="enrollment-date">Enrollment Date</Label>
+              <Label htmlFor="enrollment-date">Enrollment Quarter</Label>
               <Input
                 disabled
                 id="enrollment-date"
-                placeholder="9/2022"
+                placeholder={
+                  enrollmentQuarter[0].toLocaleUpperCase() +
+                  enrollmentQuarter.substring(1) +
+                  " " +
+                  enrollmentYear
+                }
                 className="text-lg w-full"
               />
             </div>

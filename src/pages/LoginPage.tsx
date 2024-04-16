@@ -37,11 +37,11 @@ export default function AuthenticationPage() {
     const res = await signIn(getValues().email, getValues().password);
     if (!res) {
       toast.error("Invalid credentials.");
-    } else {
+    } else if (res) {
       toast.success("Signing In - Welcome!");
       initializeUserInfo();
-      initializeCourseInfo();
     }
+    initializeCourseInfo();
     reset();
   };
 

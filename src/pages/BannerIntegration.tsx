@@ -18,6 +18,7 @@ export default function IntegrationPage() {
   const { theme } = useThemeStore();
 
   const onSubmission = async () => {
+    console.log(value);
     if (value) {
       const formData = new FormData();
       formData.append("file", value);
@@ -81,7 +82,7 @@ export default function IntegrationPage() {
         <Button
           onClick={onSubmission}
           type="submit"
-          className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16"
+          className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16 w-24"
         >
           Submit
         </Button>
