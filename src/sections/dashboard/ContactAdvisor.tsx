@@ -10,12 +10,12 @@ import { useUserStore } from "@/stores";
 
 export default function ContactAdvisor() {
   let {
-    counselor_email,
-    counselor_last_names_served,
-    counselor_meeting_link,
-    counselor_name,
-    counselor_phone,
-    counselor_title,
+    counselorEmail,
+    counselorLastnamesServed,
+    counselorMeetingLink,
+    counselorName,
+    counselorPhone,
+    counselorTitle,
   } = useUserStore();
 
   return (
@@ -29,24 +29,24 @@ export default function ContactAdvisor() {
       </CardHeader>
 
       <CardContent className="hover:animate-pulse mt-4">
-        {counselor_name ? (
+        {counselorName ? (
           <>
-            <CardTitle>{counselor_name}</CardTitle>
+            <CardTitle>{counselorName}</CardTitle>
             <CardDescription className="text-sm font-medium text-gray-400 mt-1">
-              {counselor_title}
+              {counselorTitle}
             </CardDescription>
             <CardDescription className="text-sm font-medium text-gray-400">
-              Lastnames Served - {counselor_last_names_served}
+              Lastnames Served - {counselorLastnamesServed}
             </CardDescription>
             <CardDescription className="text-sm font-medium text-gray-400">
-              Email: {counselor_email}
+              Email: {counselorEmail}
             </CardDescription>
             <CardDescription className="text-sm font-medium text-gray-400">
-              Phone: {counselor_phone}
+              Phone: {counselorPhone}
             </CardDescription>{" "}
-            <CardFooter className="flex items-center gap-3">
+            <CardFooter className="flex items-center p-0 mt-3">
               <a
-                href={counselor_meeting_link || "#"}
+                href={counselorMeetingLink || "#"}
                 target="_blank"
                 className="p-3 bg-black-light text-white-light rounded-md text-base dark:text-black-base dark:bg-white-light font-medium font-avenir hover:cursor-pointer ease-in-out hover:shadow-sm"
               >

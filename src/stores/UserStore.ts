@@ -10,14 +10,16 @@ type UserState = {
   studentId: number;
   graduationYear: number;
   graduationQuarter: string;
+  enrollmentQuarter: string;
+  enrollmentYear: string;
   fieldRequirements: [];
-  counselor_email: string;
-  counselor_name: string;
-  counselor_phone: string;
-  counselor_id: number;
-  counselor_title: string;
-  counselor_meeting_link: string;
-  counselor_last_names_served: string;
+  counselorEmail: string;
+  counselorName: string;
+  counselorPhone: string;
+  counselorId: number;
+  counselorTitle: string;
+  counselorMeetingLink: string;
+  counselorLastnamesServed: string;
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
 };
@@ -51,13 +53,15 @@ const UserStoreTemplate: StateCreator<
     studentId: 0,
     graduationYear: 0,
     graduationQuarter: "",
-    counselor_email: "",
-    counselor_name: "",
-    counselor_phone: "",
-    counselor_id: 0,
-    counselor_title: "",
-    counselor_meeting_link: "",
-    counselor_last_names_served: "",
+    enrollmentYear: "",
+    enrollmentQuarter: "",
+    counselorEmail: "",
+    counselorName: "",
+    counselorPhone: "",
+    counselorId: 0,
+    counselorTitle: "",
+    counselorMeetingLink: "",
+    counselorLastnamesServed: "",
     fieldRequirements: [],
 
     //Call getUserInfo and set user info
@@ -72,6 +76,8 @@ const UserStoreTemplate: StateCreator<
         last_name,
         graduation_year,
         graduation_quarter,
+        enrollment_quarter,
+        enrollment_year,
         field_requirements,
         counselor_email,
         counselor_name,
@@ -82,16 +88,6 @@ const UserStoreTemplate: StateCreator<
         counselor_last_names_served,
       } = userInfo;
 
-      console.log(
-        counselor_email,
-        counselor_name,
-        counselor_phone,
-        counselor_id,
-        counselor_title,
-        counselor_meeting_link,
-        counselor_last_names_served
-      );
-
       set({
         studentId: student_id,
         firstName: first_name,
@@ -99,13 +95,15 @@ const UserStoreTemplate: StateCreator<
         graduationYear: graduation_year,
         graduationQuarter: graduation_quarter,
         fieldRequirements: field_requirements,
-        counselor_email,
-        counselor_name,
-        counselor_phone,
-        counselor_id,
-        counselor_title,
-        counselor_meeting_link,
-        counselor_last_names_served,
+        enrollmentQuarter: enrollment_quarter,
+        enrollmentYear: enrollment_year,
+        counselorEmail: counselor_email,
+        counselorName: counselor_name,
+        counselorPhone: counselor_phone,
+        counselorId: counselor_id,
+        counselorTitle: counselor_title,
+        counselorMeetingLink: counselor_meeting_link,
+        counselorLastnamesServed: counselor_last_names_served,
       });
     },
   }),
