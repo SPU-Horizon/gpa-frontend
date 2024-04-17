@@ -13,12 +13,16 @@ import {
   rem,
 } from "@mantine/core";
 import { Footprints, Network } from "lucide-react";
+import CreatePlan from "@/components/CreatePlan/CreatePlan";
+import { Button } from "../ui/button";
 
 interface Course {
   course_id: string;
   name: string;
   credits: string; // or number, depending on your actual data structure
 }
+// Function to handle the completion of creating a plan
+const handleCreatePlanCompleted = () => {};
 
 const PRIMARY_COL_HEIGHT = rem(400);
 
@@ -154,50 +158,37 @@ const BuildSchedule: React.FC = () => {
   ));
 
   return (
-    <div className="flex flex-grow ml-12 mr-12 mt-4  md:mx-8">
-      <div className="grid grid-cols-6 gap-4 w-full h-[400px] md:flex md:flex-col md:gap-16 md:h-auto">
-        <div className="flex col-span-4 md:h-[400px]">
+    <div className="flex  ml-12 mr-12 mt-4  md:mx-8">
+      <div className="flex gap-4 w-full h-max md:flex-col md:gap-16 md:h-auto ">
+        <div className="flex flex-grow md:h-[400px] overflow-scroll border rounded-md p-4 ">
           {/* "Create a Plan" section */}
-          <Card className="flex flex-col w-full overflow-hidden border border-gray-100 dark:border-gray-700 dark:bg-black-light">
-            <Group justify="space-between">
-              <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">
-                Plan Options
-              </h1>
-            </Group>
-            <SimpleGrid
-              cols={{ base: 1, xs: 1, md: 2 }}
-              spacing="lg"
-              mt="md"
-              className="h-full"
-            >
-              {items}
-            </SimpleGrid>
-          </Card>
+
+          <CreatePlan onCompleted={handleCreatePlanCompleted} />
         </div>
-        <div className="flex col-span-2 md:h-[300px]">
+        <div className="flex flex-grow">
           {/* "Registered Courses" section */}
-          <Card className="flex flex-col w-full overflow-hidden border border-gray-100 dark:border-gray-700 dark:bg-black-light">
+          <Card className="flex flex-col w-full overflow-hidden  border border-gray-100 dark:border-gray-700 dark:bg-black-light">
             <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">
               Registered Courses
             </h1>
-            <List
-              spacing="sm"
-              size="sm"
-              center
-              className="overflow-scroll max-h-[20rem]"
-            >
+            <List spacing="md" size="sm" center>
               {inProgressClassList.map((course: Course) => (
                 <Card
                   key={course.course_id}
                   className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-grey-dark dark:text-white-base"
                 >
                   {course.course_id} - {course.name}
-                  <Badge className="ml-2 bg-gold-light font-semibold">
+                  <Badge className="ml-2 bg-gold-base font-semibold">
                     {course.credits} credits
                   </Badge>
                 </Card>
               ))}
             </List>
+            <div className="h-full w-full flex justify-center items-center">
+              <Button className="bg-gold-base hover:bg-gold-light text-white-base font-bold px-4 py-2 rounded-full mt-4">
+                View All
+              </Button>
+            </div>
           </Card>
         </div>
       </div>
