@@ -115,7 +115,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
           label="Input Preferences"
           icon={<TextCursorInput style={{ width: rem(18), height: rem(18) }} />}
         >
-          <form onSubmit={handleSavePlan} className="flex flex-col gap-4 mt-4">
+          <form onSubmit={handleFirstStepSubmit} className="flex flex-col gap-4 mt-4">
             <Select
               required
               label="Selected field"
@@ -155,15 +155,15 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                 ))}
               </div>
             </div>
-          </form>
-          <div className="flex justify-center">
+            <div className="flex justify-center">
             <Button
               className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full my-6 ease-in-out transition-all duration-200"
-              onClick={handleFirstStepSubmit}
+              type="submit"
             >
               Submit
             </Button>
           </div>
+          </form>
         </Stepper.Step>
         {/* Dynamic User Preference */}
         <Stepper.Step
