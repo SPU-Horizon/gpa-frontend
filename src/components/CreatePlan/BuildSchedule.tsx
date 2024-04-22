@@ -48,7 +48,7 @@ const BuildSchedule: React.FC = () => {
     studentId,
     graduationQuarter,
     graduationYear,
-    fieldRequirements,
+    fields,
     initializeUserInfo,
   } = useUserStore(); // Provide a default empty array
   const { completedClassList, inProgressClassList } = useCourseStore();
@@ -62,8 +62,8 @@ const BuildSchedule: React.FC = () => {
   }, [initializeUserInfo]);
 
   useEffect(() => {
-    console.log("Field Requirements:", fieldRequirements); // Debugging statement
-  }, [fieldRequirements]);
+    console.log("Field Requirements:", fields); // Debugging statement
+  }, [fields]);
 
   // This example assumes you have a function to get all courses for a major
   // For demonstration, using a static mapping
@@ -110,7 +110,7 @@ const BuildSchedule: React.FC = () => {
   }, [selectedField, completedClassList, inProgressClassList]);
 
   const fieldOptions =
-    fieldRequirements?.map((field) => ({
+    fields?.map((field) => ({
       value: field,
       label: field,
     })) || [];

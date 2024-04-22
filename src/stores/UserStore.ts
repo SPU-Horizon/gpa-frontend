@@ -12,7 +12,7 @@ type UserState = {
   graduationQuarter: string;
   enrollmentQuarter: string;
   enrollmentYear: string;
-  fieldRequirements: [];
+  fields: [];
   counselorEmail: string;
   counselorName: string;
   counselorPhone: string;
@@ -62,7 +62,7 @@ const UserStoreTemplate: StateCreator<
     counselorTitle: "",
     counselorMeetingLink: "",
     counselorLastnamesServed: "",
-    fieldRequirements: [],
+    fields: [],
 
     //Call getUserInfo and set user info
     initializeUserInfo: async () => {
@@ -78,7 +78,7 @@ const UserStoreTemplate: StateCreator<
         graduation_quarter,
         enrollment_quarter,
         enrollment_year,
-        field_requirements,
+        fields,
         counselor_email,
         counselor_name,
         counselor_phone,
@@ -94,7 +94,7 @@ const UserStoreTemplate: StateCreator<
         lastName: last_name,
         graduationYear: graduation_year,
         graduationQuarter: graduation_quarter,
-        fieldRequirements: field_requirements,
+        fields: fields,
         enrollmentQuarter: enrollment_quarter,
         enrollmentYear: enrollment_year,
         counselorEmail: counselor_email,
