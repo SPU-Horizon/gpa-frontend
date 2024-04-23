@@ -23,7 +23,7 @@ interface CreatePlanProps {
 }
 
 const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
-  const { fieldRequirements } = useUserStore(); // Provide a default empty array
+  const { fields } = useUserStore(); // Provide a default empty array
   const { completedClassList } = useCourseStore();
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [planName, setPlanName] = useState("");
@@ -38,8 +38,8 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     setActive((current) => (current < 3 ? current + 1 : current));
 
   useEffect(() => {
-    console.log("fieldRequirements:", fieldRequirements);
-  }, [fieldRequirements]);
+    console.log("fieldRequirements:", fields);
+  }, [fields]);
 
   // Dummy data for fields and in-progress classes
   const fieldsOptions = [
@@ -90,7 +90,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   };
 
   const fieldOptions =
-    fieldRequirements?.map((field) => ({
+    fields?.map((field) => ({
       value: field,
       label: field,
     })) || [];
