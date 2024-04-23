@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { FileDropzone } from "@/components/custom";
 import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
+import { BannerGIF } from "@/images";
 
 export default function IntegrationPage() {
   const [value, setValue] = useState<File | null>(null);
@@ -44,6 +45,8 @@ export default function IntegrationPage() {
     <ScrollArea className="mt-6 h-full w-full">
       <div className="max-w-[90%] mx-auto">
         <h1 className="text-3xl font-bold">Sync with Banner</h1>
+        <Separator className="mt-4 mb-8" />
+        <img src={BannerGIF}></img>
         <Separator className="mt-4 mb-8" />
         <Timeline
           bulletSize={40}
