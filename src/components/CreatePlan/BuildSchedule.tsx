@@ -160,14 +160,14 @@ const BuildSchedule: React.FC = () => {
   return (
     <div className="flex  ml-12 mr-12 mt-4  md:mx-8">
       <div className="flex gap-4 w-full h-max md:flex-col md:gap-16 md:h-auto ">
-        <div className="flex flex-grow md:h-[400px] overflow-scroll border rounded-md p-4 ">
+        <div className="flex flex-grow md:h-[400px] overflow-scroll border border-gray-100 dark:border-gray-800 rounded-md p-4 dark:bg-db-blue">
           {/* "Create a Plan" section */}
 
           <CreatePlan onCompleted={handleCreatePlanCompleted} />
         </div>
         <div className="flex flex-grow">
           {/* "Registered Courses" section */}
-          <Card className="flex flex-col w-full overflow-hidden  border border-gray-100 dark:border-gray-700 dark:bg-black-light">
+          <Card className="flex flex-col w-full overflow-hidden  border border-gray-100 dark:border-gray-700 dark:bg-transparent">
             <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">
               Registered Courses
             </h1>
