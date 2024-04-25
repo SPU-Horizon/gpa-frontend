@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 
 type CourseStore = {
   getEnrollments: () => Promise<Record<string, any>>;
-  postCourses: (file: FormData) => Promise<any>;
+  postCourses: (file: FormData) => Promise<boolean>;
   initializeCourseInfo: () => void;
   inProgressClassList: [];
   completedClassList: [];
@@ -48,12 +48,12 @@ const useCourseStoreTemplate: StateCreator<
           }
         );
         // Handle the response from the API
-        const failedEnrollments = res.data.data.failedEnrollments;
-        const status = res.status;
+        console.log(res.data);
 
-        return { status, failedEnrollments }; // Return the status and any failed enrollments
+        return true; // Return a boolean value indicating success
       } catch (error) {
-        return { status: 500, failedEnrollments: [] }; // Return status 500 and an empty array
+        // Handle any errors that occurred during the request
+        return false; // Return a boolean value indicating failure
       }
     },
 

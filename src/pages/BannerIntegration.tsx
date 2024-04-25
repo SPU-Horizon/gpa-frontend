@@ -26,32 +26,8 @@ export default function IntegrationPage() {
 
       const res = await postCourses(formData);
 
-      if (res.status === 200 && res.failedEnrollments.length === 0) {
-        toast.success("File Uploaded Successfully, All Classes Added");
-        setValue(null);
-        setAcceptedFile(false);
-        initializeCourseInfo();
-        initializeUserInfo();
-      } else if (res.status === 200) {
-        toast.warning(
-          <div className="flex flex-col gap-2">
-            <h1 className="font-bold text-lg">
-              Classes that couldn't be added
-            </h1>
-            <p className="font-medium text-base">
-              Either Duplicates or Not within our Database.
-            </p>
-            <div className="max-h-[250px] overflow-scroll w-full">
-              {res.failedEnrollments.map((enrollment: any, index: number) => (
-                <div key={index}>
-                  <p className="font-semibold ">
-                    {enrollment.course_id} - {enrollment.credits} credits
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
+      if (res) {
+        toast.success("File Uploaded Successfully");
         setValue(null);
         setAcceptedFile(false);
         initializeCourseInfo();
