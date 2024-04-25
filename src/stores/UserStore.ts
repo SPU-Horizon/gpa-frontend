@@ -12,7 +12,7 @@ type UserState = {
   graduationQuarter: string;
   enrollmentQuarter: string;
   enrollmentYear: string;
-  fields: [];
+  fields: { name: string; type: string; year: number; quarter: string }[];
   counselorEmail: string;
   counselorName: string;
   counselorPhone: string;
@@ -22,6 +22,8 @@ type UserState = {
   counselorLastnamesServed: string;
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
+  removeField: (fieldName: string) => void;
+  // For mock testing purposes
 };
 
 // Create the Zustand store
@@ -105,6 +107,11 @@ const UserStoreTemplate: StateCreator<
         counselorMeetingLink: counselor_meeting_link,
         counselorLastnamesServed: counselor_last_names_served,
       });
+    },
+    removeField: (fieldName: string) => {
+      set((state) => ({
+        fields: state.fields.filter((field) => field.name !== fieldName),
+      }));
     },
   }),
 

@@ -80,7 +80,7 @@ export const PrivateRoute = () => {
                     title: "Graduation Requirements",
                     icon: Search,
                     variant: "ghost",
-                    route: "/majors",
+                    route: "/requirements",
                   },
                   {
                     title: "Transcript",

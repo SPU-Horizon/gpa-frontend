@@ -1,7 +1,7 @@
 import { Timeline } from "@mantine/core";
 import { CheckCircle2, BookCheck } from "lucide-react";
 import { useState } from "react";
-import Step from "@/components/dashboard/integration/step";
+import Step from "@/components/integration/step";
 import { IntegrationStepData } from "@/constants/IntegrationStepData";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";

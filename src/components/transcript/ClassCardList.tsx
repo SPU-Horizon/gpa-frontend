@@ -1,4 +1,4 @@
-import { ScrollArea } from "../../ui/scroll-area";
+import { ScrollArea } from "../ui/scroll-area";
 import ClassCard, { ClassCardProps } from "./ClassCard";
 
 interface MailListProps {

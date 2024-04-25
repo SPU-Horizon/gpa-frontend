@@ -1,9 +1,9 @@
 /* ----------------- Landing Page Sections --------------------- */
 
-export { default as HeroSection } from "./landingpage/HeroSection";
-export { default as VisionSection } from "./landingpage/VisionSection";
-export { default as FeatureSection } from "./landingpage/FeatureSection";
-export { default as FooterSection } from "./landingpage/FooterSection";
+export { default as HeroSection } from "./LandingPage/HeroSection";
+export { default as VisionSection } from "./LandingPage/VisionSection";
+export { default as FeatureSection } from "./LandingPage/FeatureSection";
+export { default as FooterSection } from "./LandingPage/FooterSection";
 
 /* ----------------- Dashboard Sections --------------------- */
 

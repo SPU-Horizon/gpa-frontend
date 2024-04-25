@@ -46,7 +46,7 @@ export function Nav({
                     }),
                     "h-9 w-9 p-0 bg-transparent dark:bg-transparent text-black-base dark:text-white-base dark:hover:bg-black-light ",
                     currentLink === link.title &&
-                      " bg-gold-base  text-white-base dark:text-muted-foreground dark:hover:bg-black-light dark:hover:text-white"
+                      " bg-gold-base hover:bg-gold-light dark:bg-black-light text-white-base dark:text-muted-foreground dark:hover:bg-black-light dark:hover:text-white"
                   )}
                   onClick={() => {
                     setCurrentLink(link.title);
