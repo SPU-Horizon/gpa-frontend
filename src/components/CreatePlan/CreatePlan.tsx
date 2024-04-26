@@ -73,24 +73,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     });
   };
 
-  // Function to handle checkbox changes
-  const handleFieldSelect = (field : Field) => {
-    setSelectedField((prev) => {
-      if (prev.includes(field)) {
-        return prev.filter((f) => f.name !== field.name)
-        
-      }
-      else {
-        return [...prev, field]
-      }
-
-    });
-    
-    console.log(selectedField);
-    
-  };
-    
-
   // Logic for first step submission of student input
   const handleFirstStepSubmit = () => {
     
@@ -100,6 +82,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     const repeatedCoursesIds = selectedCoursesToRepeat.map(course => course.course_id);
   
     // Call generatePlanOptions function with the selected field names and repeated course IDs
+    // const [planOptions, mandatoryCourses, completedCourses] = generatePlanOptions(selectedField, repeatedCoursesIds, completedClassList, inProgressClassList, fields);
   
     // Update state with the results from generatePlanOptions
     setPlanOptions(planOptions); 
@@ -163,26 +146,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
               min={0}
               max={18}
             />
-            <div>
-              <label className="block text-sm font-medium">Select at least one field of study:</label>
-              <div className="border rounded-md max-h-[125px] overflow-y-auto p-2">
-                {fields.map((field: Field,i:number) => (
-                <div key={field.name}>
-                  <label
-                    className="ml-2 block text-sm font-medium"
-                    htmlFor={field.name}
-                  >
-                    <Checkbox
-                      onCheckedChange={() => handleFieldSelect(field)}
-                      id={field.name}
-                      className="border-[.5px] mr-6 mt-1"
-                    />
-                    {field.name} ({field.type}, {field.quarter} {field.year})
-                  </label>
-                </div>
-                ))}
-              </div>
-            </div>
             <div>
               <label className="block text-sm font-medium">
                 Select from the list below courses you'd like to retake:
