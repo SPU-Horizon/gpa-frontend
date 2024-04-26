@@ -18,6 +18,14 @@ interface Course {
   name: string;
   credits: string; // or number, depending on your actual data structure
 }
+
+interface Field {
+  name: string;
+  quarter: string;
+  type: string;
+  year: number;
+}
+
 interface CreatePlanProps {
   onCompleted: () => void;
 }
@@ -37,10 +45,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   const nextStep = () =>
     setActive((current) => (current < 3 ? current + 1 : current));
 
-  useEffect(() => {
-    console.log("fieldRequirements:", fields);
-  }, [fields]);
-
   // Dummy data for fields and in-progress classes
   const fieldsOptions = [
     { value: "science", label: "Computer Science" },
@@ -58,6 +62,12 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
       }
     });
   };
+
+  // Function to handle checkbox changes
+  const handleFieldSelect = (field: Field) => {
+    setSelectedField(field.name);  // Assuming you want to store the selected field’s name
+  };
+    
 
   // Logic for first step submission of student input
   const handleFirstStepSubmit = () => {
@@ -89,12 +99,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     onCompleted(); // This can be called after the plan is successfully saved
   };
 
-  const fieldOptions =
-    fields?.map((field) => ({
-      value: field,
-      label: field,
-    })) || [];
-
   const resetFormAndCreateAnotherPlan = () => {
     setActive(0);
     setFieldOfStudy("");
@@ -115,18 +119,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
           label="Design"
           icon={<TextCursorInput style={{ width: rem(18), height: rem(18) }} />}
         >
-          <form
-            onSubmit={handleFirstStepSubmit}
-            className="flex flex-col gap-4 mt-4"
-          >
-            <Select
-              required
-              label="Selected field"
-              placeholder="Select a field"
-              data={fieldsOptions}
-              value={selectedField}
-              onChange={(value) => setSelectedField(value || "")}
-            />
+          <form onSubmit={handleFirstStepSubmit} className="flex flex-col gap-4 mt-4">
             <NumberInput
               ref={numRef}
               required
@@ -135,6 +128,26 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
               min={0}
               max={18}
             />
+            <div>
+              <label className="block text-sm font-medium">Select your field of study:</label>
+              <div className="border rounded-md max-h-[125px] overflow-y-auto p-2">
+                {fields.map((field: Field) => (
+                <div key={field.name}>
+                  <label
+                    className="ml-2 block text-sm font-medium"
+                    htmlFor={field.name}
+                  >
+                    <Checkbox
+                      onCheckedChange={() => handleFieldSelect(field)}
+                      id={field.name}
+                      className="border-[.5px] mr-6 mt-1"
+                    />
+                    {field.name} ({field.type}, {field.quarter} {field.year})
+                  </label>
+                </div>
+                ))}
+              </div>
+            </div>
             <div>
               <label className="block text-sm font-medium">
                 Select from the list below courses you'd like to retake:
@@ -147,13 +160,14 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                       htmlFor={course.course_id}
                       key={course.course_id}
                     >
-                      {course.course_id} - {course.name}{" "}
-                    </label>
-                    <Checkbox
+                      <Checkbox
                       onCheckedChange={() => handleCourseSelect(course)}
                       id={course.course_id}
                       className="border-[.5px] mr-6 mt-1"
                     />
+                      {course.course_id} - {course.name}{" "}
+                    </label>
+                    
                   </div>
                 ))}
               </div>
