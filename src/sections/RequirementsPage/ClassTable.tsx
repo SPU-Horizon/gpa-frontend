@@ -22,6 +22,23 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Split } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useUserStore } from "@/stores";
+import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -32,8 +49,18 @@ export function ClassTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const { fields } = useUserStore();
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [checked, setChecked] = useState<string>("");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState({
+    title: true,
+    credits: true,
+    grade: true,
+    term: true,
+    year: true,
+    field: false,
+  });
   const table = useReactTable({
     data,
     columns,
@@ -43,9 +70,11 @@ export function ClassTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    enableGlobalFilter: true,
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
     },
   });
 
@@ -56,14 +85,52 @@ export function ClassTable<TData, TValue>({
           <h2 className="text-2xl font-semibold">Graduation Requirements</h2>
         </div>
         <div className="flex justify-end gap-3 items-end md:mb-4">
-          <Button
-            className="flex gap-3 text-gray-500 font-light"
-            variant="outline"
-            size="default"
-          >
-            Major
-            <Split className="w-3 h-3" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                className="flex gap-3 text-gray-500 font-light"
+                variant="outline"
+                size="default"
+              >
+                Major
+                <Split className="w-3 h-3" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white-light font-avenir">
+              <DropdownMenuLabel className="font-medium text-sm pt-1 pl-2">
+                Majors
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={checked}
+                onValueChange={setChecked}
+              >
+                {fields.map((f, i) => {
+                  return (
+                    <DropdownMenuRadioItem
+                      key={i}
+                      value={f.name}
+                      onClick={() => {
+                        table.setGlobalFilter(f.name);
+                      }}
+                    >
+                      {f.name}
+                    </DropdownMenuRadioItem>
+                  );
+                })}
+                <DropdownMenuRadioItem
+                  value="Reset"
+                  onClick={() => {
+                    table.setGlobalFilter("");
+                    setChecked("");
+                  }}
+                >
+                  All Fields
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Input
             placeholder="Filter Classes..."
             value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -99,7 +166,7 @@ export function ClassTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className="hover:scale-[1.01] ease-in-out transition-all cursor-pointer duration-200 w-full"
+                className=" ease-in-out transition-all cursor-pointer duration-200 w-full"
                 onClick={() => {
                   console.log(row.original);
                 }}
@@ -121,30 +188,51 @@ export function ClassTable<TData, TValue>({
         </TableBody>
       </Table>
       <div className="flex justify-between items-center md:flex-col md:mt-4">
-        <div className="h-max text-sm">
-          Classes per page: <b>{table.getState().pagination.pageSize}</b>
+        <div className="flex items-center gap-2">
+          <p className="text-sm font-bold">Classes per page</p>
+          <Select
+            value={`${table.getState().pagination.pageSize}`}
+            onValueChange={(value) => {
+              table.setPageSize(Number(value));
+            }}
+          >
+            <SelectTrigger className="h-8 w-[70px]">
+              <SelectValue placeholder={table.getState().pagination.pageSize} />
+            </SelectTrigger>
+            <SelectContent side="top" className="bg-white-light">
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <SelectItem key={pageSize} value={`${pageSize}`}>
+                  {pageSize}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-        <div className="flex items-center justify-end space-x-2 py-4">
+
+        <div className="flex items-center justify-end space-x-2 py-4 ">
           <div className="mr-8 text-sm">
             Page {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+
+          <div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -185,6 +185,29 @@ export const ClassColumns: ColumnDef<Classes>[] = [
         </DropdownMenu>
       );
     },
+    sortingFn: (rowA, rowB, column) => {
+      const order = [
+        "A+",
+        "A",
+        "A-",
+        "B+",
+        "B",
+        "B-",
+        "C+",
+        "C",
+        "C-",
+        "D+",
+        "D",
+        "D-",
+        "F",
+        "N/A",
+        "E",
+      ];
+
+      return (
+        order.indexOf(rowA.original.grade) - order.indexOf(rowB.original.grade)
+      );
+    },
   },
   {
     accessorKey: "credits",
@@ -229,6 +252,10 @@ export const ClassColumns: ColumnDef<Classes>[] = [
         </Dialog>
       );
     },
+  },
+  {
+    accessorKey: "field",
+    header: "Field",
   },
 ];
 
