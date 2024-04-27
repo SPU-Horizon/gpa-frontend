@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TextCursorInput, ScanEye, Pocket } from "lucide-react"; 
-import { generatePlanOptions } from "@/generatePlanOptions";
+import { set } from "date-fns";
 
 interface Course {
   course_id: string;
@@ -25,6 +25,7 @@ interface Field {
   quarter: string;
   type: string;
   year: number;
+  id: number;
 }
 
 interface CreatePlanProps {
@@ -33,11 +34,11 @@ interface CreatePlanProps {
 
 const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   const { fields } = useUserStore(); 
-  const { completedClassList } = useCourseStore();
+  const { completedClassList, inProgressClassList } = useCourseStore();
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [planName, setPlanName] = useState("");
   const [maxCredit, setMaxCredit] = useState(0);
-  const [selectedField, setSelectedField] = useState("");
+  const [selectedField, setSelectedField] = useState <Field []> ([]);
   const [planOptions, setPlanOptions] = useState([]);
   const [mandatoryCourses, setMandatoryCourses] = useState(new Set());
   const [reviewPlan, setReviewPlan] = useState(false);
@@ -47,6 +48,8 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   const [selectedCoursesToRepeat, setSelectedCoursesToRepeat] = useState<
   Course[]
   >([]);
+
+  
 
   // Function to move to the next step
   const nextStep = () =>
@@ -71,8 +74,19 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   };
 
   // Function to handle checkbox changes
-  const handleFieldSelect = (field: Field) => {
-    setSelectedField(field.name);  
+  const handleFieldSelect = (field : Field) => {
+    setSelectedField((prev) => {
+      if (prev.includes(field)) {
+        return prev.filter((f) => f.name !== field.name)
+        
+      }
+      else {
+        return [...prev, field]
+      }
+
+    });
+    
+    console.log(selectedField);
     
   };
     
@@ -80,21 +94,22 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   // Logic for first step submission of student input
   const handleFirstStepSubmit = () => {
     
-    const selectedFieldsIds = fields.filter(field => field.name === selectedField).map(field => field.id);
+    // const selectedFieldsIds = fields.filter(field => field.name === selectedField).map(field => field.id);
 
     // Extract course IDs from selected courses to repeat
     const repeatedCoursesIds = selectedCoursesToRepeat.map(course => course.course_id);
   
     // Call generatePlanOptions function with the selected field names and repeated course IDs
-    const [planOptions, mandatoryCourses, completedCourses] = generatePlanOptions(selectedFieldsIds, repeatedCoursesIds);
   
     // Update state with the results from generatePlanOptions
     setPlanOptions(planOptions); 
     setMandatoryCourses(new Set([...mandatoryCourses])); // Assuming these are course IDs
-  
+    
+
     // Move to the next step where the user can review or customize the generated plans
     nextStep();
   };
+
 
   // Logic for second step submission
   const handleSecondStepSubmit = () => {
@@ -124,13 +139,13 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     setFieldOfStudy("");
     setPlanName("");
     setMaxCredit(0);
-    setSelectedField("");
+    setSelectedField([]);
     setSelectedCoursesToRepeat([]);
     setReviewPlan(false);
   };
 
   const numRef = useRef<HTMLInputElement>(null);
-
+  console.log(selectedField);
   return (
     <div className="font-avenir w-full">
       <Stepper color="gray" active={active}>
@@ -151,7 +166,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             <div>
               <label className="block text-sm font-medium">Select at least one field of study:</label>
               <div className="border rounded-md max-h-[125px] overflow-y-auto p-2">
-                {fields.map((field: Field) => (
+                {fields.map((field: Field,i:number) => (
                 <div key={field.name}>
                   <label
                     className="ml-2 block text-sm font-medium"
