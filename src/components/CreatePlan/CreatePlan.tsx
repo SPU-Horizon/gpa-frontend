@@ -33,17 +33,25 @@ interface CreatePlanProps {
 }
 
 const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
-  const { fields } = useUserStore(); // Provide a default empty array
-  const { completedClassList } = useCourseStore();
+  const { fields } = useUserStore(); 
+  const { completedClassList, inProgressClassList } = useCourseStore();
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [planName, setPlanName] = useState("");
   const [maxCredit, setMaxCredit] = useState(0);
-  const [selectedField, setSelectedField] = useState("");
+  const [selectedField, setSelectedField] = useState <Field []> ([]);
+  const [planOptions, setPlanOptions] = useState([]);
+  const [mandatoryCourses, setMandatoryCourses] = useState(new Set());
+  const [reviewPlan, setReviewPlan] = useState(false);
+  const [active, setActive] = useState(0);
+
+  // State to store the selected courses to repeat
   const [selectedCoursesToRepeat, setSelectedCoursesToRepeat] = useState<
   Course[]
   >([]);
-  const [reviewPlan, setReviewPlan] = useState(false);
-  const [active, setActive] = useState(0);
+
+  
+
+  // Function to move to the next step
   const nextStep = () =>
     setActive((current) => (current < 3 ? current + 1 : current));
 
@@ -66,15 +74,40 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   };
 
   // Function to handle checkbox changes
-  const handleFieldSelect = (field: Field) => {
-    setSelectedField(field.name);  // Assuming you want to store the selected field’s name
+  const handleFieldSelect = (field : Field) => {
+    setSelectedField((prev) => {
+      if (prev.includes(field)) {
+        return prev.filter((f) => f.name !== field.name)
+        
+      }
+      else {
+        return [...prev, field]
+      }
+
+    });
+    
+    console.log(selectedField);
+    
   };
     
 
   // Logic for first step submission of student input
   const handleFirstStepSubmit = () => {
-    console.log(numRef.current?.value); // Get the value from the NumberInput component
-    console.log(selectedCoursesToRepeat); // Get the selected courses to repeat
+    
+    // const selectedFieldsIds = fields.filter(field => field.name === selectedField).map(field => field.id);
+
+    // Extract course IDs from selected courses to repeat
+    const repeatedCoursesIds = selectedCoursesToRepeat.map(course => course.course_id);
+  
+    // Call generatePlanOptions function with the selected field names and repeated course IDs
+    // const [planOptions, mandatoryCourses, completedCourses] = generatePlanOptions(selectedField, repeatedCoursesIds, completedClassList, inProgressClassList, fields);
+  
+    // Update state with the results from generatePlanOptions
+    setPlanOptions(planOptions); 
+    setMandatoryCourses(new Set([...mandatoryCourses])); // Assuming these are course IDs
+    
+
+    // Move to the next step where the user can review or customize the generated plans
     nextStep();
   };
 
@@ -134,7 +167,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             <div>
               <label className="block text-sm font-medium">Select your field of study:</label>
               <div className="border rounded-md max-h-[125px] overflow-y-auto p-2">
-                {fields.map((field: Field) => (
+                {fields.map((field: Field,i:number) => (
                 <div key={field.name}>
                   <label
                     className="ml-2 block text-sm font-medium"
