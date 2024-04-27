@@ -43,11 +43,15 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  heading: string;
+  order: number;
 }
 
 export function ClassTable<TData, TValue>({
   columns,
   data,
+  heading,
+  order,
 }: DataTableProps<TData, TValue>) {
   const { fields } = useUserStore();
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -82,64 +86,71 @@ export function ClassTable<TData, TValue>({
     <div className="h-max">
       <div className="flex items-center justify-between py-4 md:flex-col md:gap-2">
         <div>
-          <h2 className="text-2xl font-semibold">Graduation Requirements</h2>
+          <h2 className="text-2xl font-semibold">{heading}</h2>
         </div>
-        <div className="flex justify-end gap-3 items-end md:mb-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                className="flex gap-3 text-gray-500 font-light"
-                variant="outline"
-                size="default"
-              >
-                Major
-                <Split className="w-3 h-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white-light font-avenir">
-              <DropdownMenuLabel className="font-medium text-sm pt-1 pl-2">
-                Majors
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
-                value={checked}
-                onValueChange={setChecked}
-              >
-                {fields.map((f, i) => {
-                  return (
+
+        {order === 0 && (
+          <>
+            <div className="flex justify-end gap-3 items-end md:mb-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    className="flex gap-3 text-gray-500 font-light"
+                    variant="outline"
+                    size="default"
+                  >
+                    Major
+                    <Split className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white-light font-avenir">
+                  <DropdownMenuLabel className="font-medium text-sm pt-1 pl-2">
+                    Majors
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuRadioGroup
+                    value={checked}
+                    onValueChange={setChecked}
+                  >
+                    {fields.map((f, i) => {
+                      return (
+                        <DropdownMenuRadioItem
+                          key={i}
+                          value={f.name}
+                          onClick={() => {
+                            table.setGlobalFilter(f.name);
+                          }}
+                        >
+                          {f.name}
+                        </DropdownMenuRadioItem>
+                      );
+                    })}
                     <DropdownMenuRadioItem
-                      key={i}
-                      value={f.name}
+                      value="Reset"
                       onClick={() => {
-                        table.setGlobalFilter(f.name);
+                        table.setGlobalFilter("");
+                        setChecked("");
                       }}
                     >
-                      {f.name}
+                      All Fields
                     </DropdownMenuRadioItem>
-                  );
-                })}
-                <DropdownMenuRadioItem
-                  value="Reset"
-                  onClick={() => {
-                    table.setGlobalFilter("");
-                    setChecked("");
-                  }}
-                >
-                  All Fields
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
-          <Input
-            placeholder="Filter Classes..."
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
-            }
-            className="min-w-[375px] md:min-w-[275px] focus-visible:ring-1 focus-visible:ring-black-light "
-          />
-        </div>
+              <Input
+                placeholder="Filter Classes..."
+                value={
+                  (table.getColumn("title")?.getFilterValue() as string) ?? ""
+                }
+                onChange={(event) =>
+                  table.getColumn("title")?.setFilterValue(event.target.value)
+                }
+                className="min-w-[375px] md:min-w-[275px] focus-visible:ring-1 focus-visible:ring-black-light "
+              />
+            </div>
+          </>
+        )}
       </div>
       <Table className="max-h-[500px] overflow-clip">
         <TableHeader>
@@ -188,51 +199,65 @@ export function ClassTable<TData, TValue>({
         </TableBody>
       </Table>
       <div className="flex justify-between items-center md:flex-col md:mt-4">
-        <div className="flex items-center gap-2">
-          <p className="text-sm font-bold">Classes per page</p>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-            }}
-          >
-            <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top" className="bg-white-light">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {table.getPageCount() > 1 && (
+          <>
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-bold">Classes per page</p>
+              <Select
+                value={`${table.getState().pagination.pageSize}`}
+                onValueChange={(value) => {
+                  table.setPageSize(Number(value));
+                }}
+              >
+                <SelectTrigger className="h-8 w-[70px]">
+                  <SelectValue
+                    placeholder={table.getState().pagination.pageSize}
+                  />
+                </SelectTrigger>
+                <SelectContent side="top" className="bg-white-light">
+                  {[10, 20, 30, 40, 50].map((pageSize) => (
+                    <SelectItem key={pageSize} value={`${pageSize}`}>
+                      {pageSize}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </>
+        )}
 
-        <div className="flex items-center justify-end space-x-2 py-4 ">
-          <div className="mr-8 text-sm">
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <div
+            className={`${
+              table.getPageCount() === 1 ? `self-end text-sm` : `text-sm`
+            }`}
+          >
             Page {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </div>
 
-          <div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
-          </div>
+          {table.getPageCount() > 1 && (
+            <>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  Previous
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                >
+                  Next
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

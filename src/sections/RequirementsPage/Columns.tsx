@@ -437,3 +437,152 @@ export const MockClassData: Classes[] = [
     field: "Biology",
   },
 ];
+
+export const reqs = [
+  [
+    {
+      classes: ["CSC 1230"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 2430"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 2431"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3011"],
+      section_title: "General Core",
+      credits_required: 3,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3150"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3220"],
+      section_title: "General Core",
+      credits_required: 4,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3221"],
+      section_title: "General Core",
+      credits_required: 4,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3310"],
+      section_title: "General Core",
+      credits_required: 4,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3350"],
+      section_title: "General Core",
+      credits_required: 3,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3430"],
+      section_title: "General Core",
+      credits_required: 4,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3750"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 4410"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 4898"],
+      section_title: "General Core",
+      credits_required: 2,
+    },
+  ],
+  [
+    {
+      classes: ["MAT 1221"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [
+    {
+      classes: ["MAT 1720"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [
+    {
+      classes: ["MAT 2360"],
+      section_title: "General Core",
+      credits_required: 5,
+    },
+  ],
+  [{ classes: [], section_title: "General Core", credits_required: 0 }],
+  [
+    {
+      classes: [
+        "CSC 4210",
+        "CSC 4220",
+        "CSC 4250",
+        "CSC 4310",
+        "CSC 4350",
+        "CSC 4430",
+        "CSC 4750",
+        "CSC 4760",
+        "CSC 4800",
+        "CSC UDEL",
+      ],
+      section_title: "Technical Electives (Select one of the following)",
+      credits_required: 3,
+    },
+  ],
+  [
+    {
+      classes: [],
+      section_title: "Technical Electives (Select one of the following)",
+      credits_required: 0,
+    },
+  ],
+  [
+    {
+      classes: ["CSC 3000", "CSC 4151", "CSC 4152", "CSC 4941"],
+      section_title: "Project & Internship",
+      credits_required: 8,
+    },
+  ],
+  [{ classes: [], section_title: "Project & Internship", credits_required: 0 }],
+];
