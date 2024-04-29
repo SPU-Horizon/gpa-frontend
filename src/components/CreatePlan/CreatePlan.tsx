@@ -112,10 +112,13 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
       <Stepper color="gray" active={active}>
         {/* Form to input preferences */}
         <Stepper.Step
-          label="Input Preferences"
+          label="Design"
           icon={<TextCursorInput style={{ width: rem(18), height: rem(18) }} />}
         >
-          <form onSubmit={handleFirstStepSubmit} className="flex flex-col gap-4 mt-4">
+          <form
+            onSubmit={handleFirstStepSubmit}
+            className="flex flex-col gap-4 mt-4"
+          >
             <Select
               required
               label="Selected field"
@@ -156,18 +159,18 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
               </div>
             </div>
             <div className="flex justify-center">
-            <Button
-              className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full my-6 ease-in-out transition-all duration-200"
-              type="submit"
-            >
-              Submit
-            </Button>
-          </div>
+              <Button
+                className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full my-6 ease-in-out transition-all duration-200"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </Stepper.Step>
         {/* Dynamic User Preference */}
         <Stepper.Step
-          label="Customize Preferences"
+          label="Customize"
           icon={<Pocket style={{ width: rem(18), height: rem(18) }} />}
         >
           <div className="flex justify-center">
@@ -181,7 +184,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
         </Stepper.Step>
         {/* Render review plan */}
         <Stepper.Step
-          label="Review Plan"
+          label="Review"
           icon={<ScanEye style={{ width: rem(18), height: rem(18) }} />}
         >
           {reviewPlan && (
