@@ -12,3 +12,4 @@ export { default as KrienenHM } from "./advisors/2.jpg";
 export { default as MorrisCG } from "./advisors/3.jpg";
 export { default as RendahlAB } from "./advisors/4.jpg";
 export { default as VogelMS } from "./advisors/5.jpg";
+export { default as BannerGIF } from "./banner/banner.gif"
