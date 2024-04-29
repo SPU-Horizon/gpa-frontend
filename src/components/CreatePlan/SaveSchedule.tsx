@@ -19,6 +19,7 @@ import { mockSchedules } from "@/constants/MockScheduleData";
 import LegendPopover from "../custom/LegendPopover";
 import CustomEndpoint from "./CustomEndpoint";
 import SaveSchedulePagination from "./SaveSchedulePagination";
+import { ImageDown } from "lucide-react";
 
 const nodeTypes = {
   custom: CustomNode,
@@ -109,10 +110,10 @@ export const VisualizeSequence = ({ nodes, edges }: VisualizeSequenceProps) => {
         <Panel position="top-left">
           <div className="flex gap-2">
             <Button
-              className="bg-transparent p-0 hover:bg-transparent  text-black-base"
+              className="bg-white-light flex gap-2 py-4 px-5 hover:bg-transparent text-black-base border-[1px] hover:scale-[1.01] shadow-lg"
               onClick={onClick}
             >
-              PNG Download
+              Save <ImageDown size={20} />
             </Button>
           </div>
         </Panel>
@@ -128,7 +129,7 @@ const SaveSchedule: React.FC = () => {
   return (
     <div className="flex flex-grow  min-h-[500px] m-12 pb-4 md:my-4 md:mx-8 ">
       <div className="flex flex-col justify-between w-full rounded overflow-hidden bg-white-light dark:bg-transparent  ">
-        <h3 className="font-bold text-xl mt-4">My Schedules</h3>
+        <h3 className="font-bold text-xl mt-4 mb-4">My Schedules</h3>
         <SaveSchedulePagination schedules={mockSchedules} />
         {/* Display the selected schedule */}
       </div>

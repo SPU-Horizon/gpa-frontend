@@ -7,7 +7,6 @@ import {
   PaginationContent,
   Pagination,
 } from "../ui/pagination";
-
 import { CardContent, Card } from "../ui/card";
 import { Button } from "../ui/button";
 import useVisualizeStore, { Schedule } from "@/stores/VisualizeStore";
@@ -42,7 +41,7 @@ const ViewScheduleButton = ({
 }: ViewScheduleButtonProps) => {
   return (
     <Dialog>
-      <DialogTrigger className="w-full">
+      <DialogTrigger asChild className="w-full">
         <Button
           size="sm"
           variant="outline"
@@ -56,8 +55,8 @@ const ViewScheduleButton = ({
       </DialogTrigger>
       <DialogContent className="w-[475px] h-[550px] bg-white-light rounded-md max-w-[auto] font-avenir flex flex-col">
         <h2 className="font-semibold text-xl mb-4">Path to Graduation</h2>
-        <div className="overflow-scroll">
-          <div className="flex flex-col justify-between h-full">
+        <div className="overflow-y-scroll max-h-[420px]">
+          <div className="flex flex-col justify-between h-full mr-5 ml-2">
             {schedule.quarters.map((q, i) => {
               return (
                 <div className="flex flex-col mb-3" key={q.id}>
@@ -76,7 +75,7 @@ const ViewScheduleButton = ({
           </div>
         </div>
         <Dialog>
-          <DialogTrigger className="w-full mt-auto">
+          <DialogTrigger asChild className="w-full mt-auto">
             <Button
               size="sm"
               className="w-full bg-gold-light border-none"
@@ -100,7 +99,7 @@ const ViewScheduleButton = ({
 const DeleteScheduleButton = () => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="w-full">
+      <AlertDialogTrigger asChild className="w-full">
         <Button
           size="sm"
           className="bg-gold-light border-none w-full dark:bg-gold-base dark:hover:bg-gold-light"
@@ -157,7 +156,7 @@ const SaveSchedulePagination = ({ schedules }: SaveSchedulePaginationProps) => {
     <div>
       <div className="container mx-auto  h-full md:px-0">
         <div className="flex flex-col items-center justify-between ">
-          <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 mb-8 max-h-[350px] overflow-scroll w-full py-1 ">
+          <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 mb-8 h-max w-full py-1 ">
             {schedules.slice(startIndex, endIndex).map((schedule) => (
               <Card
                 key={schedule.id}
