@@ -64,7 +64,8 @@ export default function IntegrationPage() {
             ))}
           </Timeline>
         </div>
-        <div className="h-[400px] flex items-center self-center">
+        <div className="h-[400px] flex flex-col justify-center mt-4 ">
+          <h1 className="text-2xl font-bold mb-4">Tutorial GIF</h1>
           <img src={BannerGIF} width={600} />
         </div>
 
