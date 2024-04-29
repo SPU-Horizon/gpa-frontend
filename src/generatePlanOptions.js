@@ -37,15 +37,11 @@ let points_grade = function (letter_grade) {
 
 // selected_fields: list of student_field_field_id integers selected by the user
 // repeated_courses: list of course_id strings that the user does not consider completed
-export function generatePlanOptions(selected_fields, repeated_courses) {
+export function generatePlanOptions(fields, selected_fields, repeated_courses, inProgressClassList, completedClassList) {
   let plan_options = [];
   let mandatory_courses = new Set();
   let completed_courses = new Set();
-
-  // obtain data from the user stores
-  let {completedClassList, inProgressClassList} = useCourseStore();
-  let {fields} = useUserStore();
-
+  
   // courses with a grade of 2.0 or higher are added to completed_courses
   for (let course of completedClassList) {
     if (points_grade(course.grade) >= 2.0) {
