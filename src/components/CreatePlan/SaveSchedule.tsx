@@ -1,96 +1,138 @@
-import React, { useState } from "react";
-import { Card, Text, Select, Paper, Badge } from "@mantine/core";
+import React, { useCallback, useState } from "react";
+import { Button } from "../ui/button";
+import ReactFlow, {
+  Background,
+  MiniMap,
+  Panel,
+  useReactFlow,
+  getRectOfNodes,
+  getTransformForBounds,
+  applyNodeChanges,
+  applyEdgeChanges,
+  Edge,
+} from "reactflow";
+import "reactflow/dist/style.css";
+import CustomNode from "./CustomNode";
+import CustomEdge from "./CustomEdge";
+import { toPng } from "html-to-image";
+import { mockSchedules } from "@/constants/MockScheduleData";
+import LegendPopover from "../custom/LegendPopover";
+import CustomEndpoint from "./CustomEndpoint";
+import SaveSchedulePagination from "./SaveSchedulePagination";
+import { ImageDown } from "lucide-react";
 
-// Assuming a schedule looks like this:
-interface Schedule {
-  id: string;
-  name: string;
-  courses: { code: string; title: string; credits: number }[];
-  totalCredits: number;
-}
-const schedules: Schedule[] = [
-  {
-    id: "1",
-    name: "Schedule 1",
-    courses: [
-      { code: "CSE101", title: "Introduction to Computer Science", credits: 3 },
-      { code: "MAT201", title: "Linear Algebra", credits: 4 },
-      { code: "ENG101", title: "English Composition", credits: 3 },
-    ],
-    totalCredits: 10,
-  },
-  {
-    id: "2",
-    name: "Schedule 2",
-    courses: [
-      { code: "CSE201", title: "Data Structures and Algorithms", credits: 4 },
-      { code: "MAT301", title: "Discrete Mathematics", credits: 3 },
-      { code: "PHY101", title: "Physics", credits: 4 },
-    ],
-    totalCredits: 11,
-  },
-  // Add more schedules as needed
-];
+const nodeTypes = {
+  custom: CustomNode,
+};
 
-const SaveSchedule: React.FC = () => {
-  // Initialize with empty array or fetch from local storage/api
-  const [savedSchedules, setSavedSchedules] = useState<Schedule[]>([]);
-  const [selectedScheduleId, setSelectedScheduleId] = useState<string | null>(
-    null
-  );
+const edgeTypes = {
+  custom: CustomEdge,
+};
 
-  const selectedSchedule = schedules.find(
-    (schedule) => schedule.id === selectedScheduleId
+const defaultEdgeOptions = {
+  markerEnd: "edge-circle",
+};
+
+type VisualizeSequenceProps = {
+  nodes: any[];
+  edges?: any[];
+};
+
+const downloadImage = (dataUrl: any) => {
+  const a = document.createElement("a");
+
+  a.setAttribute("download", "gpa_course_sequence_[name].png");
+  a.setAttribute("href", dataUrl);
+  a.click();
+};
+
+export const VisualizeSequence = ({ nodes, edges }: VisualizeSequenceProps) => {
+  const imageWidth = 1024;
+  const imageHeight = 768;
+  const { getNodes } = useReactFlow();
+
+  const onClick = () => {
+    const nodeBounds = getRectOfNodes(getNodes());
+    const transform = getTransformForBounds(
+      nodeBounds,
+      imageWidth,
+      imageHeight,
+      0.2,
+      2
+    );
+
+    const elem = document.querySelector(".react-flow__viewport");
+
+    if (elem instanceof HTMLElement) {
+      toPng(elem, {
+        backgroundColor: "#fff",
+        width: imageWidth,
+        height: imageHeight,
+        style: {
+          width: imageWidth.toString(),
+          height: imageHeight.toString(),
+          transform: `translate(${transform[0]}px, ${transform[1]}px) scale(${transform[2]})`,
+        },
+      }).then(downloadImage);
+    }
+  };
+
+  const [n, setNodes] = useState(nodes);
+  const [e, setEdges] = useState<Edge<any>[]>(edges || []);
+
+  const onNodesChange = useCallback((changes: any) => {
+    setNodes((nds) => applyNodeChanges(changes, nds));
+  }, []);
+  const onEdgesChange = useCallback(
+    (changes: any) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    []
   );
 
   return (
-    <div className="flex flex-grow  min-h-[500px] m-12 pb-4 md:my-4 md:mx-8 ">
-      <Paper className="flex flex-col w-full rounded overflow-hidden bg-white-light dark:border-gray-700 dark:shadow-gray-700/50 dark:bg-black-light">
-        <Text size="xl" mb="md" className="font-bold ml-4 mt-4">
-          Saved Schedules
-        </Text>
-        {/* Dropdown to select the schedule */}
-        <Select
-          placeholder="Select a schedule"
-          data={schedules.map((schedule) => ({
-            value: schedule.id,
-            label: schedule.name,
-          }))}
-          value={selectedScheduleId}
-          onChange={(value: string | null) => setSelectedScheduleId(value)}
-          className="w-full pl-4"
-        />
-
-        {/* Display the selected schedule */}
-        {selectedSchedule && (
-          <div className="mt-4">
-            <Card
-              withBorder
-              className="flex flex-col w-full bg-gray-100 dark:border-none dark:shadow-gray-700/50 dark:bg-black-light dark:text-white-base ml-4"
+    <div className="w-full h-full font-avenir">
+      <ReactFlow
+        nodes={n}
+        edges={e}
+        edgeTypes={edgeTypes}
+        nodeTypes={nodeTypes}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        defaultEdgeOptions={defaultEdgeOptions}
+        fitView
+        minZoom={0.2}
+      >
+        <Background />
+        <LegendPopover />
+        <MiniMap />
+        <div className="text-center font-avenir font-semibold">
+          Course Sequence
+        </div>
+        <Panel position="top-left">
+          <div className="flex gap-2">
+            <Button
+              className="bg-white-light flex gap-2 py-4 px-5 hover:bg-transparent text-black-base border-[1px] hover:scale-[1.01] shadow-lg"
+              onClick={onClick}
             >
-              <div className="font-bold mb-2">{selectedSchedule.name}</div>
-              <div className="grid grid-cols-3 gap-4 pr-4 md:flex md:flex-col md:gap-3">
-                {selectedSchedule.courses.map((course) => (
-                  <Card
-                    key={course.code}
-                    className="bg-white-300 dark:bg-grey-dark p-2 dark:text-white-base "
-                  >
-                    <div className="font-medium">
-                      {course.code} - {course.title}
-                    </div>
-                    <Badge className="ml-2 bg-gold-light font-semibold">
-                      {course.credits} credits
-                    </Badge>
-                  </Card>
-                ))}
-              </div>
-              <div className="mt-4">
-                Total Planned Credits: {selectedSchedule.totalCredits}
-              </div>
-            </Card>
+              Save <ImageDown size={20} />
+            </Button>
           </div>
-        )}
-      </Paper>
+        </Panel>
+        <CustomEndpoint />
+      </ReactFlow>
+    </div>
+  );
+};
+
+const SaveSchedule: React.FC = () => {
+  // We will import the saved schedules from the plans store, we will remove this useState once that piece of work is done.
+
+  return (
+    <div className="flex flex-grow  min-h-[500px] m-12 pb-4 md:my-4 md:mx-8 ">
+      <div className="flex flex-col justify-between w-full rounded overflow-hidden bg-white-light dark:bg-transparent  ">
+        <h3 className="font-bold text-xl mt-4 mb-4">My Schedules</h3>
+        <SaveSchedulePagination schedules={mockSchedules} />
+        {/* Display the selected schedule */}
+      </div>
     </div>
   );
 };
