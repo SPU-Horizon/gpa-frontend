@@ -32,7 +32,6 @@ type Enrollment = {
 
 import { BannerGIF } from "@/images";
 
-
 export default function IntegrationPage() {
   const [value, setValue] = useState<File | null>(null);
   const [acceptedFile, setAcceptedFile] = useState(false);
@@ -66,7 +65,7 @@ export default function IntegrationPage() {
       formData.append("student_id", studentId.toString());
 
       const res = await postCourses(formData);
-
+      console.log(res);
 
       if (res.status === 200 && res.failedEnrollments.length === 0) {
         toast.success("File Uploaded Successfully, All Classes Added");
