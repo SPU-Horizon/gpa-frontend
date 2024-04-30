@@ -68,6 +68,8 @@ const UserStoreTemplate: StateCreator<
     initializeUserInfo: async () => {
       const userInfo = await useUserStore.getState().getUserInfo();
 
+      console.log(userInfo);
+
       const {
         student_id,
         first_name,

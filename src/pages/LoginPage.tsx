@@ -81,7 +81,7 @@ export default function AuthenticationPage() {
               Welcome back!
             </p>
 
-            <a
+            {/* <a
               href="#"
               className="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg hover:bg-gray-50 "
             >
@@ -104,7 +104,7 @@ export default function AuthenticationPage() {
               </a>
 
               <span className="w-1/5 border-b  lg:w-1/4"></span>
-            </div>
+            </div> */}
 
             <div className="mt-4">
               <label className="block mb-2 text-sm font-medium text-gray-600 ">
