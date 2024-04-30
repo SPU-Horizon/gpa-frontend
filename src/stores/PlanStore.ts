@@ -24,6 +24,22 @@ const usePlanStoreTemplate: StateCreator<
     (set) => ({
 
 
+      //one function for step 1? --> Kaddija will call this function in her page, so I need to be the one who calls Steven's function
+      
+
+      //Oneo other function for step 2 which calls the function in the backend. Should we reset form information after this step? What else should we reset?
+
+
+
+      //One function for saving schedules
+
+      //One function for updating these saved schedules, when should this be called?
+
+
+
+      //Initialize values from planStore
+
+
 
 
 

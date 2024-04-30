@@ -1,5 +1,3 @@
-import {useCourseStore, useUserStore} from "@/stores";
-
 // points_grade: function that returns the 4.0 grade from a letter grade
 let points_grade = function (letter_grade) {
     if (isNaN(letter_grade)) {
