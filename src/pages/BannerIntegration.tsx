@@ -9,13 +9,51 @@ import { Separator } from "@/components/ui/separator";
 import { FileDropzone } from "@/components/custom";
 import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
+import { AlertTriangle } from "lucide-react";
+
+type FailedEnrollment = {
+  course_id: string;
+  course_title: string;
+  credits: string;
+  year: string;
+  quarter: string;
+  grade: Number | null;
+};
+
+type Enrollment = {
+  attributes: string | null;
+  course_id: string;
+  credits: string;
+  description: string;
+  grade: string;
+  name: string;
+  quarter: string;
+};
 
 export default function IntegrationPage() {
   const [value, setValue] = useState<File | null>(null);
   const [acceptedFile, setAcceptedFile] = useState(false);
-  const { postCourses, initializeCourseInfo } = useCourseStore();
+  const {
+    postCourses,
+    initializeCourseInfo,
+    completedClassList,
+    inProgressClassList,
+    registeredClassList,
+  } = useCourseStore();
   const { studentId, initializeUserInfo } = useUserStore();
   const { theme } = useThemeStore();
+
+  const duplicateCheck = (courseId: string) => {
+    const allClasses = [
+      ...completedClassList,
+      ...inProgressClassList,
+      ...registeredClassList,
+    ];
+
+    return allClasses.some(
+      (course: Enrollment) => course.course_id === courseId
+    );
+  };
 
   const onSubmission = async () => {
     console.log(value);
@@ -34,21 +72,27 @@ export default function IntegrationPage() {
         initializeUserInfo();
       } else if (res.status === 200) {
         toast.warning(
-          <div className="flex flex-col gap-2">
-            <h1 className="font-bold text-lg">
-              Classes that couldn't be added
-            </h1>
-            <p className="font-medium text-base">
-              Either Duplicates or Not within our Database.
+          <div className="font-avenir flex flex-col gap-2">
+            <div className="font-bold text-lg text-center justify-center gap-2 flex">
+              <AlertTriangle /> A few classes couldn't be added.
+            </div>
+            <p className="font-bold text-base text-center">
+              We don't have these classes in our database.
             </p>
-            <div className="max-h-[250px] overflow-scroll w-full">
-              {res.failedEnrollments.map((enrollment: any, index: number) => (
-                <div key={index}>
-                  <p className="font-semibold ">
-                    {enrollment.course_id} - {enrollment.credits} credits
-                  </p>
-                </div>
-              ))}
+            <div className="max-h-[250px] overflow-scroll w-full flex flex-col justify-center items-center">
+              {res.failedEnrollments.map(
+                (enrollment: FailedEnrollment, index: number) =>
+                  duplicateCheck(enrollment["course_id"]) ? null : (
+                    <div key={index} className="flex flex-row gap-2">
+                      <p className="font-bold text-base">
+                        {enrollment["course_id"]}
+                      </p>
+                      <p className="font-bold text-base">
+                        {enrollment["course_title"]}
+                      </p>
+                    </div>
+                  )
+              )}
             </div>
           </div>
         );
