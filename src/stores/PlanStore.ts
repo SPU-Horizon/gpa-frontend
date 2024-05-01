@@ -101,6 +101,9 @@ const usePlanStoreTemplate: StateCreator<
 
       getPlans: async () => {
 
+        //ADD STUDENT ID
+        //-1 if none found
+
         const res = await axios
         .get(`http://localhost:3000/plan/getPlans`)
         .then((response) => {
