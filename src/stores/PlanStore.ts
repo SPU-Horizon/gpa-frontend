@@ -10,7 +10,7 @@ type PlanStore = {
   maxCredits: number;
   completedCourses: []; // Need to send this to backend. These completed courses are the ones from stevens function
   mandatoryCourses: [];
-  getOptions: (selected_fields: any[], repeated_courses: any[], credit_choice: number) => void; // TODO: is it ok that we are returning void
+  getOptions: (selected_fields: any[], repeated_courses: any[], credit_choice: number) => {}; // TODO: is it ok that we are returning void
   getSchedule: (options_selected: any[]) => void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
   savePlan: (plan_name: string, plan_json: {}) => void;
   getPlans: () => void;
