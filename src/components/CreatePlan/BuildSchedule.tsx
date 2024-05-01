@@ -61,10 +61,6 @@ const BuildSchedule: React.FC = () => {
     initializeUserInfo();
   }, [initializeUserInfo]);
 
-  useEffect(() => {
-    console.log("Field Requirements:", fields); // Debugging statement
-  }, [fields]);
-
   // This example assumes you have a function to get all courses for a major
   // For demonstration, using a static mapping
   const requiredCoursesForMajor = {
