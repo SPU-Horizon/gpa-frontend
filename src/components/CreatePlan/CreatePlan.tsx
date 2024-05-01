@@ -13,6 +13,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { TextCursorInput, ScanEye, Pocket } from "lucide-react"; 
 import { set } from "date-fns";
+import usePlanStore from "@/stores/PlanStore";
 
 interface Course {
   course_id: string;
@@ -49,6 +50,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   const [mandatoryCourses, setMandatoryCourses] = useState(new Set());
   const [reviewPlan, setReviewPlan] = useState(false);
   const [active, setActive] = useState(0);
+  const {getOptions, getSchedule, savePlan, getPlans}  = usePlanStore();
 
   // State to store the selected courses to repeat
   const [selectedCoursesToRepeat, setSelectedCoursesToRepeat] = useState<
@@ -106,7 +108,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     const repeatedCoursesIds = selectedCoursesToRepeat.map(course => course.course_id);
   
     // Call generatePlanOptions function with the selected field names and repeated course IDs
-    // const [planOptions, mandatoryCourses, completedCourses] = generatePlanOptions(selectedField, repeatedCoursesIds, completedClassList, inProgressClassList, fields);
+    const returnedPlanOptions = getOptions(selectedField, repeatedCoursesIds, maxCredit);
   
     // Update state with the results from generatePlanOptions
     setPlanOptions(planOptions); 
