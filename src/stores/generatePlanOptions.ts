@@ -60,8 +60,8 @@ fields.filter(field => selected_fields.includes(field.student_field_id));
 
 // Courses of requirements with required credits equal to total credits available are considered mandatory
 // Requirements that are not completed are added to plan_options
-for (let field_requirememts of fields) {  // loop through each slected field
-  for (let requirement of field_requirememts) { // loop through each requirement of the field
+for (let field of fields) {  // loop through each slected field
+  for (let requirement of field.requirements) { // loop through each requirement of the field
     let curr_option = [];
     let requirement_completed = false;
     let requirement_total_credits = 0;
