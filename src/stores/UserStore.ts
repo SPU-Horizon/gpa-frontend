@@ -8,13 +8,20 @@ type UserState = {
   firstName: string;
   lastName: string;
   studentId: number;
-  avatar: string;
   graduationYear: number;
   graduationQuarter: string;
-  fieldRequirements: [];
+  enrollmentQuarter: string;
+  enrollmentYear: string;
+  fields: [];
+  counselorEmail: string;
+  counselorName: string;
+  counselorPhone: string;
+  counselorId: number;
+  counselorTitle: string;
+  counselorMeetingLink: string;
+  counselorLastnamesServed: string;
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
-  uploadProfilePicture: (file: FormData) => Promise<void>;
 };
 
 // Create the Zustand store
@@ -40,53 +47,63 @@ const UserStoreTemplate: StateCreator<
       return res;
     },
 
-    uploadProfilePicture: async (file: FormData) => {
-      try {
-        await axios.post(
-          "http://localhost:3000/user/upload-profile-photo",
-          file,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    //Initialie user info
+    //Initialize user info
     firstName: "",
     lastName: "",
     studentId: 0,
-    avatar: "",
     graduationYear: 0,
     graduationQuarter: "",
-    fieldRequirements: [],
+    enrollmentYear: "",
+    enrollmentQuarter: "",
+    counselorEmail: "",
+    counselorName: "",
+    counselorPhone: "",
+    counselorId: 0,
+    counselorTitle: "",
+    counselorMeetingLink: "",
+    counselorLastnamesServed: "",
+    fields: [],
 
     //Call getUserInfo and set user info
     initializeUserInfo: async () => {
       const userInfo = await useUserStore.getState().getUserInfo();
 
+      console.log(userInfo);
+
       const {
         student_id,
         first_name,
         last_name,
-        avatar,
         graduation_year,
         graduation_quarter,
-        field_requirements,
+        enrollment_quarter,
+        enrollment_year,
+        fields,
+        counselor_email,
+        counselor_name,
+        counselor_phone,
+        counselor_id,
+        counselor_title,
+        counselor_meeting_link,
+        counselor_last_names_served,
       } = userInfo;
 
       set({
         studentId: student_id,
         firstName: first_name,
         lastName: last_name,
-        avatar: avatar,
         graduationYear: graduation_year,
         graduationQuarter: graduation_quarter,
-        fieldRequirements: field_requirements,
+        fields: fields,
+        enrollmentQuarter: enrollment_quarter,
+        enrollmentYear: enrollment_year,
+        counselorEmail: counselor_email,
+        counselorName: counselor_name,
+        counselorPhone: counselor_phone,
+        counselorId: counselor_id,
+        counselorTitle: counselor_title,
+        counselorMeetingLink: counselor_meeting_link,
+        counselorLastnamesServed: counselor_last_names_served,
       });
     },
   }),

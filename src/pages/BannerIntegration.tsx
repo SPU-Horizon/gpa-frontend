@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { FileDropzone } from "@/components/custom";
 import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
+import { BannerGIF } from "@/images";
 
 export default function IntegrationPage() {
   const [value, setValue] = useState<File | null>(null);
@@ -18,6 +19,7 @@ export default function IntegrationPage() {
   const { theme } = useThemeStore();
 
   const onSubmission = async () => {
+    console.log(value);
     if (value) {
       const formData = new FormData();
       formData.append("file", value);
@@ -44,21 +46,27 @@ export default function IntegrationPage() {
       <div className="max-w-[90%] mx-auto">
         <h1 className="text-3xl font-bold">Sync with Banner</h1>
         <Separator className="mt-4 mb-8" />
-        <Timeline
-          bulletSize={40}
-          color={theme === "dark" ? "#222" : "#bbb"}
-          className="mr-8"
-        >
-          {IntegrationStepData.map((step, index) => (
-            <Step
-              key={index}
-              title={step.title}
-              description={step.description}
-              icon={step.icon}
-              link={step.link}
-            />
-          ))}
-        </Timeline>
+
+        <div className="flex  gap-2">
+          <Timeline
+            bulletSize={40}
+            color={theme === "dark" ? "#222" : "#bbb"}
+            className="mr-8 mb-8"
+          >
+            {IntegrationStepData.map((step, index) => (
+              <Step
+                key={index}
+                title={step.title}
+                description={step.description}
+                icon={step.icon}
+                link={step.link}
+              />
+            ))}
+          </Timeline>
+        </div>
+        <div className="h-[400px] flex items-center self-center">
+          <img src={BannerGIF} width={600} />
+        </div>
 
         <FileDropzone
           onDrop={(files) => {
@@ -81,7 +89,7 @@ export default function IntegrationPage() {
         <Button
           onClick={onSubmission}
           type="submit"
-          className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16"
+          className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16 w-24"
         >
           Submit
         </Button>

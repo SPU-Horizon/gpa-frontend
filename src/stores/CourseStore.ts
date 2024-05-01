@@ -1,6 +1,6 @@
 import { StateCreator, create } from "zustand";
 import axios from "axios";
-import useAuthStore from "./AuthStore";
+import { useUserStore } from ".";
 import { persist } from "zustand/middleware";
 
 type CourseStore = {
@@ -9,6 +9,8 @@ type CourseStore = {
   initializeCourseInfo: () => void;
   inProgressClassList: [];
   completedClassList: [];
+  registeredClassList: [];
+  completedCredits: number; // NEED TO UPDATE THIS NEW INPUT FROM STEVENS GETENROLLMENTS
   gpa: number;
 };
 
@@ -19,10 +21,11 @@ const useCourseStoreTemplate: StateCreator<
 > = persist(
   (set) => ({
     getEnrollments: async () => {
-      const email = useAuthStore.getState().email;
+      // Get the student ID from the user store
+      const studentId = useUserStore.getState().studentId;
 
       const res = await axios
-        .get(`http://localhost:3000/course/getCourses?email=${email}`)
+        .get(`http://localhost:3000/course/getCourses?id=${studentId}`)
         .then((response) => {
           return response.data;
         })
@@ -58,6 +61,8 @@ const useCourseStoreTemplate: StateCreator<
     // Initialize classLists and gpa
     inProgressClassList: [],
     completedClassList: [],
+    registeredClassList: [],
+    completedCredits: 0,
     gpa: 0,
 
     // Call getEnrollments and set classList
@@ -65,13 +70,15 @@ const useCourseStoreTemplate: StateCreator<
       const enrollments = await useCourseStore.getState().getEnrollments();
 
       // Destructure the enrollments object
-      const { current, past, gpa } = enrollments;
+      const { current, past, future, gpa, completed_credits } = enrollments;
 
       // Set the values for inProgressClassList, completedClassList, and gpa
       set({
         inProgressClassList: current || [], // Set to an empty array if 'current' is undefined
         completedClassList: past || [], // Set to an empty array if 'past' is undefined
+        registeredClassList: future || [], // Set to an empty array if 'future' is undefined
         gpa: gpa || 0, // Set to 0 if 'gpa' is undefined
+        completedCredits: completed_credits || 0,
       });
     },
   }),

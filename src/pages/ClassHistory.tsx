@@ -5,18 +5,13 @@ import { Separator } from "@/components/ui/separator";
 import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
 import { useCourseStore } from "@/stores"; //Absolute imports
 
-interface Course {
-  id: string;
-  name: string;
-  credits: string; // or number, depending on your actual data structure
-}
-
 type ClassHistoryProps = {
   test?: any;
 };
 
 export default function ClassHistory({ test = [] }: ClassHistoryProps) {
-  const { completedClassList, inProgressClassList, gpa } = useCourseStore(); //Destructuring
+  const { completedClassList, inProgressClassList, registeredClassList, gpa } =
+    useCourseStore(); //Destructuring
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -43,7 +38,13 @@ export default function ClassHistory({ test = [] }: ClassHistoryProps) {
             defaultValue="In Progress"
             className=" mx-20 sm:mx-2 lg:mx-12 xl:mx-16 mt-4"
           >
-            <TabsList className="grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-black-light">
+            <TabsList className="grid w-full grid-cols-3 gap-2 bg-white-light dark:bg-black-light">
+              <TabsTrigger
+                value="Registered"
+                className="data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
+              >
+                Registered
+              </TabsTrigger>
               <TabsTrigger
                 value="In Progress"
                 className="data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
@@ -57,6 +58,13 @@ export default function ClassHistory({ test = [] }: ClassHistoryProps) {
                 Completed
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="Registered">
+              <ClassCardList
+                items={test.length > 0 ? test : registeredClassList}
+                completion="Registered"
+              />
+            </TabsContent>
 
             <TabsContent value="In Progress">
               <ClassCardList
