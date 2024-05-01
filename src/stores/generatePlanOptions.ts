@@ -35,23 +35,23 @@ let points_grade = function (letter_grade) {
 
 // selected_fields: list of student_field_field_id integers selected by the user
 // repeated_courses: list of course_id strings that the user does not consider completed
-export function generatePlanOptions(fields, selected_fields, repeated_courses, current_enrollments, past_enrollments, completed_credits) {
+export default function generatePlanOptions(fields, selected_fields, repeated_courses, inProgressClassList, completedClassList) {
+  console.log("MADE IT TO THE FUNCTION")
   let plan_options = [];
   let mandatory_courses = new Set();
   let completed_courses = new Set();
   
   // courses with a grade of 2.0 or higher are added to completed_courses
-  for (let enrollment of past_enrollments) {
-    if (points_grade(enrollment.grade) >= 2.0) {
-      completed_courses.add(enrollment.course_id);
+  for (let course of completedClassList) {
+    if (points_grade(course.grade) >= 2.0) {
+      completed_courses.add(course.course_id);
     }
   }
 
   // courses not marked to be repeated are add to completed_courses
-  for (let enrollment of current_enrollments) {
-    if (!repeated_courses.includes(enrollment.course_id)) {
-      completed_courses.add(enrollment.course_id);
-      completed_credits += enrollment.credits;
+  for (let course of inProgressClassList) {
+    if (!repeated_courses.includes(course.course_id)) {
+      completed_courses.add(course.course_id);
     }
   }
 
@@ -95,5 +95,5 @@ export function generatePlanOptions(fields, selected_fields, repeated_courses, c
     }
   }
   // return the plan_options (an array of arrays of objects), mandatory_courses (a set), and completed_courses (a set)
-  return {plan_options: plan_options, mandatory_courses: mandatory_courses, completed_courses: completed_courses, completed_credits: completed_credits};
+  return (plan_options, mandatory_courses, completed_courses);
 }
