@@ -9,4 +9,3 @@ export { default as FooterSection } from "./landingpage/FooterSection";
 
 export { default as ClassHistory } from "../pages/ClassHistory";
 export { default as IntegrationPage } from "../pages/BannerIntegration";
-export { default as CreatePlan } from "../pages/CreatePlan";

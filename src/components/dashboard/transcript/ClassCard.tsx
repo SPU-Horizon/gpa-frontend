@@ -53,19 +53,9 @@ export default function ClassCard({
                     <Badge>In Progress</Badge>
                   </span>
                 )}
-                {completion == "Registered" && (
-                  <span>
-                    <Badge>Registered</Badge>
-                  </span>
-                )}
               </div>
             </div>
             <div className="text-md font-medium">{item.name}</div>
-            {item.credits === "0" ? (
-              <>Credits unavailable</>
-            ) : (
-              <>{item.credits} Credits</>
-            )}
           </div>
         </button>
       </DialogTrigger>

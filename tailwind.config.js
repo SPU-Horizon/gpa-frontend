@@ -23,9 +23,6 @@ export default {
         grey: {
           dark: "#2e2e2e",
         },
-        db: {
-          blue: "#030712",
-        },
       },
     },
 

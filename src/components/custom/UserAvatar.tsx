@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuShortcut,
 } from "../ui/dropdown-menu";
 import useAuthStore from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
@@ -19,22 +18,16 @@ export function UserAvatar() {
   const { signOut, email } = useAuthStore();
   const { setCurrentTab } = useNavigationStore();
   const navigate = useNavigate();
-  let { firstName, lastName } = useUserStore();
-
-  if (!firstName || !lastName) {
-    firstName = "First";
-    lastName = "Last";
-  }
+  const { firstName, lastName } = useUserStore();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={""} alt="@shadcn" />
+            <AvatarImage src={undefined} alt="@shadcn" />
             <AvatarFallback className="bg-black-base text-white-light">
-              {firstName[0].toLocaleUpperCase() +
-                lastName[0].toLocaleUpperCase()}
+              UN
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -54,17 +47,8 @@ export function UserAvatar() {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-black-base" />
-        <DropdownMenuGroup>
-          <DropdownMenuItem
-            onClick={() => {
-              setCurrentTab("profile"), navigate("/profile");
-            }}
-          >
-            Profile
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator className="bg-black-base" />
+        <DropdownMenuSeparator className="bg-black-light" />
+
         <DropdownMenuItem onClick={signOut}>Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
