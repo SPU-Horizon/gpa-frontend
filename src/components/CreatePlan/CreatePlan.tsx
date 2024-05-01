@@ -28,6 +28,12 @@ interface Field {
   id: number;
 }
 
+interface PlanOption {
+  course_id: string;
+  name: string;
+  credits: string;
+}
+
 interface CreatePlanProps {
   onCompleted: () => void;
 }
@@ -208,6 +214,28 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                 ))}
               </div>
             </div>
+
+            {/*map through planOptions display in a Card checkbox */}
+            
+              <div>
+                {/* {planOptions.map((planpreference:PlanOption) => (
+                  <div key={planpreference.course_id}>
+                    <label
+                      className="ml-2"
+                      htmlFor={planpreference.course_id}
+                      key={planpreference.course_id}
+                    >
+                      <Checkbox
+                      onCheckedChange={() => handleCourseSelect(planpreference)}
+                      id={planpreference.course_id}
+                      className="border-[.5px] mr-6 mt-1"
+                    />
+                      {planpreference.course_id} - {planpreference.name}{" "}
+                    </label>
+                  </div>
+                ))} */}
+              </div>
+
             <div className="flex justify-center">
               <Button
                 className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full my-6 ease-in-out transition-all duration-200"
