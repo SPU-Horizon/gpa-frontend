@@ -35,7 +35,8 @@ let points_grade = function (letter_grade) {
 
 // selected_fields: list of student_field_field_id integers selected by the user
 // repeated_courses: list of course_id strings that the user does not consider completed
-export function generatePlanOptions(fields, selected_fields, repeated_courses, inProgressClassList, completedClassList) {
+export default function generatePlanOptions(fields, selected_fields, repeated_courses, inProgressClassList, completedClassList) {
+  console.log("MADE IT TO THE FUNCTION")
   let plan_options = [];
   let mandatory_courses = new Set();
   let completed_courses = new Set();
