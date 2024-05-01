@@ -1,6 +1,6 @@
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
-import generatePlanOptions from './generatePlanOptions';
+import { generatePlanOptions} from './generatePlanOptions';
 import { useCourseStore } from ".";  // TODO: Use for  completed credits, this function is now updated
 import { useUserStore } from ".";
 import axios from "axios";

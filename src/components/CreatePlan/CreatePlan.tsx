@@ -102,19 +102,13 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   // Logic for first step submission of student input
   const handleFirstStepSubmit = () => {
     
-    // const selectedFieldsIds = fields.filter(field => field.name === selectedField).map(field => field.id);
 
     // Extract course IDs from selected courses to repeat
     const repeatedCoursesIds = selectedCoursesToRepeat.map(course => course.course_id);
-  
-    // Call generatePlanOptions function with the selected field names and repeated course IDs
-    const returnedPlanOptions = getOptions(selectedField, repeatedCoursesIds, maxCredit);
-  
-    // Update state with the results from generatePlanOptions
-    setPlanOptions(planOptions); 
-    setMandatoryCourses(new Set([...mandatoryCourses])); // Assuming these are course IDs
-    
-
+    console.log("repeatedCoursesIds", repeatedCoursesIds);
+    // Call getOptions function with the selected field names and repeated course IDs
+    // const {plan_options, mandatory_courses, completed_courses, completed_credits} = getOptions(selectedField, repeatedCoursesIds, maxCredit);
+    // console.log(plan_options);
     // Move to the next step where the user can review or customize the generated plans
     nextStep();
   };
@@ -220,7 +214,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             {/*map through planOptions display in a Card checkbox */}
             
               <div>
-                {/* {planOptions.map((planpreference:PlanOption) => (
+                {/* {plan_options.map((planpreference:PlanOption) => (
                   <div key={planpreference.course_id}>
                     <label
                       className="ml-2"
