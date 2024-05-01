@@ -11,8 +11,9 @@ type PlanStore = {
   completedCourses: []; // Need to send this to backend. These completed courses are the ones from stevens function
   mandatoryCourses: [];
   getOptions: (selected_fields: any[], repeated_courses: any[], credit_choice: number) => void; // TODO: is it ok that we are returning void
-  updateMandatoryCourses: (options_selected: any[]) => void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
-  savePlan: () => void;
+  getSchedule: (options_selected: any[]) => void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
+  savePlan: (plan_name: string, plan_json: {}) => void;
+  getPlans: () => void;
 };
  
 const usePlanStoreTemplate: StateCreator<
@@ -38,7 +39,7 @@ const usePlanStoreTemplate: StateCreator<
         return planOptions;
       },
 
-      updateMandatoryCourses: async (options_selected: any[]) => {
+      getSchedule: async (options_selected: any[]) => {
         
         // First step is to update mandatory courses
         const finalCourses = new Set();
@@ -51,6 +52,12 @@ const usePlanStoreTemplate: StateCreator<
           finalCourses.add(course);
         });
 
+        
+        set({
+          mandatoryCourses: [],
+        });
+
+
         let formInformation = {
           maxCredits: usePlanStore.getState().maxCredits,
           completedCredits: useCourseStore.getState().completedCredits,
@@ -60,7 +67,7 @@ const usePlanStoreTemplate: StateCreator<
 
         // Send all necessary information to steven
         const res = await axios
-          .get(`http://localhost:3000/plan/getSchedule`, { params: formInformation })
+          .post(`http://localhost:3000/plan/getSchedule`, { params: formInformation })
           .then((response) => {
             return response.data;
           })
@@ -73,10 +80,44 @@ const usePlanStoreTemplate: StateCreator<
       },
       
 
-      savePlan: () => {
+      savePlan: async (plan_name: string, plan_json: {}) => {
 
+        let formInformation = {
+          planName: plan_name,
+          planJson: plan_json,
+        };
+
+        const res = await axios
+        .post(`http://localhost:3000/plan/saveSchedule`, { params: formInformation })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          return {};
+        });
 
       },
+
+      getPlans: async () => {
+
+        const res = await axios
+        .get(`http://localhost:3000/plan/getPlans`)
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          return {};
+        });
+
+        console.log(res)
+
+        // set({
+        //   plans: res.data,
+        // });
+
+      }
 
 
 
