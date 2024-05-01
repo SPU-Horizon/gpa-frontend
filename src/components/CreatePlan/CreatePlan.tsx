@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { TextCursorInput, ScanEye, Pocket } from "lucide-react"; 
 import { set } from "date-fns";
 import usePlanStore from "@/stores/PlanStore";
+import { generatePlanOptions } from "@/stores/generatePlanOptions";
 
 interface Course {
   course_id: string;
@@ -45,8 +46,13 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [planName, setPlanName] = useState("");
   const [maxCredit, setMaxCredit] = useState(0);
+<<<<<<< HEAD
   const [selectedField, setSelectedField] = useState <Field []> ([]);
   const [planOptions, setPlanOptions] = useState([]);
+=======
+  const [selectedField, setSelectedField] = useState<Field[]>([]);
+  const [planOptions, setPlanOptions] = useState<any[][]>([]);
+>>>>>>> 145b63c (Updating branch, generatePlanOptions working.)
   const [mandatoryCourses, setMandatoryCourses] = useState(new Set());
   const [reviewPlan, setReviewPlan] = useState(false);
   const [active, setActive] = useState(0);
@@ -88,6 +94,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
         return prev.filter((f) => f.name !== field.name)
         
       }
+<<<<<<< HEAD
       else {
         return [...prev, field]
       }
@@ -96,6 +103,9 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     
     console.log(selectedField);
     
+=======
+    });
+>>>>>>> 145b63c (Updating branch, generatePlanOptions working.)
   };
     
 
@@ -106,9 +116,36 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     // Extract course IDs from selected courses to repeat
     const repeatedCoursesIds = selectedCoursesToRepeat.map(course => course.course_id);
     console.log("repeatedCoursesIds", repeatedCoursesIds);
+
+    const completedCourses = useCourseStore.getState().completedClassList;
+    const inProgressCourses = useCourseStore.getState().inProgressClassList;
+    const fields = useUserStore.getState().fields;
+
     // Call getOptions function with the selected field names and repeated course IDs
-    // const {plan_options, mandatory_courses, completed_courses, completed_credits} = getOptions(selectedField, repeatedCoursesIds, maxCredit);
-    // console.log(plan_options);
+    try {
+      const {
+        plan_options,
+        mandatory_courses,
+        completed_courses,
+        completed_credits,
+      } = generatePlanOptions(
+        fields,
+        [1],
+        repeatedCoursesIds,
+        inProgressCourses,
+        completedCourses,
+        75
+      );
+
+      setPlanOptions(plan_options);
+      setMandatoryCourses(mandatory_courses);
+      console.log("plan_options", plan_options);
+      console.log("mandatory_courses", mandatory_courses);
+      console.log("completed_credit", completed_credits);
+    } catch (error) {
+      console.error(error);
+    }
+
     // Move to the next step where the user can review or customize the generated plans
     nextStep();
   };
@@ -148,7 +185,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   };
 
   const numRef = useRef<HTMLInputElement>(null);
-  console.log(selectedField);
+
   return (
     <div className="font-avenir w-full">
       <Stepper color="gray" active={active}>
@@ -212,6 +249,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             </div>
 
             {/*map through planOptions display in a Card checkbox */}
+<<<<<<< HEAD
             
               <div>
                 {/* {plan_options.map((planpreference:PlanOption) => (
@@ -231,6 +269,8 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                   </div>
                 ))} */}
               </div>
+=======
+>>>>>>> 145b63c (Updating branch, generatePlanOptions working.)
 
             <div className="flex justify-center">
               <Button
@@ -247,19 +287,17 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
           label="Customize"
           icon={<Pocket style={{ width: rem(18), height: rem(18) }} />}
         >
-          {/* <div>
-          {planOptions.map((optionGroup, index) => (
-            <div key={index}>
-              {optionGroup.map((option) => (
-                <Checkbox
-                  key={option.course_id}
-                  label={`${option.course_id} - ${option.name}`}
-                  
-                />
-              ))}
-            </div>
-          ))}
-          </div> */}
+          <div>
+            {planOptions.map((item, index) => {
+              return (
+                <div key={index}>
+                  {item[0].courses.map((item2: string, index2: number) => {
+                    return <div key={index2 * index}>{item2}</div>;
+                  })}
+                </div>
+              );
+            })}
+          </div>
           <div className="flex justify-center">
             <Button
               className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"

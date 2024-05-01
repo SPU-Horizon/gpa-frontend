@@ -26,10 +26,8 @@ export default function HomeOptions() {
         <StatsGrid />
         <SimpleGrid className="my-8 mx-4" cols={{ base: 1, xs: 2, md: 3 }}>
           <RegisteredCourseList />
-          <div className="md:row-start-3">PlaceHolder</div>
           <ContactAdvisors />
-          <div>PlaceHolder</div>
-          <div>PlaceHolder</div>
+          {/* <div className="md:row-start-3">PlaceHolder</div> */}
         </SimpleGrid>
       </ScrollArea>
       <Footer />

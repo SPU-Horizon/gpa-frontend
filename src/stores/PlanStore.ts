@@ -1,94 +1,93 @@
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
-import { generatePlanOptions} from './generatePlanOptions';
-import { useCourseStore } from ".";  // TODO: Use for  completed credits, this function is now updated
+import { useCourseStore } from "."; // TODO: Use for  completed credits, this function is now updated
 import { useUserStore } from ".";
 import axios from "axios";
- 
+import { any } from "zod";
+import { generatePlanOptions } from "./generatePlanOptions";
+
 type PlanStore = {
   plans: [];
   maxCredits: number;
   completedCourses: []; // Need to send this to backend. These completed courses are the ones from stevens function
   mandatoryCourses: [];
-  getOptions: (selected_fields: any[], repeated_courses: any[], credit_choice: number) => {}; // TODO: is it ok that we are returning void
+  getOptions: (
+    selected_fields: any[],
+    repeated_courses: any[],
+    credit_choice: number
+  ) => {
+    plan_options: any[][];
+    mandatory_courses: Set<any>;
+    completed_courses: Set<any>;
+    completed_credits: any;
+  }; // TODO: is it ok that we are returning void
   getSchedule: (options_selected: any[]) => void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
   savePlan: (plan_name: string, plan_json: {}) => void;
   getPlans: () => void;
 };
- 
+
 const usePlanStoreTemplate: StateCreator<
   PlanStore,
   [],
   [["zustand/persist", PlanStore]]
 > = persist(
-    (set) => ({
+  (set) => ({
+    plans: [],
+    maxCredits: 0,
+    completedCourses: [],
+    mandatoryCourses: [],
+    planOptions: [],
+    formInformation: {},
 
-      plans: [],
-      maxCredits: 0,
-      completedCourses: [],
-      mandatoryCourses: [],
-      planOptions: [],
-      formInformation: {},
+    getOptions: (
+      selected_fields: any[],
+      repeated_courses: any[],
+      credit_choice: number
+    ) => {
+      const completedCourses = useCourseStore.getState().completedClassList;
+      const inProgressCourses = useCourseStore.getState().inProgressClassList;
+      const fields = useUserStore.getState().fields;
 
-      getOptions: (selected_fields: any[], repeated_courses: any[], credit_choice: number) => {
-        const completedCourses = useCourseStore.getState().completedClassList;
-        const inProgressCourses = useCourseStore.getState().inProgressClassList;
-        const fields = useUserStore.getState().fields;
+      const planOptions = generatePlanOptions(
+        fields,
+        selected_fields,
+        repeated_courses,
+        inProgressCourses,
+        completedCourses,
+        12
+      );
 
-        const planOptions = generatePlanOptions(fields, selected_fields, repeated_courses, inProgressCourses, completedCourses);
-        return planOptions;
-      },
+      return planOptions;
+    },
 
-      getSchedule: async (options_selected: any[]) => {
-        
-        // First step is to update mandatory courses
-        const finalCourses = new Set();
-        options_selected.forEach((option: any) => {
-          finalCourses.add(option.course);
-        });
+    getSchedule: async (options_selected: any[]) => {
+      // First step is to update mandatory courses
+      const finalCourses = new Set();
+      options_selected.forEach((option: any) => {
+        finalCourses.add(option.course);
+      });
 
-        // Add values in "mandatoryCourses" array to finalCourses
-        usePlanStore.getState().mandatoryCourses.forEach((course: any) => {
-          finalCourses.add(course);
-        });
+      // Add values in "mandatoryCourses" array to finalCourses
+      usePlanStore.getState().mandatoryCourses.forEach((course: any) => {
+        finalCourses.add(course);
+      });
 
-        
-        set({
-          mandatoryCourses: [],
-        });
+      set({
+        mandatoryCourses: [],
+      });
 
+      let formInformation = {
+        maxCredits: usePlanStore.getState().maxCredits,
+        completedCredits: useCourseStore.getState().completedCredits,
+        completedCourses: useCourseStore.getState().completedClassList,
+        finalCourses: Array.from(finalCourses),
+      };
 
-        let formInformation = {
-          maxCredits: usePlanStore.getState().maxCredits,
-          completedCredits: useCourseStore.getState().completedCredits,
-          completedCourses: useCourseStore.getState().completedClassList,
-          finalCourses: Array.from(finalCourses),
-        };
-
-        // Send all necessary information to steven
-        const res = await axios
-          .post(`http://localhost:3000/plan/getSchedule`, { params: formInformation })
-          .then((response) => {
-            return response.data;
-          })
-          .catch((err) => {
-            console.log(err);
-            return {};
-          });
-
-        return res;
-      },
-      
-
-      savePlan: async (plan_name: string, plan_json: {}) => {
-
-        let formInformation = {
-          planName: plan_name,
-          planJson: plan_json,
-        };
-
-        const res = await axios
-        .post(`http://localhost:3000/plan/saveSchedule`, { params: formInformation })
+      // Send all necessary information to steven
+      const res = await axios
+        .post(`http://localhost:3000/plan/getSchedule`, {
+          params: formInformation,
+        })
         .then((response) => {
           return response.data;
         })
@@ -97,14 +96,33 @@ const usePlanStoreTemplate: StateCreator<
           return {};
         });
 
-      },
+      return res;
+    },
 
-      getPlans: async () => {
+    savePlan: async (plan_name: string, plan_json: {}) => {
+      let formInformation = {
+        planName: plan_name,
+        planJson: plan_json,
+      };
 
-        //ADD STUDENT ID
-        //-1 if none found
+      const res = await axios
+        .post(`http://localhost:3000/plan/saveSchedule`, {
+          params: formInformation,
+        })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          return {};
+        });
+    },
 
-        const res = await axios
+    getPlans: async () => {
+      //ADD STUDENT ID
+      //-1 if none found
+
+      const res = await axios
         .get(`http://localhost:3000/plan/getPlans`)
         .then((response) => {
           return response.data;
@@ -114,37 +132,30 @@ const usePlanStoreTemplate: StateCreator<
           return {};
         });
 
-        console.log(res)
+      console.log(res);
 
-        // set({
-        //   plans: res.data,
-        // });
+      // set({
+      //   plans: res.data,
+      // });
+    },
 
-      }
+    //one function for step 1? --> Kaddija will call this function in her page, so I need to be the one who calls Steven's function
 
+    //Oneo other function for step 2 which calls the function in the backend. Should we reset form information after this step? What else should we reset?
 
+    //One function for saving schedules
 
-      //one function for step 1? --> Kaddija will call this function in her page, so I need to be the one who calls Steven's function
-      
+    //One function for updating these saved schedules, when should this be called?
 
-      //Oneo other function for step 2 which calls the function in the backend. Should we reset form information after this step? What else should we reset?
+    //Initialize values from planStore
+  }),
+  {
+    name: "planStore",
+  }
+);
 
-
-
-      //One function for saving schedules
-
-      //One function for updating these saved schedules, when should this be called?
-
-
-
-      //Initialize values from planStore
-
-    }), {
-  name: "planStore",
-});
- 
 const usePlanStore = create(usePlanStoreTemplate);
- 
+
 export default usePlanStore;
 
 /*
