@@ -1,6 +1,8 @@
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
+import generatePlanOptions from './generatePlanOptions';
 import { useCourseStore } from ".";  // TODO: Use for  completed credits, this function is now updated
+import { useUserStore } from ".";
 import axios from "axios";
  
 type PlanStore = {
@@ -8,12 +10,9 @@ type PlanStore = {
   maxCredits: number;
   completedCourses: []; // Need to send this to backend. These completed courses are the ones from stevens function
   mandatoryCourses: [];
-  planOptions: []; // **Not needed???** One of the returns from Stevens function. This will be needed for step 2
-  getOptions: () => void; // This function will update getOptions. ***Maybe we can just return instead of having a data value planOptions[]**
-  updateMandatoryCourses: () => void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
+  getOptions: (selected_fields: any[], repeated_courses: any[], credit_choice: number) => void; // TODO: is it ok that we are returning void
+  updateMandatoryCourses: (options_selected: any[]) => void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
   savePlan: () => void;
-  //Get Plans?
-  formInformation: {}; // Will contain everything  sent to backend for stevens function
 };
  
 const usePlanStoreTemplate: StateCreator<
@@ -22,6 +21,63 @@ const usePlanStoreTemplate: StateCreator<
   [["zustand/persist", PlanStore]]
 > = persist(
     (set) => ({
+
+      plans: [],
+      maxCredits: 0,
+      completedCourses: [],
+      mandatoryCourses: [],
+      planOptions: [],
+      formInformation: {},
+
+      getOptions: (selected_fields: any[], repeated_courses: any[], credit_choice: number) => {
+        const completedCourses = useCourseStore.getState().completedClassList;
+        const inProgressCourses = useCourseStore.getState().inProgressClassList;
+        const fields = useUserStore.getState().fields;
+
+        const planOptions = generatePlanOptions(fields, selected_fields, repeated_courses, inProgressCourses, completedCourses);
+        return planOptions;
+      },
+
+      updateMandatoryCourses: async (options_selected: any[]) => {
+        
+        // First step is to update mandatory courses
+        const finalCourses = new Set();
+        options_selected.forEach((option: any) => {
+          finalCourses.add(option.course);
+        });
+
+        // Add values in "mandatoryCourses" array to finalCourses
+        usePlanStore.getState().mandatoryCourses.forEach((course: any) => {
+          finalCourses.add(course);
+        });
+
+        let formInformation = {
+          maxCredits: usePlanStore.getState().maxCredits,
+          completedCredits: useCourseStore.getState().completedCredits,
+          completedCourses: useCourseStore.getState().completedClassList,
+          finalCourses: Array.from(finalCourses),
+        };
+
+        // Send all necessary information to steven
+        const res = await axios
+          .get(`http://localhost:3000/plan/getSchedule`, { params: formInformation })
+          .then((response) => {
+            return response.data;
+          })
+          .catch((err) => {
+            console.log(err);
+            return {};
+          });
+
+        return res;
+      },
+      
+
+      savePlan: () => {
+
+
+      },
+
 
 
       //one function for step 1? --> Kaddija will call this function in her page, so I need to be the one who calls Steven's function
@@ -38,17 +94,6 @@ const usePlanStoreTemplate: StateCreator<
 
 
       //Initialize values from planStore
-
-
-
-
-
-
-
-
-
-
-
 
     }), {
   name: "planStore",
