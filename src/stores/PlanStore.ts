@@ -83,6 +83,8 @@ const usePlanStoreTemplate: StateCreator<
         finalCourses: Array.from(finalCourses),
       };
 
+      console.log(formInformation);
+
       // Send all necessary information to steven
       const res = await axios
         .post(`http://localhost:3000/plan/getSchedule`, {

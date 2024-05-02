@@ -90,17 +90,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     });
   };
 
-  // const handlePreferredCourseSelect = (courseId) => {
-  //   setSelectedPreferredCourses(prev => {
-  //     const newSelection = new Set(prev);
-  //     if (newSelection.has(courseId)) {
-  //       newSelection.delete(courseId);
-  //     } else {
-  //       newSelection.add(courseId);
-  //     }
-  //     return newSelection;
-  //   });
-  // };
   const handlePreferredCourseSelect = (courseId) => {
     setSelectedPreferredCourses(prev => {
       const newSelection = new Set(prev);
@@ -109,7 +98,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
       } else {
         newSelection.add(courseId);
       }
-      console.log("Selected Preferred Courses:", Array.from(newSelection)); // Debug: log current state
       return newSelection;
     });
   };
@@ -175,12 +163,8 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     const selectedPlanOptions = flattenedOptions.filter(group => 
       group.courses.some(courseId => selectedPreferredCourses.has(courseId))
     );
-  
-    console.log("Selected Plan Options:", selectedPlanOptions); // This should show filtered groups
-  
-    
       try {
-        await getSchedule(selectedPlanOptions);
+        getSchedule(selectedPlanOptions);
          
       } catch (error) {
         console.error("Failed to update schedule:", error);
@@ -336,6 +320,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             <>
               <Card shadow="sm" p="lg" className="mb-4">
                 {/* Display the plan summary for review */}
+
               </Card>
               <Button onClick={handleReviewPlan}>Save Plan</Button>
               <Button onClick={handleDiscardPlan} color="red">
