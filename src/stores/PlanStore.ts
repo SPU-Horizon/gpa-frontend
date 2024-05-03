@@ -87,9 +87,7 @@ const usePlanStoreTemplate: StateCreator<
 
       // Send all necessary information to steven
       const res = await axios
-        .post(`http://localhost:3000/plan/getSchedule`, {
-          params: formInformation,
-        })
+        .post(`http://localhost:3000/plan/getSchedule`, formInformation)
         .then((response) => {
           return response.data;
         })

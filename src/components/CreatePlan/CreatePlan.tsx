@@ -1,21 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useUserStore, useCourseStore } from "@/stores";
 import {
   TextInput,
   Card,
   NumberInput,
-  Select,
   Button,
   Stepper,
   Text,
   rem,
 } from "@mantine/core";
 import { Checkbox } from "@/components/ui/checkbox";
-import { TextCursorInput, ScanEye, Pocket } from "lucide-react"; 
-import { set } from "date-fns";
+import { TextCursorInput, ScanEye, Pocket } from "lucide-react";
 import usePlanStore from "@/stores/PlanStore";
 import { generatePlanOptions } from "@/stores/generatePlanOptions";
-import { on } from "events";
 
 interface Course {
   course_id: string;
@@ -58,8 +55,9 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   const [reviewPlan, setReviewPlan] = useState(false);
   const [active, setActive] = useState(0);
   const { getOptions, getSchedule, savePlan, getPlans } = usePlanStore();
-  const [selectedPreferredCourses, setSelectedPreferredCourses] = useState(new Set());
-
+  const [selectedPreferredCourses, setSelectedPreferredCourses] = useState(
+    new Set()
+  );
 
   // State to store the selected courses to repeat
   const [selectedCoursesToRepeat, setSelectedCoursesToRepeat] = useState<
@@ -91,7 +89,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   };
 
   const handlePreferredCourseSelect = (courseId) => {
-    setSelectedPreferredCourses(prev => {
+    setSelectedPreferredCourses((prev) => {
       const newSelection = new Set(prev);
       if (newSelection.has(courseId)) {
         newSelection.delete(courseId);
@@ -158,18 +156,17 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   // Logic for second step submission
   const handleSecondStepSubmit = async () => {
     // As each optionGroup is an array containing a single object, you must access this object:
-    const flattenedOptions = planOptions.map(group => group[0]);
-  
-    const selectedPlanOptions = flattenedOptions.filter(group => 
-      group.courses.some(courseId => selectedPreferredCourses.has(courseId))
+    const flattenedOptions = planOptions.map((group) => group[0]);
+
+    const selectedPlanOptions = flattenedOptions.filter((group) =>
+      group.courses.some((courseId) => selectedPreferredCourses.has(courseId))
     );
-      try {
-        getSchedule(selectedPlanOptions);
-         
-      } catch (error) {
-        console.error("Failed to update schedule:", error);
-      }
-  };  
+    try {
+      getSchedule(selectedPlanOptions);
+    } catch (error) {
+      console.error("Failed to update schedule:", error);
+    }
+  };
 
   // Logic for saving the plan
   const handleSavePlan = () => {
@@ -278,29 +275,37 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
           icon={<Pocket style={{ width: rem(18), height: rem(18) }} />}
         >
           <div>
-          <label className="block text-sm font-medium mb-4">
-                Select from the list below courses you'd prefer to take:
-          </label>
+            <label className="block text-sm font-medium mb-4">
+              Select from the list below courses you'd prefer to take:
+            </label>
           </div>
           <div className="grid grid-cols-2 gap-4 max-h-[500px] overflow-auto">
-          {planOptions.map((optionGroup, index) => (
-            optionGroup.map((option, subIndex) => (
-              <div key={`group-${index}-option-${subIndex}`} className="p-3 border rounded">
-                <div className="font-bold">{option.section_title} (Required Credits: {option.credits_required})</div>
-                {option.courses.map((course, courseIndex) => (
-                  <div key={courseIndex} className="flex items-center">
-                    <Checkbox
-                      checked={selectedPreferredCourses.has(course)} // Ensure `course` is a unique identifier
-                      onCheckedChange={() => handlePreferredCourseSelect(course)} // Pass `course` directly if it's a unique identifier
-                      id={`preferred-${index}-${subIndex}-${courseIndex}`} // Ensures unique ID for each checkbox
-                      className="border-[.5px] mr-2 mt-1"
-                    />
-                    {course}
+            {planOptions.map((optionGroup, index) =>
+              optionGroup.map((option, subIndex) => (
+                <div
+                  key={`group-${index}-option-${subIndex}`}
+                  className="p-3 border rounded"
+                >
+                  <div className="font-bold">
+                    {option.section_title} (Required Credits:{" "}
+                    {option.credits_required})
                   </div>
-                ))}
-              </div>
-            ))
-          ))}
+                  {option.courses.map((course, courseIndex) => (
+                    <div key={courseIndex} className="flex items-center">
+                      <Checkbox
+                        checked={selectedPreferredCourses.has(course)} // Ensure `course` is a unique identifier
+                        onCheckedChange={() =>
+                          handlePreferredCourseSelect(course)
+                        } // Pass `course` directly if it's a unique identifier
+                        id={`preferred-${index}-${subIndex}-${courseIndex}`} // Ensures unique ID for each checkbox
+                        className="border-[.5px] mr-2 mt-1"
+                      />
+                      {course}
+                    </div>
+                  ))}
+                </div>
+              ))
+            )}
           </div>
           <div className="flex justify-center">
             <Button
@@ -320,7 +325,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             <>
               <Card shadow="sm" p="lg" className="mb-4">
                 {/* Display the plan summary for review */}
-
               </Card>
               <Button onClick={handleReviewPlan}>Save Plan</Button>
               <Button onClick={handleDiscardPlan} color="red">
