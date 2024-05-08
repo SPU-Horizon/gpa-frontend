@@ -66,12 +66,13 @@ const usePlanStoreTemplate: StateCreator<
       options_selected.forEach((option: any) => {
         finalCourses.add(option.course);
       });
-
+      
       // Add values in "mandatoryCourses" array to finalCourses
-      usePlanStore.getState().mandatoryCourses.forEach((course: any) => {
-        finalCourses.add(course);
-      });
-
+      // usePlanStore.getState().mandatoryCourses.forEach((course: any) => {
+      //   finalCourses.add(course);
+      // });
+      console.log("Mandatory Courses: ", usePlanStore.getState().mandatoryCourses);
+      
       set({
         mandatoryCourses: [],
       });
