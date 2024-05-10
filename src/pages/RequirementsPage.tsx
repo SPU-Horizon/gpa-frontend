@@ -6,53 +6,53 @@ import {
 } from "@/sections/RequirementsPage/Columns";
 import { FieldsDisplay } from "@/sections/RequirementsPage/FieldsDisplay";
 import { ColumnDef } from "@tanstack/react-table";
+import { useCourseStore, useUserStore } from "@/stores";
+import { useState } from "react";
 
 const RequirementsPage = () => {
   // For each section title, we need a table
+  const [activeField, setActiveField] = useState(0);
+
+  let { fields } = useUserStore();
+  const { inProgressClassList, completedClassList } = useCourseStore();
+
+  let inProgressIDs = inProgressClassList.map((class_) => class_.course_id);
+  let completedIDs = completedClassList.map((class_) => class_.course_id);
+
+  let field = fields[activeField].requirements;
 
   // Get all the unique titles of each section of the requirements
   const title: Set<string> = new Set();
-  reqs.forEach((req) => {
+  field.forEach((req) => {
     title.add(req[0].section_title);
   });
 
   const title_classes: {
     section: string;
     code: string;
-    credits: number;
+    credits: number | string;
     grade: string;
     status: string;
     title: string;
   }[] = [];
 
-  // For each title, we will find the number of credits needed to fill that specific requirement
-  const title_credits = new Map<string, number>();
-
-  reqs.map((req, i) => {
-    let credits = title_credits.get(req[0].section_title)
-      ? title_credits.get(req[0].section_title)
-      : 0;
-
-    title_credits.set(req[0].section_title, credits! + req[0].credits_required);
-  });
-
-  const CreditTitleArray = Array.from(title_credits).map(
-    ([title, credits]) => ({
-      title,
-      credits,
-    })
-  );
-
+  // change classes to courses
   // From those requirements,
-  reqs.forEach((req) => {
-    req[0].classes.forEach((class_, i) => {
+  field.forEach((req) => {
+    req[0].courses.forEach((class_, i) => {
       title_classes.push({
         section: req[0].section_title,
-        code: class_,
-        credits: req[0].credits_required,
-        grade: "B-",
-        status: "Complete",
-        title: MockClassData[i].title,
+        code: class_.course_id,
+        credits: class_.credits ? class_.credits : "N/A",
+        grade: completedIDs.includes(class_.course_id)
+          ? completedClassList[completedIDs.indexOf(class_.course_id)].grade
+          : "N/A",
+        status: inProgressIDs.includes(class_.course_id)
+          ? "In Progress"
+          : completedIDs.includes(class_.course_id)
+          ? "Complete"
+          : "Remaining",
+        title: class_.name,
       });
     });
   });
@@ -64,20 +64,17 @@ const RequirementsPage = () => {
       </header>
       <FieldsDisplay />
 
-      {Array.from(CreditTitleArray).map((ct, i) => (
-        <div key={ct.title}>
-          <ClassTable
-            order={i}
-            columns={ClassColumns as ColumnDef<{}, unknown>[]}
-            data={title_classes.filter((c) => {
-              return c.section === ct.title;
-            })}
-            heading={ct.title}
-            requiredCredits={ct.credits}
-            creditsRemaining={0}
-          />
-        </div>
-      ))}
+      <div key={1}>
+        <ClassTable
+          order={0}
+          columns={ClassColumns as ColumnDef<{ section: string }, unknown>[]}
+          data={title_classes}
+          setActiveField={setActiveField}
+          activeField={activeField}
+          currentField=""
+          completedCourseIDs={completedIDs}
+        />
+      </div>
     </div>
   );
 };

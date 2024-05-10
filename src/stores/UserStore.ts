@@ -12,7 +12,18 @@ type UserState = {
   graduationQuarter: string;
   enrollmentQuarter: string;
   enrollmentYear: string;
-  fields: { name: string; type: string; year: number; quarter: string }[];
+  fields: {
+    student_field_id: number;
+    name: string;
+    type: string;
+    year: number;
+    quarter: string;
+    requirements: {
+      courses: { name: string; credits: number; course_id: string }[];
+      section_title: string;
+      credits_required: number;
+    }[][];
+  }[];
   counselorEmail: string;
   counselorName: string;
   counselorPhone: string;

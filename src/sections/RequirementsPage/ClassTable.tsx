@@ -29,7 +29,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useUserStore } from "@/stores";
+import { useCourseStore, useUserStore } from "@/stores";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 import {
   Select,
@@ -39,26 +39,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends { section: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  heading: string;
   order: number;
-  requiredCredits?: number;
-  creditsRemaining?: number;
+  setActiveField: (field: number) => void;
+  activeField: number;
+  currentField: string;
+  completedCourseIDs: string[];
 }
 
-export function ClassTable<TData, TValue>({
-  columns,
+export function ClassTable<TData extends { section: string }, TValue>({
   data,
-  heading,
+  columns,
   order,
-  requiredCredits,
-  creditsRemaining,
+  setActiveField,
+  activeField,
+  completedCourseIDs,
 }: DataTableProps<TData, TValue>) {
   const { fields } = useUserStore();
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [checked, setChecked] = useState<string>("");
+  const [checked, setChecked] = useState<string>(fields[activeField].name);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState({
     title: true,
@@ -68,6 +69,62 @@ export function ClassTable<TData, TValue>({
     year: true,
     field: false,
   });
+
+  const { completedClassList } = useCourseStore();
+  const activeFieldData = fields[activeField].requirements;
+
+  // We have each title of the section requirements for the field
+  const title: Set<string> = new Set();
+  activeFieldData.forEach((req) => {
+    title.add(req[0].section_title);
+  });
+
+  // For each title, we will find the number of credits needed to fill that specific requirement
+  const title_credits = new Map<string, number>();
+
+  activeFieldData.map((req, i) => {
+    let credits = title_credits.get(req[0].section_title)
+      ? title_credits.get(req[0].section_title)
+      : 0;
+
+    title_credits.set(req[0].section_title, credits! + req[0].credits_required);
+  });
+
+  // We have each section title, and the credits required for the sections
+  const creditTitleArray = Array.from(title_credits).map(
+    ([title, credits]) => ({
+      title,
+      credits,
+    })
+  );
+
+  const requiredCredits = creditTitleArray.reduce((acc, curr) => {
+    return acc + curr.credits;
+  }, 0 as number);
+
+  // Now, we find how many credits are left for each section, to display in the table
+  let sectionCreditsRemaining = new Map<string, number>();
+
+  Array.from(title).map((title) => {
+    sectionCreditsRemaining.set(title, 0);
+  });
+
+  activeFieldData.map((req, i) => {
+    req.map((section) => {
+      section.courses.map((course) => {
+        if (completedCourseIDs.includes(course.course_id)) {
+          let credits = sectionCreditsRemaining.get(section.section_title);
+          let findIndex = completedCourseIDs.indexOf(course.course_id);
+          let creditsToAdd = Number(completedClassList[findIndex].credits);
+          sectionCreditsRemaining.set(
+            section.section_title,
+            credits! + creditsToAdd
+          );
+        }
+      });
+    });
+  });
+
   const table = useReactTable({
     data,
     columns,
@@ -83,14 +140,21 @@ export function ClassTable<TData, TValue>({
       columnFilters,
       columnVisibility,
     },
+    initialState: {
+      pagination: {
+        pageIndex: 0,
+        pageSize: 1000,
+      },
+    },
   });
 
   return (
     <div className="h-max pb-4">
-      <div className="flex items-center justify-between py-4 md:flex-col md:gap-2">
+      <div className="flex flex-col gap-4 items-center justify-between py-4 md:flex-col md:gap-2">
         <div className="flex">
-          <h2 className="text-2xl font-semibold">
-            {heading} - Required Credits: {requiredCredits}
+          <h2 className="text-3xl font-semibold ml-3 mt-4 ">
+            Current Field: {fields[activeField].name} - Required Credits:{" "}
+            {requiredCredits}
           </h2>
         </div>
 
@@ -123,22 +187,13 @@ export function ClassTable<TData, TValue>({
                           key={i}
                           value={f.name}
                           onClick={() => {
-                            table.setGlobalFilter(f.name);
+                            setActiveField(i);
                           }}
                         >
                           {f.name}
                         </DropdownMenuRadioItem>
                       );
                     })}
-                    <DropdownMenuRadioItem
-                      value="Reset"
-                      onClick={() => {
-                        table.setGlobalFilter("");
-                        setChecked("");
-                      }}
-                    >
-                      All Fields
-                    </DropdownMenuRadioItem>
                   </DropdownMenuRadioGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -157,74 +212,105 @@ export function ClassTable<TData, TValue>({
           </>
         )}
       </div>
-      <Table className="max-h-[500px] overflow-clip">
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
 
-              <TableHead className="">Required Credits</TableHead>
-              <TableHead className=""> Credits Remaining</TableHead>
-            </TableRow>
-          ))}
-        </TableHeader>
+      {creditTitleArray.map((title, i) => {
+        return (
+          <div className="flex flex-col gap-1">
+            <div className="ml-3 font-semibold text-xl mt-4 mb-2">
+              {title.title}
+            </div>
+            <Table className="max-h-[500px] overflow-clip" key={i}>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    })}
 
-        <TableBody className="">
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row, i) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-                className="ease-in-out transition-all cursor-pointer duration-200 w-min border-b-0 hover:bg-transparent"
-                onClick={() => {
-                  console.log(row.original);
-                }}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    {/* {console.log(cell.column.columnDef.header, cell.getValue())} */}
-                  </TableCell>
+                    <TableHead className="">Required Credits</TableHead>
+                    <TableHead className="">Credits Remaining</TableHead>
+                  </TableRow>
                 ))}
+              </TableHeader>
 
-                {i === 0 ? (
-                  <>
+              <TableBody className="">
+                {table.getRowModel().rows?.length ? (
+                  table
+                    .getRowModel()
+                    .rows.filter(
+                      (item) => item.original!.section == title.title
+                    )
+                    .map((row, j) => (
+                      <>
+                        {row.original!.section === title.title ? (
+                          <>
+                            <TableRow
+                              key={row.id}
+                              data-state={row.getIsSelected() && "selected"}
+                              className="ease-in-out transition-all cursor-pointer duration-200 w-min border-b-0 hover:bg-transparent"
+                            >
+                              {row.getVisibleCells().map((cell) => (
+                                <TableCell key={cell.id}>
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext()
+                                  )}
+                                </TableCell>
+                              ))}
+
+                              {
+                                // If the row is the first row of the section, display the credits required and credits remaining
+                                j === 0 ? (
+                                  <>
+                                    <TableCell
+                                      rowSpan={table.getRowModel().rows.length}
+                                      className="text-center"
+                                    >
+                                      <b>{title.credits}</b>
+                                    </TableCell>
+                                    <TableCell
+                                      rowSpan={table.getRowModel().rows.length}
+                                      className="text-center hover:bg-transparent"
+                                    >
+                                      <b>
+                                        {title.credits -
+                                          sectionCreditsRemaining.get(
+                                            title.title
+                                          )!}
+                                      </b>
+                                    </TableCell>
+                                  </>
+                                ) : null
+                              }
+                            </TableRow>
+                          </>
+                        ) : null}
+                      </>
+                    ))
+                ) : (
+                  <TableRow>
                     <TableCell
-                      rowSpan={table.getRowModel().rows.length}
-                      className="text-center"
+                      colSpan={columns.length}
+                      className="h-24 text-center"
                     >
-                      <b>{requiredCredits}</b>
+                      No results.
                     </TableCell>
-                    <TableCell
-                      rowSpan={table.getRowModel().rows.length}
-                      className="text-center hover:bg-transparent"
-                    >
-                      <b>{creditsRemaining}</b>
-                    </TableCell>
-                  </>
-                ) : null}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        );
+      })}
 
       {table.getPageCount() === 1 ? (
         <>
@@ -242,7 +328,7 @@ export function ClassTable<TData, TValue>({
                 <Select
                   value={`${table.getState().pagination.pageSize}`}
                   onValueChange={(value) => {
-                    table.setPageSize(Number(value));
+                    table.setPageSize(table.getRowCount());
                   }}
                 >
                   <SelectTrigger className="h-8 w-[70px]">

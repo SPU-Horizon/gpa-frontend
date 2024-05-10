@@ -7,10 +7,36 @@ type CourseStore = {
   getEnrollments: () => Promise<Record<string, any>>;
   postCourses: (file: FormData) => Promise<boolean>;
   initializeCourseInfo: () => void;
-  inProgressClassList: [];
-  completedClassList: [];
-  registeredClassList: [];
+  inProgressClassList: {
+    attributes: string;
+    course_id: string;
+    credits: string;
+    description: string;
+    name: string;
+    quarter: string;
+    year: number;
+  }[];
+  completedClassList: {
+    attributes: string;
+    course_id: string;
+    credits: string;
+    description: string;
+    grade: string;
+    name: string;
+    quarter: string;
+    year: number;
+  }[];
+  registeredClassList: {
+    attributes: string;
+    course_id: string;
+    credits: string;
+    description: string;
+    name: string;
+    quarter: string;
+    year: number;
+  }[];
   gpa: number;
+  dropField: (student_field_id: number) => Promise<boolean>;
 };
 
 const useCourseStoreTemplate: StateCreator<
@@ -77,6 +103,26 @@ const useCourseStoreTemplate: StateCreator<
         registeredClassList: future || [], // Set to an empty array if 'future' is undefined
         gpa: gpa || 0, // Set to 0 if 'gpa' is undefined
       });
+    },
+
+    dropField: async (student_field_id: number) => {
+      try {
+        const res = await axios.delete(
+          "http://localhost:3000/course/drop-field",
+          {
+            data: {
+              student_field_id,
+            },
+          }
+        );
+        // Handle the response from the API
+        console.log(res);
+
+        return true; // Return a boolean value indicating success
+      } catch (error) {
+        // Handle any errors that occurred during the request
+        return false; // Return a boolean value indicating failure
+      }
     },
   }),
   {
