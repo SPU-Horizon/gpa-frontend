@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // @ts-nocheck
 
 // isPassingGrade: anonymous function that returns true if the points grade is greater than or equal to 2.0
@@ -18,8 +19,60 @@ let isPassingGrade = function (letter_grade) {
     }
     else {
       return (parseFloat(letter_grade) >= 2.0);
+=======
+// // points_grade: function that returns the 4.0 grade from a letter grade
+let points_grade = function (letter_grade: any) {
+  if (isNaN(letter_grade)) {
+    switch (letter_grade) {
+      case "A":
+        return 4.0;
+      case "A-":
+        return 3.7;
+      case "B+":
+        return 3.3;
+      case "B":
+        return 3.0;
+      case "B-":
+        return 2.7;
+      case "C+":
+        return 2.3;
+      case "C":
+        return 2.0;
+      case "C-":
+        return 1.7;
+      case "D+":
+        return 1.3;
+      case "D":
+        return 1.0;
+      case "E":
+        return 0.0;
+      default:
+        return null;
+>>>>>>> 7154f8f (update)
     }
 };
+
+interface Enrollment {
+  course_id: string;
+  grade: string;
+  credits: number;
+}
+
+interface Field {
+  student_field_id: number;
+  requirements: Requirement[];
+}
+
+interface Requirement {
+  credits_required: number;
+  courses: Course[];
+}
+
+interface Course {
+  course_id: string;
+  credits: number;
+}
+
 
 // selected_fields: list of student_field_field_id integers selected by the user
 // repeated_courses: list of course_id strings that the user does not consider completed
@@ -89,7 +142,16 @@ export default function generatePlanOptions(all_fields, selected_fields, repeate
       }
     }
   }
+<<<<<<< HEAD
   // return the plan_options (an array of arrays of objects), mandatory_courses (an array of course_id strings), completed_courses (an array of course_id strings), and completed_credits (a number)
+=======
+  console.log("plan_options", plan_options);
+  console.log("mandatory_courses", mandatory_courses);
+  console.log("completed_courses", completed_courses);
+  console.log("completed_credits", completed_credits);
+
+  // return the plan_options (an array of arrays of objects), mandatory_courses (a set), and completed_courses (a set)
+>>>>>>> 7154f8f (update)
   return {
     plan_options: plan_options,
     mandatory_courses: Array.from(mandatory_courses),

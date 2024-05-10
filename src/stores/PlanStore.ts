@@ -21,7 +21,9 @@ type PlanStore = {
     completed_courses: Set<any>;
     completed_credits: any;
   }; // TODO: is it ok that we are returning void
-  getSchedule: (options_selected: any[]) => void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
+  getSchedule: (
+    options_selected: any[], 
+    maxCredits: number)=> void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
   savePlan: (plan_name: string, plan_json: {}) => void;
   getPlans: () => void;
 };
@@ -48,47 +50,48 @@ const usePlanStoreTemplate: StateCreator<
       const inProgressCourses = useCourseStore.getState().inProgressClassList;
       const fields = useUserStore.getState().fields;
 
+      console.log("maxCredit before in createPlan getOptions", credit_choice);
+
       const planOptions = generatePlanOptions(
         fields,
         selected_fields,
         repeated_courses,
         inProgressCourses,
         completedCourses,
-        12
+        credit_choice
       );
 
       return planOptions;
     },
 
-    getSchedule: async (options_selected: any[]) => {
+    getSchedule: async (options_selected: any[], maxCredits: number) => {
       // First step is to update mandatory courses
       const finalCourses = new Set();
       options_selected.forEach((option: any) => {
         finalCourses.add(option.course);
       });
-      
+
       // Add values in "mandatoryCourses" array to finalCourses
       // usePlanStore.getState().mandatoryCourses.forEach((course: any) => {
       //   finalCourses.add(course);
       // });
-      console.log("Mandatory Courses: ", usePlanStore.getState().mandatoryCourses);
-      
+
       set({
         mandatoryCourses: [],
       });
 
       let formInformation = {
-        maxCredits: usePlanStore.getState().maxCredits,
+        maxCredits: maxCredits,
         completedCredits: useCourseStore.getState().completedCredits,
         completedCourses: useCourseStore.getState().completedClassList,
-        finalCourses: Array.from(finalCourses),
+        options_selected,
       };
-
-      console.log(formInformation);
 
       // Send all necessary information to steven
       const res = await axios
-        .post(`http://localhost:3000/plan/getSchedule`, formInformation)
+        .post(`http://localhost:3000/plan/getSchedule`, {
+          params: formInformation,
+        })
         .then((response) => {
           return response.data;
         })
