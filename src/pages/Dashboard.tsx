@@ -11,7 +11,14 @@ export default function Dashboard() {
       <div className="flex-grow overflow-scroll">
         <Routes>
           <Route path="" element={<HomeOptions />} />
-          <Route path="/transcript" element={<ClassHistory />} />
+          <Route
+            path="/transcript"
+            element={
+              <div className="overflow-scroll h-full w-full">
+                <ClassHistory />
+              </div>
+            }
+          />
           <Route path="/plans" element={<CreatePlan />} />
           <Route path="/requirements" element={<RequirementsPage />} />
           <Route path="/integrate-banner" element={<IntegrationPage />} />

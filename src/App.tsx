@@ -12,12 +12,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./utils/ProtectedRoute";
 
 import { useThemeStore } from "./stores";
+import generatePlanOptions from "./stores/generatePlanOptions";
 
 function App() {
   const { theme } = useThemeStore();
-
+  
   const themeClass = theme === "dark" ? "dark" : "light";
-
   return (
     <div className={`${themeClass}`}>
       <Router>

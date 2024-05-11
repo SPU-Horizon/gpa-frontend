@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { DialogDescription, DialogTrigger } from "@radix-ui/react-dialog";
 
 export type ClassCardProps = {
-  student_id: number;
+  student_id?: number;
   course_id: string;
   name: string;
   description: string;

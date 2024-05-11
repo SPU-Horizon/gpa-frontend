@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 
 type CourseStore = {
   getEnrollments: () => Promise<Record<string, any>>;
-  postCourses: (file: FormData) => Promise<boolean>;
+  postCourses: (file: FormData) => Promise<any>;
   initializeCourseInfo: () => void;
   inProgressClassList: {
     attributes: string;
@@ -36,6 +36,7 @@ type CourseStore = {
     year: number;
   }[];
   gpa: number;
+  completedCredits: number;
   dropField: (student_field_id: number) => Promise<boolean>;
 };
 
@@ -73,13 +74,15 @@ const useCourseStoreTemplate: StateCreator<
             },
           }
         );
-        // Handle the response from the API
-        console.log(res.data);
 
-        return true; // Return a boolean value indicating success
+        // Handle the response from the API
+        const failedEnrollments = res.data.data.failedEnrollments;
+        const status = res.status;
+
+        return { status, failedEnrollments }; // Return the status and any failed enrollments
       } catch (error) {
         // Handle any errors that occurred during the request
-        return false; // Return a boolean value indicating failure
+        return { status: 500, failedEnrollments: [] };
       }
     },
 
@@ -87,6 +90,7 @@ const useCourseStoreTemplate: StateCreator<
     inProgressClassList: [],
     completedClassList: [],
     registeredClassList: [],
+    completedCredits: 0,
     gpa: 0,
 
     // Call getEnrollments and set classList
@@ -94,7 +98,7 @@ const useCourseStoreTemplate: StateCreator<
       const enrollments = await useCourseStore.getState().getEnrollments();
 
       // Destructure the enrollments object
-      const { current, past, future, gpa } = enrollments;
+      const { current, past, future, gpa, completed_credits } = enrollments;
 
       // Set the values for inProgressClassList, completedClassList, and gpa
       set({
@@ -102,6 +106,7 @@ const useCourseStoreTemplate: StateCreator<
         completedClassList: past || [], // Set to an empty array if 'past' is undefined
         registeredClassList: future || [], // Set to an empty array if 'future' is undefined
         gpa: gpa || 0, // Set to 0 if 'gpa' is undefined
+        completedCredits: completed_credits || 0,
       });
     },
 
