@@ -38,24 +38,48 @@ const RequirementsPage = () => {
 
   // change classes to courses
   // From those requirements,
-  field.forEach((req) => {
-    req[0].courses.forEach((class_, i) => {
-      title_classes.push({
-        section: req[0].section_title,
-        code: class_.course_id,
-        credits: class_.credits ? class_.credits : "N/A",
-        grade: completedIDs.includes(class_.course_id)
-          ? completedClassList[completedIDs.indexOf(class_.course_id)].grade
-          : "N/A",
-        status: inProgressIDs.includes(class_.course_id)
-          ? "In Progress"
-          : completedIDs.includes(class_.course_id)
-          ? "Complete"
-          : "Remaining",
-        title: class_.name,
+
+  console.log(field);
+
+  field.forEach((req, i) => {
+    req.forEach((set, i) => {
+      set.courses?.forEach((class_) => {
+        title_classes.push({
+          section: set.section_title,
+          code: class_.course_id,
+          credits: class_.credits ? class_.credits : "N/A",
+          grade: completedIDs.includes(class_.course_id)
+            ? completedClassList[completedIDs.indexOf(class_.course_id)].grade
+            : "N/A",
+          status: inProgressIDs.includes(class_.course_id)
+            ? "In Progress"
+            : completedIDs.includes(class_.course_id)
+            ? "Complete"
+            : "Remaining",
+          title: class_.name,
+        });
       });
     });
   });
+
+  // field.forEach((req, i) => {
+  //   req[0].courses?.forEach((class_) => {
+  //     title_classes.push({
+  //       section: req[0].section_title,
+  //       code: class_.course_id,
+  //       credits: class_.credits ? class_.credits : "N/A",
+  //       grade: completedIDs.includes(class_.course_id)
+  //         ? completedClassList[completedIDs.indexOf(class_.course_id)].grade
+  //         : "N/A",
+  //       status: inProgressIDs.includes(class_.course_id)
+  //         ? "In Progress"
+  //         : completedIDs.includes(class_.course_id)
+  //         ? "Complete"
+  //         : "Remaining",
+  //       title: class_.name,
+  //     });
+  //   });
+  // });
 
   return (
     <div className="px-10 h-full  mx-auto pt-4">

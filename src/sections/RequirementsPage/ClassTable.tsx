@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -159,7 +159,7 @@ export function ClassTable<TData extends { section: string }, TValue>({
         </div>
 
         {order === 0 && (
-          <>
+          <React.Fragment key={"order-0"}>
             <div className="flex justify-end gap-3 items-end md:mb-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -209,7 +209,7 @@ export function ClassTable<TData extends { section: string }, TValue>({
                 className="min-w-[375px] md:min-w-[275px] focus-visible:ring-1 focus-visible:ring-black-light "
               />
             </div>
-          </>
+          </React.Fragment>
         )}
       </div>
 
@@ -250,51 +250,49 @@ export function ClassTable<TData extends { section: string }, TValue>({
                       (item) => item.original!.section == title.title
                     )
                     .map((row, j) => (
-                      <>
+                      <React.Fragment key={j}>
                         {row.original!.section === title.title ? (
-                          <>
-                            <TableRow
-                              key={row.id}
-                              data-state={row.getIsSelected() && "selected"}
-                              className="ease-in-out transition-all cursor-pointer duration-200 w-min border-b-0 hover:bg-transparent"
-                            >
-                              {row.getVisibleCells().map((cell) => (
-                                <TableCell key={cell.id}>
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                  )}
-                                </TableCell>
-                              ))}
+                          <TableRow
+                            key={row.id}
+                            data-state={row.getIsSelected() && "selected"}
+                            className="ease-in-out transition-all cursor-pointer duration-200 w-min border-b-0 hover:bg-transparent"
+                          >
+                            {row.getVisibleCells().map((cell) => (
+                              <TableCell key={cell.id}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </TableCell>
+                            ))}
 
-                              {
-                                // If the row is the first row of the section, display the credits required and credits remaining
-                                j === 0 ? (
-                                  <>
-                                    <TableCell
-                                      rowSpan={table.getRowModel().rows.length}
-                                      className="text-center"
-                                    >
-                                      <b>{title.credits}</b>
-                                    </TableCell>
-                                    <TableCell
-                                      rowSpan={table.getRowModel().rows.length}
-                                      className="text-center hover:bg-transparent"
-                                    >
-                                      <b>
-                                        {title.credits -
-                                          sectionCreditsRemaining.get(
-                                            title.title
-                                          )!}
-                                      </b>
-                                    </TableCell>
-                                  </>
-                                ) : null
-                              }
-                            </TableRow>
-                          </>
+                            {
+                              // If the row is the first row of the section, display the credits required and credits remaining
+                              j === 0 ? (
+                                <>
+                                  <TableCell
+                                    rowSpan={table.getRowModel().rows.length}
+                                    className="text-center"
+                                  >
+                                    <b>{title.credits}</b>
+                                  </TableCell>
+                                  <TableCell
+                                    rowSpan={table.getRowModel().rows.length}
+                                    className="text-center hover:bg-transparent"
+                                  >
+                                    <b>
+                                      {title.credits -
+                                        sectionCreditsRemaining.get(
+                                          title.title
+                                        )!}
+                                    </b>
+                                  </TableCell>
+                                </>
+                              ) : null
+                            }
+                          </TableRow>
                         ) : null}
-                      </>
+                      </React.Fragment>
                     ))
                 ) : (
                   <TableRow>
