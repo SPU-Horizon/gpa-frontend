@@ -37,7 +37,7 @@ type CourseStore = {
   }[];
   gpa: number;
   completedCredits: number;
-  dropField: (student_field_id: number) => Promise<boolean>;
+  dropField: (student_field_id: number) => Promise<any>;
 };
 
 const useCourseStoreTemplate: StateCreator<
@@ -123,7 +123,7 @@ const useCourseStoreTemplate: StateCreator<
         // Handle the response from the API
         console.log(res);
 
-        return true; // Return a boolean value indicating success
+        return { status: res.status, data: res.data.display_message }; // Return a boolean value indicating success
       } catch (error) {
         // Handle any errors that occurred during the request
         return false; // Return a boolean value indicating failure

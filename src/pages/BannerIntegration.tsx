@@ -10,6 +10,7 @@ import { FileDropzone } from "@/components/custom";
 import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
+import { BannerGIF } from "@/images";
 
 type FailedEnrollment = {
   course_id: string;
@@ -25,12 +26,10 @@ type Enrollment = {
   course_id: string;
   credits: string;
   description: string;
-  grade: string;
+  grade?: string;
   name: string;
   quarter: string;
 };
-
-import { BannerGIF } from "@/images";
 
 export default function IntegrationPage() {
   const [value, setValue] = useState<File | null>(null);
@@ -52,25 +51,23 @@ export default function IntegrationPage() {
       ...registeredClassList,
     ];
 
-    return allClasses.some(
+    let val = allClasses.some(
       (course: Enrollment) => course.course_id === courseId
     );
+
+    return val;
   };
 
   const onSubmission = async () => {
-    console.log(value);
     if (value) {
       const formData = new FormData();
       formData.append("file", value);
       formData.append("student_id", studentId.toString());
 
       const res = await postCourses(formData);
-      console.log(res);
 
       if (res.status === 200 && res.failedEnrollments.length === 0) {
         toast.success("File Uploaded Successfully, All Classes Added");
-        setValue(null);
-        setAcceptedFile(false);
         initializeCourseInfo();
         initializeUserInfo();
       } else if (res.status === 200) {
@@ -99,12 +96,14 @@ export default function IntegrationPage() {
             </div>
           </div>
         );
+        initializeCourseInfo();
+        initializeUserInfo();
       } else {
         toast.error("An Error Occured While Uploading File");
-        setValue(null);
-        setAcceptedFile(false);
       }
     }
+    setValue(null);
+    setAcceptedFile(false);
   };
 
   return (

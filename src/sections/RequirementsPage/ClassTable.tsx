@@ -80,13 +80,7 @@ export function ClassTable<TData extends { section: string }, TValue>({
   activeFieldData.forEach((req) => {
     if (req.length > 1) {
       req.forEach((section, i) => {
-        if (!section.section_title.includes("Option")) {
-          section.section_title =
-            section.section_title + " (Option " + (i + 1) + ")";
-          title.add(section.section_title);
-        } else {
-          title.add(section.section_title);
-        }
+        title.add(section.section_title);
       });
     } else if (req[0].courses.length === 0) {
     } else {
@@ -99,8 +93,6 @@ export function ClassTable<TData extends { section: string }, TValue>({
 
   activeFieldData.map((req, i) => {
     if (req.length > 1) {
-      console.log(req);
-
       req.forEach((section, i) => {
         let credits = title_credits.get(req[i].section_title)
           ? title_credits.get(req[i].section_title)
@@ -189,9 +181,8 @@ export function ClassTable<TData extends { section: string }, TValue>({
     <div className="h-max pb-4">
       <div className="flex flex-col gap-4 items-center justify-between py-4 md:flex-col md:gap-2">
         <div className="flex">
-          <h2 className="text-3xl font-semibold ml-3 mt-4 ">
-            Current Field: {fields[activeField].name} - Required Credits:{" "}
-            {requiredCredits}
+          <h2 className="text-2xl font-semibold ml-3 mt-4 ">
+            Current Field: {fields[activeField].name}
           </h2>
         </div>
 
@@ -215,7 +206,7 @@ export function ClassTable<TData extends { section: string }, TValue>({
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup
-                    value={checked}
+                    value={fields[activeField].name}
                     onValueChange={setChecked}
                   >
                     {fields.map((f, i) => {
@@ -252,9 +243,21 @@ export function ClassTable<TData extends { section: string }, TValue>({
 
       {creditTitleArray.map((title, i) => {
         return (
-          <div className="flex flex-col gap-1">
-            <div className="ml-3 font-semibold text-xl mt-4 mb-2">
-              {title.title}
+          <div className="flex flex-col gap-1" key={i}>
+            <div className="ml-3 font-semibold text-xl mt-4 mb-2 flex flex-col">
+              <div>
+                {title.title.includes("Option")
+                  ? title.title.substring(0, title.title.indexOf("("))
+                  : title.title}
+              </div>
+              <div className="text-base font-normal mt-2">
+                {title.title.includes("Option")
+                  ? title.title.substring(
+                      title.title.indexOf("(") + 1,
+                      title.title.indexOf(")")
+                    )
+                  : null}
+              </div>
             </div>
             <Table className="max-h-[500px] overflow-clip" key={i}>
               <TableHeader>

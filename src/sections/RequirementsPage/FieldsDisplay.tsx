@@ -1,4 +1,12 @@
-import { Group, Paper, SimpleGrid, Text } from "@mantine/core";
+import {
+  Group,
+  Paper,
+  SimpleGrid,
+  Text,
+  Title,
+  Button,
+  Container,
+} from "@mantine/core";
 import { useCourseStore, useUserStore } from "@/stores";
 import { XCircle } from "lucide-react";
 import {
@@ -11,15 +19,29 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useNavigate } from "react-router-dom";
+import { useNavigationStore } from "@/stores/NavigationStore";
+import { toast } from "sonner";
 
-export const FieldsDisplay = () => {
+type FieldsDisplayProps = {
+  setActiveField?: (field: number) => void;
+};
+
+export const FieldsDisplay = ({ setActiveField }: FieldsDisplayProps) => {
   let { fields, initializeUserInfo } = useUserStore();
   let { dropField, initializeCourseInfo } = useCourseStore();
+  const navigate = useNavigate();
+  const { setCurrentTab } = useNavigationStore();
 
   const updateFields = async (student_field_id: number) => {
-    dropField(student_field_id);
-    initializeCourseInfo();
-    initializeUserInfo();
+    const res = await dropField(student_field_id);
+    if (res.status === 200) {
+      initializeCourseInfo();
+      initializeUserInfo();
+      toast.success(res.data);
+    } else {
+      toast.error("Failed to remove field");
+    }
   };
 
   // Mock Data if fields are not available, also can display the removal process
@@ -29,11 +51,12 @@ export const FieldsDisplay = () => {
       {fields.length ? (
         fields.map((field, i) => (
           <Paper
-            className="dark:bg-black-light dark:border-none shadow-md  transition-all duration-200 ease-in-out"
+            className="dark:bg-black-light dark:border-none shadow-md transition-all duration-200 ease-in-out hover:cursor-pointer hover:shadow-lg"
             withBorder
             p="sm"
             radius="md"
             key={field.name + i}
+            onClick={() => setActiveField(i)}
           >
             <Group justify="space-between">
               <Text size="md" c="dimmed">
@@ -61,7 +84,7 @@ export const FieldsDisplay = () => {
                     <AlertDialogCancel>No</AlertDialogCancel>
                     <AlertDialogCancel
                       className="bg-gold-light hover:bg-black-base hover:text-white-base"
-                      onClick={() => updateFields(field.student_field_id)}
+                      onClick={async () => updateFields(field.student_field_id)}
                     >
                       Yes - Remove it.
                     </AlertDialogCancel>
@@ -85,9 +108,34 @@ export const FieldsDisplay = () => {
         ))
       ) : (
         <div className="col-span-full">
-          <p className="text-black-base dark:text-white-base text-base font-medium ">
-            No fields - Please upload your banner page to add a field.
-          </p>
+          <Container className="py-[150px]">
+            <Title className="text-center font-semibold text-3xl sm:max-w-8 font-avenir">
+              No Fields To Display
+            </Title>
+            <Text
+              c="dimmed"
+              size="lg"
+              ta="center"
+              className="max-w-[500px] m-auto my-8"
+            >
+              You'll need to visit the BannerSync page and follow the
+              instructions there to add a field to your account. Then
+              requirements will be displayed here.
+            </Text>
+            <Group justify="center">
+              <Button
+                variant="subtle"
+                size="md"
+                color="#927c4e"
+                onClick={() => {
+                  navigate("/dashboard/integrate-banner");
+                  setCurrentTab("BannerSync");
+                }}
+              >
+                Go to BannerSync
+              </Button>
+            </Group>
+          </Container>
         </div>
       )}
     </SimpleGrid>
