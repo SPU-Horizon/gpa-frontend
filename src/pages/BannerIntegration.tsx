@@ -10,6 +10,7 @@ import { FileDropzone } from "@/components/custom";
 import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
+import {Text} from "@mantine/core";
 
 import { BannerGIF } from "@/images";
 import { set } from "date-fns";
@@ -102,6 +103,12 @@ export default function IntegrationPage() {
                     </div>
                   )
               )}
+            </div>
+            <div>
+              {/*  Dispay the message of missingFileds in the res object */}
+            <Text>
+              We've noticed there are some missing fields: {res.missingFields.join(", ")}. 
+              Would you like to upload additional files to complete these entries?</Text>
             </div>
           </div>
         );
