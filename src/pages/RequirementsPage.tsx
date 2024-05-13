@@ -4,13 +4,15 @@ import { FieldsDisplay } from "@/sections/RequirementsPage/FieldsDisplay";
 import { ColumnDef } from "@tanstack/react-table";
 import { useCourseStore, useUserStore } from "@/stores";
 import { useState } from "react";
+import { Loader } from "@mantine/core";
 
 const RequirementsPage = () => {
   // For each section title, we need a table
-  const [activeField, setActiveField] = useState(0);
 
-  let { fields } = useUserStore();
+  let { fields, activeField, setActiveField } = useUserStore();
   const { inProgressClassList, completedClassList } = useCourseStore();
+
+  const [isLoading, setLoading] = useState(false);
 
   let inProgressIDs = inProgressClassList.map((class_) => class_.course_id);
   let completedIDs = completedClassList.map((class_) => class_.course_id);
@@ -73,9 +75,9 @@ const RequirementsPage = () => {
         <header className="flex gap-2 items-end">
           <h1 className="text-2xl font-bold mb-4 ">Major Fields</h1>
         </header>
-        <FieldsDisplay setActiveField={setActiveField} />
+        <FieldsDisplay setIsLoading={setLoading} />
 
-        <div key={1}>
+        {isLoading ? (
           <ClassTable
             order={0}
             columns={ClassColumns as ColumnDef<{ section: string }, unknown>[]}
@@ -85,7 +87,21 @@ const RequirementsPage = () => {
             currentField=""
             completedCourseIDs={completedIDs}
           />
-        </div>
+        ) : (
+          <div key={1}>
+            <ClassTable
+              order={0}
+              columns={
+                ClassColumns as ColumnDef<{ section: string }, unknown>[]
+              }
+              data={title_classes}
+              setActiveField={setActiveField}
+              activeField={activeField}
+              currentField=""
+              completedCourseIDs={completedIDs}
+            />
+          </div>
+        )}
       </div>
     );
   } else {

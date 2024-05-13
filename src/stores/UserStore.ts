@@ -24,6 +24,7 @@ type UserState = {
       credits_required: number;
     }[][];
   }[];
+  activeField: number;
   counselorEmail: string;
   counselorName: string;
   counselorPhone: string;
@@ -33,7 +34,7 @@ type UserState = {
   counselorLastnamesServed: string;
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
-  removeField: (fieldName: string) => void;
+  setActiveField: (activeField: number) => void;
   // For mock testing purposes
 };
 
@@ -60,6 +61,10 @@ const UserStoreTemplate: StateCreator<
       return res;
     },
 
+    setActiveField: (activeField: number) => {
+      set({ activeField });
+    },
+
     //Initialize user info
     firstName: "",
     lastName: "",
@@ -76,6 +81,7 @@ const UserStoreTemplate: StateCreator<
     counselorMeetingLink: "",
     counselorLastnamesServed: "",
     fields: [],
+    activeField: 0,
 
     //Call getUserInfo and set user info
     initializeUserInfo: async () => {
@@ -116,11 +122,6 @@ const UserStoreTemplate: StateCreator<
         counselorMeetingLink: counselor_meeting_link,
         counselorLastnamesServed: counselor_last_names_served,
       });
-    },
-    removeField: (fieldName: string) => {
-      set((state) => ({
-        fields: state.fields.filter((field) => field.name !== fieldName),
-      }));
     },
   }),
 

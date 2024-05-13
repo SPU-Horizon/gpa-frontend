@@ -11,6 +11,7 @@ import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
 import { BannerGIF } from "@/images";
+import { set } from "date-fns";
 
 type FailedEnrollment = {
   course_id: string;
@@ -34,6 +35,8 @@ type Enrollment = {
 export default function IntegrationPage() {
   const [value, setValue] = useState<File | null>(null);
   const [acceptedFile, setAcceptedFile] = useState(false);
+
+  const [isLoading, setLoading] = useState(false);
   const {
     postCourses,
     initializeCourseInfo,
@@ -59,6 +62,7 @@ export default function IntegrationPage() {
   };
 
   const onSubmission = async () => {
+    setLoading(true);
     if (value) {
       const formData = new FormData();
       formData.append("file", value);
@@ -104,6 +108,7 @@ export default function IntegrationPage() {
     }
     setValue(null);
     setAcceptedFile(false);
+    setLoading(false);
   };
 
   return (
@@ -134,24 +139,58 @@ export default function IntegrationPage() {
           <img src={BannerGIF} width={600} />
         </div>
 
-        <FileDropzone
-          onDrop={(files) => {
-            setValue(files[0]);
-            setAcceptedFile(true);
-          }}
-          accept={{ "text/html": [".html"] }}
-          maxFiles={1}
-          header={
-            acceptedFile ? "File Accepted" : "Drag or click to select files"
-          }
-          subheader={
-            acceptedFile ? "Youre Good To Go!" : " ONLY .html & .htm accepted "
-          }
-          className="mt-16 mb-7 dark:bg-black-light dark:border-none dark:text-white-dark"
-          icon={
-            acceptedFile ? <CheckCircle2 size={52} /> : <BookCheck size={52} />
-          }
-        />
+        {isLoading ? (
+          <>
+            <FileDropzone
+              loading={true}
+              loaderProps={{ type: "dots", color: "#927c4e" }}
+              accept={{ "text/html": [".html"] }}
+              maxFiles={1}
+              header={
+                acceptedFile ? "File Accepted" : "Drag or click to select files"
+              }
+              subheader={
+                acceptedFile
+                  ? "Youre Good To Go!"
+                  : " ONLY .html & .htm accepted "
+              }
+              className="mt-16 mb-7 dark:bg-black-light dark:border-none dark:text-white-dark"
+              icon={
+                acceptedFile ? (
+                  <CheckCircle2 size={52} />
+                ) : (
+                  <BookCheck size={52} />
+                )
+              }
+            />
+          </>
+        ) : (
+          <FileDropzone
+            onDrop={(files) => {
+              setValue(files[0]);
+              setAcceptedFile(true);
+            }}
+            accept={{ "text/html": [".html"] }}
+            maxFiles={1}
+            header={
+              acceptedFile ? "File Accepted" : "Drag or click to select files"
+            }
+            subheader={
+              acceptedFile
+                ? "Youre Good To Go!"
+                : " ONLY .html & .htm accepted "
+            }
+            className="mt-16 mb-7 dark:bg-black-light dark:border-none dark:text-white-dark"
+            icon={
+              acceptedFile ? (
+                <CheckCircle2 size={52} />
+              ) : (
+                <BookCheck size={52} />
+              )
+            }
+          />
+        )}
+
         <Button
           onClick={onSubmission}
           type="submit"

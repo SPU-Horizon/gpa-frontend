@@ -6,6 +6,7 @@ import {
   Title,
   Button,
   Container,
+  Loader,
 } from "@mantine/core";
 import { useCourseStore, useUserStore } from "@/stores";
 import { XCircle } from "lucide-react";
@@ -24,24 +25,32 @@ import { useNavigationStore } from "@/stores/NavigationStore";
 import { toast } from "sonner";
 
 type FieldsDisplayProps = {
-  setActiveField?: (field: number) => void;
+  setIsLoading?: (value: boolean) => void;
 };
 
-export const FieldsDisplay = ({ setActiveField }: FieldsDisplayProps) => {
-  let { fields, initializeUserInfo } = useUserStore();
-  let { dropField, initializeCourseInfo } = useCourseStore();
+export const FieldsDisplay = ({ setIsLoading }: FieldsDisplayProps) => {
+  let { fields, initializeUserInfo, activeField, setActiveField } =
+    useUserStore();
+  let { dropField } = useCourseStore();
   const navigate = useNavigate();
   const { setCurrentTab } = useNavigationStore();
 
   const updateFields = async (student_field_id: number) => {
+    setIsLoading && setIsLoading(true);
+
     const res = await dropField(student_field_id);
     if (res.status === 200) {
-      initializeCourseInfo();
-      initializeUserInfo();
+      if (activeField !== 0) {
+        setActiveField(activeField - 1);
+      }
+
       toast.success(res.data);
     } else {
       toast.error("Failed to remove field");
     }
+    initializeUserInfo();
+    setIsLoading && setIsLoading(false);
+    toast.dismiss();
   };
 
   // Mock Data if fields are not available, also can display the removal process
@@ -56,7 +65,7 @@ export const FieldsDisplay = ({ setActiveField }: FieldsDisplayProps) => {
             p="sm"
             radius="md"
             key={field.name + i}
-            onClick={() => setActiveField(i)}
+            onClick={() => setActiveField && setActiveField(i)}
           >
             <Group justify="space-between">
               <Text size="md" c="dimmed">
@@ -84,7 +93,21 @@ export const FieldsDisplay = ({ setActiveField }: FieldsDisplayProps) => {
                     <AlertDialogCancel>No</AlertDialogCancel>
                     <AlertDialogCancel
                       className="bg-gold-light hover:bg-black-base hover:text-white-base"
-                      onClick={async () => updateFields(field.student_field_id)}
+                      onClick={() => {
+                        setActiveField(activeField - 1);
+                        updateFields(field.student_field_id);
+                        toast.loading(
+                          <div className="flex gap-4 justify-center items-center">
+                            <Loader type="bars" color="#eee" size={15} />
+                            <p className="text-white-light font-medium">
+                              Removing Field...
+                            </p>
+                          </div>,
+                          {
+                            description: "Removing Field...",
+                          }
+                        );
+                      }}
                     >
                       Yes - Remove it.
                     </AlertDialogCancel>
