@@ -74,20 +74,54 @@ export function ClassTable<TData extends { section: string }, TValue>({
   const activeFieldData = fields[activeField].requirements;
 
   // We have each title of the section requirements for the field
+  // We have a special case where Tables can have an "OR" option, so we need to account for that
+  // We do this by transforming the data in the Requirements Page
   const title: Set<string> = new Set();
   activeFieldData.forEach((req) => {
-    title.add(req[0].section_title);
+    if (req.length > 1) {
+      req.forEach((section, i) => {
+        if (!section.section_title.includes("Option")) {
+          section.section_title =
+            section.section_title + " (Option " + (i + 1) + ")";
+          title.add(section.section_title);
+        } else {
+          title.add(section.section_title);
+        }
+      });
+    } else if (req[0].courses.length === 0) {
+    } else {
+      title.add(req[0].section_title);
+    }
   });
 
   // For each title, we will find the number of credits needed to fill that specific requirement
   const title_credits = new Map<string, number>();
 
   activeFieldData.map((req, i) => {
-    let credits = title_credits.get(req[0].section_title)
-      ? title_credits.get(req[0].section_title)
-      : 0;
+    if (req.length > 1) {
+      console.log(req);
 
-    title_credits.set(req[0].section_title, credits! + req[0].credits_required);
+      req.forEach((section, i) => {
+        let credits = title_credits.get(req[i].section_title)
+          ? title_credits.get(req[i].section_title)
+          : 0;
+
+        title_credits.set(
+          req[i].section_title,
+          credits! + req[i].credits_required
+        );
+      });
+    } else if (req[0].courses.length === 0) {
+    } else {
+      let credits = title_credits.get(req[0].section_title)
+        ? title_credits.get(req[0].section_title)
+        : 0;
+
+      title_credits.set(
+        req[0].section_title,
+        credits! + req[0].credits_required
+      );
+    }
   });
 
   // We have each section title, and the credits required for the sections
@@ -98,7 +132,10 @@ export function ClassTable<TData extends { section: string }, TValue>({
     })
   );
 
-  const requiredCredits = creditTitleArray.reduce((acc, curr) => {
+  let requiredCredits = creditTitleArray.reduce((acc, curr) => {
+    if (curr.title.includes("Option")) {
+      return acc;
+    }
     return acc + curr.credits;
   }, 0 as number);
 

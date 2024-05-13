@@ -8,6 +8,7 @@ import { FieldsDisplay } from "@/sections/RequirementsPage/FieldsDisplay";
 import { ColumnDef } from "@tanstack/react-table";
 import { useCourseStore, useUserStore } from "@/stores";
 import { useState } from "react";
+import { c } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 const RequirementsPage = () => {
   // For each section title, we need a table
@@ -24,7 +25,18 @@ const RequirementsPage = () => {
   // Get all the unique titles of each section of the requirements
   const title: Set<string> = new Set();
   field.forEach((req) => {
-    title.add(req[0].section_title);
+    if (req.length > 1) {
+      req.forEach((section, i) => {
+        if (!section.section_title.includes("Option")) {
+          section.section_title =
+            section.section_title + " (Option " + (i + 1) + ")";
+          title.add(section.section_title);
+        }
+      });
+    } else if (req[0].courses.length === 0) {
+    } else {
+      title.add(req[0].section_title);
+    }
   });
 
   const title_classes: {
@@ -38,8 +50,6 @@ const RequirementsPage = () => {
 
   // change classes to courses
   // From those requirements,
-
-  console.log(field);
 
   field.forEach((req, i) => {
     req.forEach((set, i) => {
@@ -61,25 +71,6 @@ const RequirementsPage = () => {
       });
     });
   });
-
-  // field.forEach((req, i) => {
-  //   req[0].courses?.forEach((class_) => {
-  //     title_classes.push({
-  //       section: req[0].section_title,
-  //       code: class_.course_id,
-  //       credits: class_.credits ? class_.credits : "N/A",
-  //       grade: completedIDs.includes(class_.course_id)
-  //         ? completedClassList[completedIDs.indexOf(class_.course_id)].grade
-  //         : "N/A",
-  //       status: inProgressIDs.includes(class_.course_id)
-  //         ? "In Progress"
-  //         : completedIDs.includes(class_.course_id)
-  //         ? "Complete"
-  //         : "Remaining",
-  //       title: class_.name,
-  //     });
-  //   });
-  // });
 
   return (
     <div className="px-10 h-full  mx-auto pt-4">
