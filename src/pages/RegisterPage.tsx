@@ -59,13 +59,13 @@ export default function RegisterPage() {
       getValues().confirmPassword === ""
     ) {
       toast.error("Please Complete Password Fields!");
-    } else if(res == 2) {
-      toast.error("Email Already Exists")
+    } else if (res == 2) {
+      toast.error("Email Already Exists");
     } else {
       toast.success("Validation should be sent to your Email!");
+      navigate("/sign-in");
     }
 
-    navigate("/sign-in");
     reset();
   };
 
