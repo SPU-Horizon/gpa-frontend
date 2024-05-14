@@ -52,13 +52,15 @@ export default function RegisterPage() {
       password: getValues().password,
     });
 
-    if (!res) {
+    if (res == 1) {
       toast.error("An Error Occured While Registering!");
     } else if (
       getValues().password === "" ||
       getValues().confirmPassword === ""
     ) {
       toast.error("Please Complete Password Fields!");
+    } else if(res == 2) {
+      toast.error("Email Already Exists")
     } else {
       toast.success("Validation should be sent to your Email!");
     }
