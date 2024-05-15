@@ -24,7 +24,7 @@ export default function ClassHistory({ test = [] }: ClassHistoryProps) {
 
       <Tabs
         defaultValue="In Progress"
-        className=" mx-12 sm:mx-2 lg:mx-12 xl:mx-12 mt-4 overflow-y-scroll overflow-x-visible "
+        className=" mx-12 sm:mx-2 lg:mx-12 xl:mx-12 mt-4 overflow-y-hidden overflow-x-visible "
       >
         <TabsList className="grid w-full grid-cols-3 gap-2 bg-white-light dark:bg-black-light">
           <TabsTrigger

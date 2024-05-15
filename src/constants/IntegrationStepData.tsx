@@ -7,6 +7,7 @@ import {
   CircleDot,
   ArrowDownToLine,
   ArrowUpFromLine,
+  ChevronsLeftRight,
 } from "lucide-react";
 
 export const IntegrationStepData: StepProps[] = [
@@ -41,7 +42,13 @@ export const IntegrationStepData: StepProps[] = [
     icon: <ArrowDownToLine height={20} width={25} />,
   },
   {
-    title: "6. That's It!",
+    title: "6. Select upload type",
+    description:
+      "Adding a new field for scheduling or are unsure? Select 'New Field'. If you are only updating your courses then select 'Update Courses'.",
+    icon: <ChevronsLeftRight height={20} width={25} />,
+  },
+  {
+    title: "7. That's It!",
     description:
       "Now, simply drop or select the saved file from your file system and upload it here. We'll take care of the rest!",
     icon: <ArrowUpFromLine height={20} width={25} />,
