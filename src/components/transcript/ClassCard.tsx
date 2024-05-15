@@ -1,6 +1,6 @@
 import React from "react";
-import { ComponentProps } from "react";
-import { Badge } from "../../ui/badge";
+
+import { Badge } from "../ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { DialogDescription, DialogTrigger } from "@radix-ui/react-dialog";
 
 export type ClassCardProps = {
-  student_id: number;
+  student_id?: number;
   course_id: string;
   name: string;
   description: string;

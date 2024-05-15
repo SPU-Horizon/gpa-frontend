@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
-import { ClassCardList } from "@/components/dashboard/transcript/ClassCardList";
-import { useCourseStore } from "@/stores";
+import { ClassCardList } from "@/components/transcript/ClassCardList";
+import { useCourseStore } from "@/stores"; //Absolute imports
 
 type ClassHistoryProps = {
   test?: any;

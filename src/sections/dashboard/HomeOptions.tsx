@@ -1,13 +1,13 @@
-import Header from "@/components/dashboard/home/Header";
+import Header from "@/components/dashboard/Header";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
-import Footer from "@/components/dashboard/home/Footer";
-import { StatsGrid } from "@/components/dashboard/home/StatsGrid";
-import { ActionsGrid } from "@/components/dashboard/home/MenuOptionsNew";
+import Footer from "@/components/dashboard/Footer";
+import { StatsGrid } from "@/components/dashboard/StatsGrid";
+import { ActionsGrid } from "@/components/dashboard/MenuOptionsNew";
 import { Separator } from "@/components/ui/separator";
-import ContactAdvisors from "./ContactAdvisor";
+import ContactAdvisors from "../../components/dashboard/ContactAdvisor";
 import { SimpleGrid } from "@mantine/core";
-import RegisteredCourseList from "./RegisteredCourses";
+import RegisteredCourseList from "../../components/dashboard/RegisteredCourses";
 
 export default function HomeOptions() {
   const navigate = useNavigate(); // React Router's useNavigate hook

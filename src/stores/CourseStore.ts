@@ -7,11 +7,37 @@ type CourseStore = {
   getEnrollments: () => Promise<Record<string, any>>;
   postBanner: (file: FormData, option: string) => Promise<any>;
   initializeCourseInfo: () => void;
-  inProgressClassList: [];
-  completedClassList: [];
-  registeredClassList: [];
-  completedCredits: number; // NEED TO UPDATE THIS NEW INPUT FROM STEVENS GETENROLLMENTS
+  inProgressClassList: {
+    attributes: string;
+    course_id: string;
+    credits: string;
+    description: string;
+    name: string;
+    quarter: string;
+    year: number;
+  }[];
+  completedClassList: {
+    attributes: string;
+    course_id: string;
+    credits: string;
+    description: string;
+    grade: string;
+    name: string;
+    quarter: string;
+    year: number;
+  }[];
+  registeredClassList: {
+    attributes: string;
+    course_id: string;
+    credits: string;
+    description: string;
+    name: string;
+    quarter: string;
+    year: number;
+  }[];
   gpa: number;
+  completedCredits: number;
+  dropField: (student_field_id: number) => Promise<any>;
 };
 
 const useCourseStoreTemplate: StateCreator<
@@ -38,9 +64,10 @@ const useCourseStoreTemplate: StateCreator<
     },
 
     postBanner: async (file, option) => {
+      console.log(option);
       try {
-        const res = await axios
-        .post(`http://localhost:3000/course/parseBanner?option=${option}`,
+        const res = await axios.post(
+          `http://localhost:3000/course/parseBanner?option=${option}`,
           file, // Pass formData directly as the second argument
           {
             headers: {
@@ -82,6 +109,26 @@ const useCourseStoreTemplate: StateCreator<
         gpa: gpa || 0, // Set to 0 if 'gpa' is undefined
         completedCredits: completed_credits || 0,
       });
+    },
+
+    dropField: async (student_field_id: number) => {
+      try {
+        const res = await axios.delete(
+          "http://localhost:3000/course/drop-field",
+          {
+            data: {
+              student_field_id,
+            },
+          }
+        );
+        // Handle the response from the API
+        console.log(res);
+
+        return { status: res.status, data: res.data.display_message }; // Return a boolean value indicating success
+      } catch (error) {
+        // Handle any errors that occurred during the request
+        return false; // Return a boolean value indicating failure
+      }
     },
   }),
   {

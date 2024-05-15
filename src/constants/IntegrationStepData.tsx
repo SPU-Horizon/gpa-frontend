@@ -1,4 +1,4 @@
-import { StepProps } from "@/components/dashboard/integration/step";
+import { StepProps } from "@/components/integration/step";
 const WebAppLink = "https://web-apps.spu.edu/apps";
 import {
   Search,

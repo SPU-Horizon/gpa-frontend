@@ -7,7 +7,6 @@ import {
   Dashboard,
   Page404,
   ProfilePage,
-  SettingsPage,
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./utils/ProtectedRoute";
@@ -29,7 +28,6 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard/*" element={<Dashboard />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/settings" element={<SettingsPage />} />
           </Route>
           <Route path="*" element={<Page404 />}></Route>
         </Routes>

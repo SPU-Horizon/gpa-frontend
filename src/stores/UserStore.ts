@@ -12,7 +12,19 @@ type UserState = {
   graduationQuarter: string;
   enrollmentQuarter: string;
   enrollmentYear: string;
-  fields: [];
+  fields: {
+    student_field_id: number;
+    name: string;
+    type: string;
+    year: number;
+    quarter: string;
+    requirements: {
+      courses: { name: string; credits: number; course_id: string }[];
+      section_title: string;
+      credits_required: number;
+    }[][];
+  }[];
+  activeField: number;
   counselorEmail: string;
   counselorName: string;
   counselorPhone: string;
@@ -22,6 +34,8 @@ type UserState = {
   counselorLastnamesServed: string;
   getUserInfo: () => Promise<Record<string, any>>;
   initializeUserInfo: () => void;
+  setActiveField: (activeField: number) => void;
+  // For mock testing purposes
 };
 
 // Create the Zustand store
@@ -47,6 +61,10 @@ const UserStoreTemplate: StateCreator<
       return res;
     },
 
+    setActiveField: (activeField: number) => {
+      set({ activeField });
+    },
+
     //Initialize user info
     firstName: "",
     lastName: "",
@@ -63,12 +81,11 @@ const UserStoreTemplate: StateCreator<
     counselorMeetingLink: "",
     counselorLastnamesServed: "",
     fields: [],
+    activeField: 0,
 
     //Call getUserInfo and set user info
     initializeUserInfo: async () => {
       const userInfo = await useUserStore.getState().getUserInfo();
-
-      console.log(userInfo);
 
       const {
         student_id,

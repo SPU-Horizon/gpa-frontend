@@ -8,7 +8,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <MantineProvider>
     <div>
       <App />
-      <Toaster richColors />
     </div>
+    <Toaster richColors />
   </MantineProvider>
 );
