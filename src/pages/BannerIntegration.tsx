@@ -59,8 +59,6 @@ export default function IntegrationPage() {
   };
 
   const onSubmission = async (option: string) => {
-    console.log("CLICKED SUBMISSION")
-    console.log(option);
     if (value) {
       const formData = new FormData();
       formData.append("file", value);
@@ -69,7 +67,6 @@ export default function IntegrationPage() {
       const res = await postBanner(formData, option); 
       //Res can be an object with 3 properties: parsedCourses, majorRequirements, failedEnrollments (if field option is chosen)
       //Otherwise res only contains parserCourses, failedEnrollments
-      console.log(res);
 
       if (res.status === 200 && res.failedEnrollments.length === 0) {
         toast.success("File Uploaded Successfully, All Classes Added");
