@@ -33,9 +33,14 @@ const RequirementsPage = () => {
         });
       } else if (req[0].courses.length === 0) {
       } else {
+        if (req[0].section_title.includes("*")) {
+          req[0].section_title = req[0].section_title.replace(/\*+/g, " ");
+        }
         title.add(req[0].section_title);
       }
     });
+
+    console.log(title, "title");
 
     const title_classes: {
       section: string;

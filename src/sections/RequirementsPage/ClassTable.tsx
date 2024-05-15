@@ -117,12 +117,18 @@ export function ClassTable<TData extends { section: string }, TValue>({
   });
 
   // We have each section title, and the credits required for the sections
-  const creditTitleArray = Array.from(title_credits).map(
-    ([title, credits]) => ({
-      title,
-      credits,
-    })
-  );
+  let creditTitleArray = Array.from(title_credits).map(([title, credits]) => ({
+    title,
+    credits,
+  }));
+
+  creditTitleArray = creditTitleArray.map((item, i) => {
+    if (item.title.includes("*")) {
+      item.title = item.title.replace(/\*+/g, " ");
+    }
+
+    return item;
+  });
 
   let requiredCredits = creditTitleArray.reduce((acc, curr) => {
     if (curr.title.includes("Option")) {
@@ -196,13 +202,13 @@ export function ClassTable<TData extends { section: string }, TValue>({
                     variant="outline"
                     size="default"
                   >
-                    Major
+                    Fields
                     <Split className="w-3 h-3" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-white-light font-avenir">
                   <DropdownMenuLabel className="font-medium text-sm pt-1 pl-2">
-                    Majors
+                    Filter Fields
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup
@@ -245,10 +251,16 @@ export function ClassTable<TData extends { section: string }, TValue>({
         return (
           <div className="flex flex-col gap-1" key={i}>
             <div className="ml-3 font-semibold text-xl mt-4 mb-2 flex flex-col">
-              <div>
+              <div
+                className={
+                  title.credits - sectionCreditsRemaining.get(title.title)! <= 0
+                    ? "text-green-500"
+                    : "text-black-base"
+                }
+              >
                 {title.title.includes("Option")
                   ? title.title.substring(0, title.title.indexOf("("))
-                  : title.title}
+                  : title.title.replace("*", "")}
               </div>
               <div className="text-base font-normal mt-2">
                 {title.title.includes("Option")
@@ -324,7 +336,13 @@ export function ClassTable<TData extends { section: string }, TValue>({
                                       {title.credits -
                                         sectionCreditsRemaining.get(
                                           title.title
-                                        )!}
+                                        )! <
+                                      0
+                                        ? 0
+                                        : title.credits -
+                                          sectionCreditsRemaining.get(
+                                            title.title
+                                          )!}
                                     </b>
                                   </TableCell>
                                 </>
