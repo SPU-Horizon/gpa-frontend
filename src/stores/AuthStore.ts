@@ -28,7 +28,7 @@ type AuthStore = {
     lastName,
     email,
     password,
-  }: RegisterType) => Promise<boolean>;
+  }: RegisterType) => Promise<number>;
   isAuthenticated: boolean;
   token: string;
   refreshToken: string;
@@ -100,7 +100,7 @@ const useAuthStoreTemplate: StateCreator<
       if (error) {
         set({ isLoading: false });
         console.log(error);
-        return false;
+        return 1;
       } else {
         // Add user to the database
         const data = {
@@ -123,12 +123,17 @@ const useAuthStoreTemplate: StateCreator<
         );
 
         const res = await response.json();
-        console.log(res);
+        if (response.status === 409) {
+          set({ isAuthenticated: false });
+          set({ isLoading: false });
+          return 2;
+        }
+
       }
 
       set({ isAuthenticated: false });
       set({ isLoading: false });
-      return true;
+      return 0;
     },
     // ... other initial state properties
     isLoading: false,
