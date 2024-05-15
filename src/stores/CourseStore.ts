@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 
 type CourseStore = {
   getEnrollments: () => Promise<Record<string, any>>;
-  postCourses: (file: FormData) => Promise<any>;
+  postBanner: (file: FormData, option: string) => Promise<any>;
   initializeCourseInfo: () => void;
   inProgressClassList: {
     attributes: string;
@@ -63,10 +63,10 @@ const useCourseStoreTemplate: StateCreator<
       return res;
     },
 
-    postCourses: async (file) => {
+    postBanner: async (file, option) => {
       try {
-        const res = await axios.post(
-          "http://localhost:3000/course/parseCourses",
+        const res = await axios
+        .post(`http://localhost:3000/course/parseBanner?option=${option}`,
           file, // Pass formData directly as the second argument
           {
             headers: {

@@ -10,8 +10,12 @@ import { FileDropzone } from "@/components/custom";
 import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
+
 import { BannerGIF } from "@/images";
 import { set } from "date-fns";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 
 type FailedEnrollment = {
   course_id: string;
@@ -38,7 +42,7 @@ export default function IntegrationPage() {
 
   const [isLoading, setLoading] = useState(false);
   const {
-    postCourses,
+    postBanner,
     initializeCourseInfo,
     completedClassList,
     inProgressClassList,
@@ -61,14 +65,22 @@ export default function IntegrationPage() {
     return val;
   };
 
-  const onSubmission = async () => {
+
+  
+    
+
+  const onSubmission = async (option: string) => {
+
     setLoading(true);
     if (value) {
       const formData = new FormData();
       formData.append("file", value);
       formData.append("student_id", studentId.toString());
 
-      const res = await postCourses(formData);
+
+      const res = await postBanner(formData, option); 
+      //Res can be an object with 3 properties: parsedCourses, majorRequirements, failedEnrollments (if field option is chosen)
+      //Otherwise res only contains parserCourses, failedEnrollments
 
       if (res.status === 200 && res.failedEnrollments.length === 0) {
         toast.success("File Uploaded Successfully, All Classes Added");
@@ -111,8 +123,10 @@ export default function IntegrationPage() {
     setLoading(false);
   };
 
+
   return (
     <ScrollArea className="mt-6 h-full w-full">
+
       <div className="max-w-[90%] mx-auto">
         <h1 className="text-3xl font-bold">Sync with Banner</h1>
         <Separator className="mt-4 mb-8" />
@@ -139,6 +153,25 @@ export default function IntegrationPage() {
           <img src={BannerGIF} width={600} />
         </div>
 
+
+        <Tabs
+        defaultValue="New Field"
+        className="mt-4 overflow-y-hidden overflow-x-visible">
+        
+          <TabsList className="mt-12 grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-black-light">
+          <TabsTrigger
+            value="Update Courses"
+            className="text-md data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
+          >
+            Update Courses
+          </TabsTrigger>
+          <TabsTrigger
+            value="New Field"
+            className="text-md data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
+          >
+            New Field
+          </TabsTrigger>
+        </TabsList>
         {isLoading ? (
           <>
             <FileDropzone
@@ -190,14 +223,27 @@ export default function IntegrationPage() {
             }
           />
         )}
+          <TabsContent value="Update Courses">
+          <Button
+            onClick={() => onSubmission("courses")}
+            type="submit"
+            className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-2 dark:hover:bg-gold-base mb-16 w-24"
+          >
+            Submit
+          </Button>
 
-        <Button
-          onClick={onSubmission}
-          type="submit"
-          className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-8 dark:hover:bg-gold-base mb-16 w-24"
-        >
-          Submit
-        </Button>
+        </TabsContent>
+
+        <TabsContent value="New Field">
+          <Button
+            onClick={() => onSubmission("field")}
+            type="submit"
+            className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-2 dark:hover:bg-gold-base mb-16 w-24"
+          >
+            Submit
+          </Button>
+        </TabsContent>
+        </Tabs>
       </div>
     </ScrollArea>
   );
