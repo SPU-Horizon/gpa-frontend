@@ -64,9 +64,10 @@ const useCourseStoreTemplate: StateCreator<
     },
 
     postBanner: async (file, option) => {
+      console.log(option);
       try {
-        const res = await axios
-        .post(`http://localhost:3000/course/parseBanner?option=${option}`,
+        const res = await axios.post(
+          `http://localhost:3000/course/parseBanner?option=${option}`,
           file, // Pass formData directly as the second argument
           {
             headers: {
