@@ -12,12 +12,12 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { TextCursorInput, ScanEye, Pocket } from "lucide-react";
 import usePlanStore from "@/stores/PlanStore";
-import { generatePlanOptions } from "@/stores/generatePlanOptions";
+
 
 interface Course {
   course_id: string;
   name: string;
-  credits: string; 
+  credits: string;
 }
 
 interface Field {
@@ -39,18 +39,13 @@ interface CreatePlanProps {
 }
 
 const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
-  const { fields } = useUserStore(); 
+  const { fields } = useUserStore();
   const { completedClassList, inProgressClassList } = useCourseStore();
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [planName, setPlanName] = useState("");
   const [maxCredit, setMaxCredit] = useState(0);
-<<<<<<< HEAD
-  const [selectedField, setSelectedField] = useState <Field []> ([]);
-  const [planOptions, setPlanOptions] = useState([]);
-=======
   const [selectedField, setSelectedField] = useState<Field[]>([]);
   const [planOptions, setPlanOptions] = useState<any[][]>([]);
->>>>>>> 145b63c (Updating branch, generatePlanOptions working.)
   const [mandatoryCourses, setMandatoryCourses] = useState(new Set());
   const [reviewPlan, setReviewPlan] = useState(false);
   const [active, setActive] = useState(0);
@@ -63,10 +58,8 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   
   // State to store the selected courses to repeat
   const [selectedCoursesToRepeat, setSelectedCoursesToRepeat] = useState<
-  Course[]
+    Course[]
   >([]);
-
-  
 
   // Function to move to the next step
   const nextStep = () =>
@@ -100,20 +93,18 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   };
 
   // Function to handle checkbox changes
-  const handleFieldSelect = (field : Field) => {
+  const handleFieldSelect = (field: Field) => {
     setSelectedField((prev) => {
       if (prev.includes(field)) {
-        return prev.filter((f) => f.name !== field.name)
-        
+        return prev.filter((f) => f.name !== field.name);
+      } else {
+        return [...prev, field];
       }
     });
   };
-    
 
   // Logic for first step submission of student input
   const handleFirstStepSubmit = () => {
-    
-
     // Extract course IDs from selected courses to repeat
     const repeatedCoursesIds = selectedCoursesToRepeat.map(
       (course) => course.course_id
@@ -148,7 +139,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     // Move to the next step where the user can review or customize the generated plans
     nextStep();
   };
-
 
   // Logic for second step submission
   const handleSecondStepSubmit = async () => {
@@ -211,7 +201,10 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
           label="Design"
           icon={<TextCursorInput style={{ width: rem(18), height: rem(18) }} />}
         >
-          <form onSubmit={handleFirstStepSubmit} className="flex flex-col gap-4 mt-4">
+          <form
+            onSubmit={handleFirstStepSubmit}
+            className="flex flex-col gap-4 mt-4"
+          >
             <NumberInput
               value={maxCredit}
               onChange={handleMaxCreditsChange}
@@ -222,22 +215,24 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
               placeholder="Enter max credits"
             />
             <div>
-              <label className="block text-sm font-medium">Select your field of study:</label>
+              <label className="block text-sm font-medium">
+                Select your field of study:
+              </label>
               <div className="border rounded-md max-h-[125px] overflow-y-auto p-2">
-                {fields.map((field: Field,i:number) => (
-                <div key={field.name}>
-                  <label
-                    className="ml-2 block text-sm font-medium"
-                    htmlFor={field.name}
-                  >
-                    <Checkbox
-                      onCheckedChange={() => handleFieldSelect(field)}
-                      id={field.name}
-                      className="border-[.5px] mr-6 mt-1"
-                    />
-                    {field.name} ({field.type}, {field.quarter} {field.year})
-                  </label>
-                </div>
+                {fields.map((field: Field, i: number) => (
+                  <div key={field.name}>
+                    <label
+                      className="ml-2 block text-sm font-medium"
+                      htmlFor={field.name}
+                    >
+                      <Checkbox
+                        onCheckedChange={() => handleFieldSelect(field)}
+                        id={field.name}
+                        className="border-[.5px] mr-6 mt-1"
+                      />
+                      {field.name} ({field.type}, {field.quarter} {field.year})
+                    </label>
+                  </div>
                 ))}
               </div>
             </div>
@@ -254,13 +249,12 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                       key={course.course_id}
                     >
                       <Checkbox
-                      onCheckedChange={() => handleCourseSelect(course)}
-                      id={course.course_id}
-                      className="border-[.5px] mr-6 mt-1"
-                    />
+                        onCheckedChange={() => handleCourseSelect(course)}
+                        id={course.course_id}
+                        className="border-[.5px] mr-6 mt-1"
+                      />
                       {course.course_id} - {course.name}{" "}
                     </label>
-                    
                   </div>
                 ))}
               </div>
@@ -290,6 +284,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                     className="p-3 border-b last:border-b-0"
                   >
                     <div className="font-bold">{option.section_title} (Required Credits: {option.credits_required})</div>
+                    
                     {option.courses.map((course, courseIndex) => (
                       <div key={courseIndex} className="flex items-center">
                         <Checkbox
@@ -298,7 +293,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                           id={`preferred-${index}-${subIndex}-${courseIndex}`}
                           className="border-[.5px] mr-2 mt-1"
                         />
-                        {course}
+                        {course.name} - Credits: {course.credits}
                       </div>
                     ))}
                   </div>

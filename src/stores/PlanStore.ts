@@ -4,7 +4,7 @@ import { useCourseStore } from "."; // TODO: Use for  completed credits, this fu
 import { useUserStore } from ".";
 import axios from "axios";
 import { any } from "zod";
-import { generatePlanOptions } from "./generatePlanOptions";
+import {generatePlanOptions} from "./generatePlanOptions";
 
 type PlanStore = {
   plans: [];
