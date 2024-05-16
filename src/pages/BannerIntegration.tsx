@@ -16,6 +16,7 @@ import { BannerGIF } from "@/images";
 import { set } from "date-fns";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Console } from "console";
 
 type FailedEnrollment = {
   course_id: string;
@@ -115,7 +116,7 @@ export default function IntegrationPage() {
       }
 
       if (res.missingFields.length > 0){
-       if (res.missingFields.length === 1){
+       if (res.missingFields[1].length === 1){
         toast.warning(
           <div className="font-avenir flex flex-col gap-2">
             <div>
