@@ -121,7 +121,7 @@ export default function IntegrationPage() {
           <div className="font-avenir flex flex-col gap-2">
             <div>
               <Text className="font-bold text-base text-center">
-                We've noticed there are some missing fields: {res.missingFields.join("")}.
+                We've noticed there are some missing fields: {res.missingFields}.
                 Would you like to upload additional files to complete these entries?
               </Text>
             </div>
