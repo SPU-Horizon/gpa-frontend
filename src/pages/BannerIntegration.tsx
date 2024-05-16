@@ -115,6 +115,18 @@ export default function IntegrationPage() {
       }
 
       if (res.missingFields.length > 0){
+       if (res.missingFields.length === 1){
+        toast.warning(
+          <div className="font-avenir flex flex-col gap-2">
+            <div>
+              <Text className="font-bold text-base text-center">
+                We've noticed there are some missing fields: {res.missingFields.join(" ")}.
+                Would you like to upload additional files to complete these entries?
+              </Text>
+            </div>
+          </div>
+        );
+       } else {
         toast.warning(
           <div className="font-avenir flex flex-col gap-2">
             <div>
@@ -125,6 +137,7 @@ export default function IntegrationPage() {
             </div>
           </div>
         );
+       }
     }
     }
     setValue(null);
