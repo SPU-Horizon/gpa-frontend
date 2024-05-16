@@ -116,7 +116,7 @@ export default function IntegrationPage() {
       }
 
       if (res.missingFields.length > 0){
-       if (res.missingFields[1].length === 1){
+       if (res.missingFields[1].length == 0){
         toast.warning(
           <div className="font-avenir flex flex-col gap-2">
             <div>
