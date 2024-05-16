@@ -9,6 +9,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <div>
       <App />
     </div>
-    <Toaster richColors />
+    <Toaster expand richColors />
   </MantineProvider>
 );

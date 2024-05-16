@@ -8,13 +8,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { FileDropzone } from "@/components/custom";
 import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
-import { toast } from "sonner";
+import { Toaster, toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
+import {Text} from "@mantine/core";
 
 import { BannerGIF } from "@/images";
 import { set } from "date-fns";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Console } from "console";
 
 type FailedEnrollment = {
   course_id: string;
@@ -81,27 +83,29 @@ export default function IntegrationPage() {
         initializeUserInfo();
       } else if (res.status === 200) {
         toast.warning(
-          <div className="font-avenir flex flex-col gap-2">
+          <div className="font-avenir flex flex-col gap-4">
             <div className="font-bold text-lg text-center justify-center gap-2 flex">
               <AlertTriangle /> A few classes couldn't be added.
             </div>
             <p className="font-bold text-base text-center">
               We don't have these classes in our database.
             </p>
-            <div className="max-h-[250px] overflow-scroll w-full flex flex-col justify-center items-center">
-              {res.failedEnrollments.map(
-                (enrollment: FailedEnrollment, index: number) =>
-                  duplicateCheck(enrollment["course_id"]) ? null : (
-                    <div key={index} className="flex flex-row gap-2">
-                      <p className="font-bold text-base">
-                        {enrollment["course_id"]}
-                      </p>
-                      <p className="font-bold text-base">
-                        {enrollment["course_title"]}
-                      </p>
-                    </div>
-                  )
-              )}
+            <div className="max-h-[250px] overflow-scroll w-full flex justify-center items-center">
+              <div className="flex flex-wrap gap-4 justify-center">
+                {res.failedEnrollments.map(
+                  (enrollment: FailedEnrollment, index: number) =>
+                    duplicateCheck(enrollment["course_id"]) ? null : (
+                      <div key={index} className="flex flex-col items-center p-2 border rounded shadow-md w-full md:w-1/2">
+                        <p className="font-bold text-base">
+                          {enrollment["course_id"]}
+                        </p>
+                        <p className="font-bold text-base">
+                          {enrollment["course_title"]}
+                        </p>
+                      </div>
+                    )
+                )}
+              </div>
             </div>
           </div>
         );
@@ -110,12 +114,38 @@ export default function IntegrationPage() {
       } else {
         toast.error("An Error Occured While Uploading File");
       }
+
+      if (res.missingFields.length > 0){
+       if (res.missingFields[1].length == 0){
+        toast.warning(
+          <div className="font-avenir flex flex-col gap-2">
+            <div>
+              <Text className="font-bold text-base text-center">
+                We've noticed there are some missing fields: {res.missingFields}.
+                Would you like to upload additional files to complete these entries?
+              </Text>
+            </div>
+          </div>
+        );
+       } else {
+        toast.warning(
+          <div className="font-avenir flex flex-col gap-2">
+            <div>
+              <Text className="font-bold text-base text-center">
+                We've noticed there are some missing fields: {res.missingFields.join(", ")}. 
+                Would you like to upload additional files to complete these entries?
+              </Text>
+            </div>
+          </div>
+        );
+       }
+    }
     }
     setValue(null);
     setAcceptedFile(false);
     setLoading(false);
   };
-
+ 
   return (
     <ScrollArea className="mt-6 h-full w-full">
       <div className="max-w-[90%] mx-auto">

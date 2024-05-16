@@ -78,9 +78,10 @@ const useCourseStoreTemplate: StateCreator<
 
         // Handle the response from the API
         const failedEnrollments = res.data.data.failedEnrollments;
+        const missingFields = res.data.data.missingFields;
         const status = res.status;
 
-        return { status, failedEnrollments }; // Return the status and any failed enrollments
+        return { status, failedEnrollments, missingFields}; // Return the status and any failed enrollments
       } catch (error) {
         // Handle any errors that occurred during the request
         return { status: 500, failedEnrollments: [] };
