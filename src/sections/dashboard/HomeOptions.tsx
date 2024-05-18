@@ -1,9 +1,10 @@
 import Header from "@/components/dashboard/Header";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
-import Footer from "@/components/dashboard/Footer";
+
+import { DashboardFooter, MajorProgressGraph } from "@/components/dashboard";
+
 import { StatsGrid } from "@/components/dashboard/StatsGrid";
-import { ActionsGrid } from "@/components/dashboard/MenuOptionsNew";
 import { Separator } from "@/components/ui/separator";
 import ContactAdvisors from "../../components/dashboard/ContactAdvisor";
 import { SimpleGrid } from "@mantine/core";
@@ -20,17 +21,20 @@ export default function HomeOptions() {
 
   return (
     <div className="flex flex-col h-screen">
-      <Header />
+      <Header title="Dashboard" />
       <Separator />
       <ScrollArea>
-        <StatsGrid />
-        <SimpleGrid className="my-8 mx-4" cols={{ base: 1, xs: 2, md: 3 }}>
-          <RegisteredCourseList />
-          <ContactAdvisors />
-          {/* <div className="md:row-start-3">PlaceHolder</div> */}
-        </SimpleGrid>
+        <div className="px-10 mx-auto pt-4">
+          <StatsGrid />
+          <SimpleGrid className="my-8" cols={{ base: 1, xs: 1, sm: 2, md: 4 }}>
+            <RegisteredCourseList />
+            <MajorProgressGraph />
+            <ContactAdvisors />
+            <div>PlaceHolder</div>
+          </SimpleGrid>
+        </div>
+        <DashboardFooter />
       </ScrollArea>
-      <Footer />
     </div>
   );
 }

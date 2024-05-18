@@ -22,11 +22,14 @@ export default function MyRegisteredList() {
   let { registeredClassList } = useCourseStore();
 
   return (
-    <Card className="col-span-2 md:col-span-2 xl:col-span-full">
+    <Card className="md:col-span-2 lg:mb-4 col-span-2 shadow-md">
       <CardHeader className="px-7 mb-2 flex flex-row justify-between items-center">
         <div>
           <CardTitle>My Courses</CardTitle>
-          <CardDescription> Current enrollments this quarter</CardDescription>
+          <CardDescription className="pt-2">
+            {" "}
+            Current enrollments this quarter
+          </CardDescription>
         </div>
         <div>
           <Button variant="default">
@@ -45,28 +48,38 @@ export default function MyRegisteredList() {
               <TableHead className=" text-right">Credits</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {registeredClassList.map((course: any, i) => (
-              <TableRow key={i} className="bg-accent">
-                <TableCell>
-                  <div className="font-medium">{course.course_id}</div>
-                  <div className="text-sm text-muted-foreground md:inline">
-                    {course.name}
-                  </div>
-                </TableCell>
-                <TableCell className=" table-cell">
-                  {course.attributes}
-                </TableCell>
-                <TableCell className=" table-cell">
-                  <Badge className="text-xs" variant="secondary">
-                    In Progress
-                  </Badge>
-                </TableCell>
+          {registeredClassList.length ? (
+            <TableBody>
+              {registeredClassList.map((course: any, i) => (
+                <TableRow key={i} className="bg-accent">
+                  <TableCell>
+                    <div className="font-medium">{course.course_id}</div>
+                    <div className="text-sm text-muted-foreground md:inline">
+                      {course.name}
+                    </div>
+                  </TableCell>
+                  <TableCell className=" table-cell">
+                    {course.attributes}
+                  </TableCell>
+                  <TableCell className=" table-cell">
+                    <Badge className="text-xs" variant="secondary">
+                      In Progress
+                    </Badge>
+                  </TableCell>
 
-                <TableCell className="text-right">{course.credits}</TableCell>
+                  <TableCell className="text-right">{course.credits}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          ) : (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan={4} className="text-center font-bold">
+                  No Data to Display
+                </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableBody>
+          )}
         </Table>
       </CardContent>
     </Card>

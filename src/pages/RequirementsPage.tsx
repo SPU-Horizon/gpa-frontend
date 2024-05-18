@@ -5,6 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useCourseStore, useUserStore } from "@/stores";
 import { useState } from "react";
 import { Loader } from "@mantine/core";
+import { StandardHeader } from "@/components/dashboard";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const RequirementsPage = () => {
   // For each section title, we need a table
@@ -76,37 +79,43 @@ const RequirementsPage = () => {
     });
 
     return (
-      <div className="px-10 h-full  mx-auto pt-4">
-        <header className="flex gap-2 items-end">
-          <h1 className="text-2xl font-bold mb-4 ">Major Fields</h1>
-        </header>
-        <FieldsDisplay setIsLoading={setLoading} />
+      <div className="h-screen flex flex-col">
+        <StandardHeader title="Major Fields" />
+        <Separator />
 
-        {isLoading ? (
-          <ClassTable
-            order={0}
-            columns={ClassColumns as ColumnDef<{ section: string }, unknown>[]}
-            data={title_classes}
-            setActiveField={setActiveField}
-            activeField={activeField}
-            currentField=""
-            completedCourseIDs={completedIDs}
-          />
-        ) : (
-          <div key={1}>
-            <ClassTable
-              order={0}
-              columns={
-                ClassColumns as ColumnDef<{ section: string }, unknown>[]
-              }
-              data={title_classes}
-              setActiveField={setActiveField}
-              activeField={activeField}
-              currentField=""
-              completedCourseIDs={completedIDs}
-            />
+        <ScrollArea>
+          <div className="mx-auto px-10 py-4">
+            <FieldsDisplay setIsLoading={setLoading} />
+
+            {isLoading ? (
+              <ClassTable
+                order={0}
+                columns={
+                  ClassColumns as ColumnDef<{ section: string }, unknown>[]
+                }
+                data={title_classes}
+                setActiveField={setActiveField}
+                activeField={activeField}
+                currentField=""
+                completedCourseIDs={completedIDs}
+              />
+            ) : (
+              <div key={1}>
+                <ClassTable
+                  order={0}
+                  columns={
+                    ClassColumns as ColumnDef<{ section: string }, unknown>[]
+                  }
+                  data={title_classes}
+                  setActiveField={setActiveField}
+                  activeField={activeField}
+                  currentField=""
+                  completedCourseIDs={completedIDs}
+                />
+              </div>
+            )}
           </div>
-        )}
+        </ScrollArea>
       </div>
     );
   } else {

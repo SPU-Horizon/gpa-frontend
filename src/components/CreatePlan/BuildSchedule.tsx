@@ -154,7 +154,7 @@ const BuildSchedule: React.FC = () => {
   ));
 
   return (
-    <div className="flex  ml-12 mr-12 mt-4  md:mx-8">
+    <div className="flex mt-4">
       <div className="flex gap-4 w-full h-max md:flex-col md:gap-16 md:h-auto ">
         <div className="flex flex-grow md:h-[400px] overflow-scroll border border-gray-100 dark:border-gray-800 rounded-md p-4 dark:bg-db-blue">
           {/* "Create a Plan" section */}
