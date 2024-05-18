@@ -19,7 +19,7 @@ export default function ContactAdvisor() {
   } = useUserStore();
 
   return (
-    <Card className="md:col-span-2 flex flex-col justify-between ">
+    <Card className="col-span-2 flex flex-col justify-between">
       <CardHeader className="pb-3 text-center ">
         <CardTitle>Academic Counseling</CardTitle>
         <CardDescription className=" leading-relaxed text-xl font-medium text-gray-400">
@@ -28,20 +28,20 @@ export default function ContactAdvisor() {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="hover:animate-pulse mt-4 mb-8 text-center">
+      <CardContent className="hover:animate-pulse mt-4 mb-1 text-center">
         {counselorName ? (
           <>
             <CardTitle>{counselorName}</CardTitle>
-            <CardDescription className="text-lg font-medium text-gray-400 mt-1">
+            <CardDescription className="text-base font-medium text-gray-400 mt-1">
               {counselorTitle}
             </CardDescription>
-            <CardDescription className="text-lg font-medium text-gray-400">
+            <CardDescription className="text-base font-medium text-gray-400">
               Lastnames Served - {counselorLastnamesServed}
             </CardDescription>
-            <CardDescription className="text-lg font-medium text-gray-400">
+            <CardDescription className="text-base font-medium text-gray-400">
               Email: {counselorEmail}
             </CardDescription>
-            <CardDescription className="text-lg font-medium text-gray-400">
+            <CardDescription className="text-base font-medium text-gray-400">
               Phone: {counselorPhone}
             </CardDescription>{" "}
             <CardFooter className="flex items-center p-0 mt-3 justify-center">

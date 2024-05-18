@@ -10,13 +10,10 @@ import { FileDropzone } from "@/components/custom";
 import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
 import { Toaster, toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
-import {Text} from "@mantine/core";
-
+import { Text } from "@mantine/core";
 import { BannerGIF } from "@/images";
-import { set } from "date-fns";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Console } from "console";
+import { StandardHeader } from "@/components/dashboard";
 
 type FailedEnrollment = {
   course_id: string;
@@ -95,7 +92,10 @@ export default function IntegrationPage() {
                 {res.failedEnrollments.map(
                   (enrollment: FailedEnrollment, index: number) =>
                     duplicateCheck(enrollment["course_id"]) ? null : (
-                      <div key={index} className="flex flex-col items-center p-2 border rounded shadow-md w-full md:w-1/2">
+                      <div
+                        key={index}
+                        className="flex flex-col items-center p-2 border rounded shadow-md w-full md:w-1/2"
+                      >
                         <p className="font-bold text-base">
                           {enrollment["course_id"]}
                         </p>
@@ -115,88 +115,118 @@ export default function IntegrationPage() {
         toast.error("An Error Occured While Uploading File");
       }
 
-      if (res.missingFields.length > 0){
-       if (res.missingFields[1].length == 0){
-        toast.warning(
-          <div className="font-avenir flex flex-col gap-2">
-            <div>
-              <Text className="font-bold text-base text-center">
-                We've noticed there are some missing fields: {res.missingFields}.
-                Would you like to upload additional files to complete these entries?
-              </Text>
+      if (res.missingFields.length > 0) {
+        if (res.missingFields[1].length == 0) {
+          toast.warning(
+            <div className="font-avenir flex flex-col gap-2">
+              <div>
+                <Text className="font-bold text-base text-center">
+                  We've noticed there are some missing fields:{" "}
+                  {res.missingFields}. Would you like to upload additional files
+                  to complete these entries?
+                </Text>
+              </div>
             </div>
-          </div>
-        );
-       } else {
-        toast.warning(
-          <div className="font-avenir flex flex-col gap-2">
-            <div>
-              <Text className="font-bold text-base text-center">
-                We've noticed there are some missing fields: {res.missingFields.join(", ")}. 
-                Would you like to upload additional files to complete these entries?
-              </Text>
+          );
+        } else {
+          toast.warning(
+            <div className="font-avenir flex flex-col gap-2">
+              <div>
+                <Text className="font-bold text-base text-center">
+                  We've noticed there are some missing fields:{" "}
+                  {res.missingFields.join(", ")}. Would you like to upload
+                  additional files to complete these entries?
+                </Text>
+              </div>
             </div>
-          </div>
-        );
-       }
-    }
+          );
+        }
+      }
     }
     setValue(null);
     setAcceptedFile(false);
     setLoading(false);
   };
- 
+
   return (
-    <ScrollArea className="mt-6 h-full w-full">
-      <div className="max-w-[90%] mx-auto">
-        <h1 className="text-3xl font-bold">Sync with Banner</h1>
-        <Separator className="mt-4 mb-8" />
+    <div className="h-screen flex flex-col">
+      <StandardHeader title="Sync With Banner" />
+      <Separator />
+      <ScrollArea>
+        <div className="mx-auto px-10 mt-6">
+          <div className="flex  gap-2">
+            <Timeline
+              bulletSize={40}
+              color={theme === "dark" ? "#222" : "#bbb"}
+              className="mr-8 mb-8"
+            >
+              {IntegrationStepData.map((step, index) => (
+                <Step
+                  key={index}
+                  title={step.title}
+                  description={step.description}
+                  icon={step.icon}
+                  link={step.link}
+                />
+              ))}
+            </Timeline>
+          </div>
+          <div className="h-[400px] flex flex-col justify-center mt-4 ">
+            <h1 className="text-2xl font-bold mb-4">Tutorial GIF</h1>
+            <img src={BannerGIF} width={600} />
+          </div>
 
-        <div className="flex  gap-2">
-          <Timeline
-            bulletSize={40}
-            color={theme === "dark" ? "#222" : "#bbb"}
-            className="mr-8 mb-8"
+          <Tabs
+            defaultValue="New Field"
+            className="mt-4 overflow-y-hidden overflow-x-visible"
           >
-            {IntegrationStepData.map((step, index) => (
-              <Step
-                key={index}
-                title={step.title}
-                description={step.description}
-                icon={step.icon}
-                link={step.link}
-              />
-            ))}
-          </Timeline>
-        </div>
-        <div className="h-[400px] flex flex-col justify-center mt-4 ">
-          <h1 className="text-2xl font-bold mb-4">Tutorial GIF</h1>
-          <img src={BannerGIF} width={600} />
-        </div>
-
-        <Tabs
-          defaultValue="New Field"
-          className="mt-4 overflow-y-hidden overflow-x-visible"
-        >
-          <TabsList className="mt-12 grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-black-light">
-            <TabsTrigger
-              value="Update Courses"
-              className="text-md data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
-            >
-              Update Courses
-            </TabsTrigger>
-            <TabsTrigger
-              value="New Field"
-              className="text-md data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
-            >
-              New Field
-            </TabsTrigger>
-          </TabsList>
-          {isLoading ? (
-            <>
+            <TabsList className="mt-12 grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-black-light">
+              <TabsTrigger
+                value="Update Courses"
+                className="text-md data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
+              >
+                Update Courses
+              </TabsTrigger>
+              <TabsTrigger
+                value="New Field"
+                className="text-md data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
+              >
+                New Field
+              </TabsTrigger>
+            </TabsList>
+            {isLoading ? (
+              <>
+                <FileDropzone
+                  loading={true}
+                  loaderProps={{ type: "dots", color: "#927c4e" }}
+                  accept={{ "text/html": [".html"] }}
+                  maxFiles={1}
+                  header={
+                    acceptedFile
+                      ? "File Accepted"
+                      : "Drag or click to select files"
+                  }
+                  subheader={
+                    acceptedFile
+                      ? "Youre Good To Go!"
+                      : " ONLY .html & .htm accepted "
+                  }
+                  className="mt-16 mb-7 dark:bg-black-light dark:border-none dark:text-white-dark"
+                  icon={
+                    acceptedFile ? (
+                      <CheckCircle2 size={52} />
+                    ) : (
+                      <BookCheck size={52} />
+                    )
+                  }
+                />
+              </>
+            ) : (
               <FileDropzone
-                loading={true}
-                loaderProps={{ type: "dots", color: "#927c4e" }}
+                onDrop={(files) => {
+                  setValue(files[0]);
+                  setAcceptedFile(true);
+                }}
                 accept={{ "text/html": [".html"] }}
                 maxFiles={1}
                 header={
@@ -218,54 +248,29 @@ export default function IntegrationPage() {
                   )
                 }
               />
-            </>
-          ) : (
-            <FileDropzone
-              onDrop={(files) => {
-                setValue(files[0]);
-                setAcceptedFile(true);
-              }}
-              accept={{ "text/html": [".html"] }}
-              maxFiles={1}
-              header={
-                acceptedFile ? "File Accepted" : "Drag or click to select files"
-              }
-              subheader={
-                acceptedFile
-                  ? "Youre Good To Go!"
-                  : " ONLY .html & .htm accepted "
-              }
-              className="mt-16 mb-7 dark:bg-black-light dark:border-none dark:text-white-dark"
-              icon={
-                acceptedFile ? (
-                  <CheckCircle2 size={52} />
-                ) : (
-                  <BookCheck size={52} />
-                )
-              }
-            />
-          )}
-          <TabsContent value="Update Courses">
-            <Button
-              onClick={() => onSubmission("courses")}
-              type="submit"
-              className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-2 dark:hover:bg-gold-base mb-16 w-24"
-            >
-              Submit
-            </Button>
-          </TabsContent>
+            )}
+            <TabsContent value="Update Courses">
+              <Button
+                onClick={() => onSubmission("courses")}
+                type="submit"
+                className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-2 dark:hover:bg-gold-base mb-16 w-24"
+              >
+                Submit
+              </Button>
+            </TabsContent>
 
-          <TabsContent value="New Field">
-            <Button
-              onClick={() => onSubmission("field")}
-              type="submit"
-              className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-2 dark:hover:bg-gold-base mb-16 w-24"
-            >
-              Submit
-            </Button>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </ScrollArea>
+            <TabsContent value="New Field">
+              <Button
+                onClick={() => onSubmission("field")}
+                type="submit"
+                className="dark:bg-black-light dark:text-white-light rounded-md px-5 py-2 mt-2 dark:hover:bg-gold-base mb-16 w-24"
+              >
+                Submit
+              </Button>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </ScrollArea>
+    </div>
   );
 }

@@ -1,10 +1,10 @@
 import { Group, Paper, RingProgress, SimpleGrid, Text } from "@mantine/core";
 import { ArrowUpRight } from "lucide-react";
 import classes from "@/lib/modules/StatsGrid.module.css";
-import { useCourseStore } from "@/stores";
+import { useCourseStore, useUserStore } from "@/stores";
 
 interface Course {
-  id: string;
+  course_id: string;
   name: string;
   credits: string; // or number, depending on your actual data structure
 }
@@ -18,6 +18,7 @@ const icons = {
 
 export function StatsGrid() {
   const { completedClassList, inProgressClassList } = useCourseStore();
+  const { fields } = useUserStore();
 
   const totalCreditsRequired = 180;
 
@@ -43,31 +44,26 @@ export function StatsGrid() {
       title: "Completed Courses",
       icon: "receipt",
       value: completedClassList.length,
-      diff: 34,
     },
     {
-      title: "Credits Until Graduation",
+      title: "Credits Until Complete",
       icon: "coin",
       value: totalCreditsRequired - completedCredits,
-      diff: -13,
     },
     {
       title: "Current Major",
       icon: "discount",
       value: "Computer Science",
-      diff: 18,
     },
     {
       title: "Credits In Progress",
       icon: "user",
       value: inProgressCredits,
-      diff: -30,
     },
     {
       title: "Total Credits Earned",
       icon: "user",
       value: completedCredits,
-      diff: -30,
     },
   ] as const;
 
@@ -76,7 +72,7 @@ export function StatsGrid() {
 
     return (
       <Paper
-        className="dark:bg-black-light dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out"
+        className="dark:bg-black-light dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out shadow-sm hover:shadow-md"
         withBorder
         p="lg"
         radius="md"
@@ -86,7 +82,6 @@ export function StatsGrid() {
           <Text size="md" c="dimmed" className={classes.title}>
             {stat.title}
           </Text>
-          <Icon className={classes.icon} size="1.4rem" />
         </Group>
 
         <Group align="flex-end" gap="xs" mt={35}>
@@ -100,14 +95,14 @@ export function StatsGrid() {
 
   return (
     <div className={classes.root}>
-      <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }}>
+      <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }} className="p-0">
         {stats}
         <Paper
           withBorder
           p="lg"
           radius="md"
           key={0}
-          className=" dark:bg-[#030712] dark:border-gray-700 hover:scale-[1.01] transition-all duration-200 ease-in-out"
+          className=" dark:bg-[#030712] dark:border-gray-700 hover:scale-[1.01] transition-all duration-200 ease-in-out shadow-sm hover:shadow-md"
         >
           <div className="flex justify-between items-center">
             <div className="flex flex-col self-start">

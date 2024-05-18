@@ -4,7 +4,7 @@ import axios from "axios";
 import useAuthStore from "./AuthStore";
 
 // Define your store's state
-type UserState = {
+export type UserState = {
   firstName: string;
   lastName: string;
   studentId: number;
