@@ -30,8 +30,8 @@ export function CustomCarousel({ className, content }: CustomCarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="top-[90%] left-[2rem] w-[2.5rem] h-[2.5rem] bg-white-light " />
-      <CarouselNext className="top-[90%] right-[2rem] w-[2.5rem] h-[2.5rem] bg-white-light" />
+      <CarouselPrevious className="top-[90%] left-[2rem] w-[2.5rem] h-[2.5rem] bg-white dark:bg-black" />
+      <CarouselNext className="top-[90%] right-[2rem] w-[2.5rem] h-[2.5rem] bg-white dark:bg-black" />
     </Carousel>
   );
 }

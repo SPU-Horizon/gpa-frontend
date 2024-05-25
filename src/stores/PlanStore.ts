@@ -3,8 +3,7 @@ import { persist } from "zustand/middleware";
 import { useCourseStore } from "."; // TODO: Use for  completed credits, this function is now updated
 import { useUserStore } from ".";
 import axios from "axios";
-import { any } from "zod";
-import {generatePlanOptions} from "./generatePlanOptions";
+import { generatePlanOptions } from "./generatePlanOptions";
 
 type PlanStore = {
   plans: [];
@@ -21,9 +20,7 @@ type PlanStore = {
     completed_courses: Set<any>;
     completed_credits: any;
   }; // TODO: is it ok that we are returning void
-  getSchedule: (
-    options_selected: any[], 
-    maxCredits: number)=> void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
+  getSchedule: (options_selected: any[], maxCredits: number) => void; // This will be called on that second submit of the input form. It will update the mandatory courses, and send all needed information for stevens scheduler
   savePlan: (plan_name: string, plan_json: {}) => void;
   getPlans: () => void;
 };

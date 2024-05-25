@@ -79,7 +79,7 @@ export default function RegisterPage() {
         />
 
         {/* Form Section on the right side of the page */}
-        <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2 ">
+        <div className="flex bg-white items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2 ">
           <div className="w-full md:pt-12">
             <RegisterPageHeader />
 
@@ -126,7 +126,7 @@ export default function RegisterPage() {
 
               <button
                 type="submit"
-                className="md:my-10 self-end h-[50px] flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-gold-light rounded-lg hover:bg-black-base hover:text-white-light focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                className="md:my-10 self-end h-[50px] flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-primary rounded-lg hover:bg-black-base hover:text-white-light focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
               >
                 <span className="dark:text-white-light ">Sign Up </span>
                 <ArrowRight />

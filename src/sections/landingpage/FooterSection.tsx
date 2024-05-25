@@ -16,19 +16,19 @@ export default function FooterSection() {
   return (
     <section
       id="ContactUs"
-      className="min-h-screen bg-white dark:bg-black-light flex md:flex-col md:justify-between border-t-[3px] border-gold-ligh dark:border-black-base "
+      className="min-h-screen bg-white dark:bg-black flex md:flex-col md:justify-between border-t-[3px] border-gold-ligh dark:border-black-base "
     >
       <div className="sm:text-center sm:p-7 flex flex-col justify-center  w-full p-14  dark:bg-black-light lg:px-12 xl:px-32 lg:w-1/2 md:w-full">
-        <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white-light lg:text-3xl">
+        <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white lg:text-3xl">
           Get In Touch
         </h1>
 
-        <p className="font-medium mt-4 text-gray-500 dark:text-white-light">
+        <p className="font-medium mt-4 text-gray-500 dark:text-white">
           Any suggestions? We'd love to hear from you.
         </p>
       </div>
 
-      <div className="flex flex-col justify-center w-full p-8 pt-0 lg:w-1/2 lg:px-12 xl:px-24 md:w-full md:pt-4 bg-gold-light ">
+      <div className="flex flex-col justify-center w-full p-8 pt-0 lg:w-1/2 lg:px-12 xl:px-24 md:w-full md:pt-4 bg-[#927d4ebd] ">
         <form>
           <div className="-mx-2 md:items-center md:flex-col md:gap-4">
             <div className="flex-1 px-2">
@@ -59,7 +59,7 @@ export default function FooterSection() {
 
           <div className="w-full mt-8">
             <a
-              className="block w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white-light capitalize transition-colors duration-300 transform bg-black-light rounded-md hover:bg-black-base focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 text-center"
+              className="block w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-md hover:bg-black-base focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 text-center"
               href={`mailto:${email}?subject=${encodeURIComponent(
                 subject
               )}&body=${encodeURIComponent(message)}`}

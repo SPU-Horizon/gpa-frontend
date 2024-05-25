@@ -22,7 +22,7 @@ export function MobileDrawer({ color }: DrawerProps) {
           <LuMenu size={"2.5em"} color={color} />
         </Button>
       </SheetTrigger>
-      <SheetContent className="bg-black-base border-0 font-avenir text-white-light">
+      <SheetContent className="bg-muted border-0 font-avenir text-white-light">
         <SheetHeader>
           <SheetTitle className="text-3xl dark:text-white-light text-white-light">
             Menu

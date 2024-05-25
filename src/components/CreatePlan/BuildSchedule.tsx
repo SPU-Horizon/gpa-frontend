@@ -1,20 +1,11 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useUserStore, useCourseStore, useThemeStore } from "@/stores";
-import {
-  UnstyledButton,
-  Text,
-  Badge,
-  Group,
-  List,
-  SimpleGrid,
-  Grid,
-  Card,
-  rem,
-} from "@mantine/core";
+import { useUserStore, useCourseStore } from "@/stores";
+import { UnstyledButton, Text, Badge, List, Card, rem } from "@mantine/core";
 import { Footprints, Network } from "lucide-react";
 import CreatePlan from "@/components/CreatePlan/CreatePlan";
 import { Button } from "../ui/button";
+import { useTheme } from "../theme-provider";
 
 interface Course {
   course_id: string;
@@ -55,11 +46,7 @@ const BuildSchedule: React.FC = () => {
   const [selectedField, setSelectedField] = useState("");
   const [remainingCourses, setRemainingCourses] = useState<string[]>([]);
   const [value, setValue] = useState<Date | null>(null);
-  const { theme } = useThemeStore();
-
-  useEffect(() => {
-    initializeUserInfo();
-  }, [initializeUserInfo]);
+  const { theme } = useTheme();
 
   // This example assumes you have a function to get all courses for a major
   // For demonstration, using a static mapping
@@ -160,32 +147,6 @@ const BuildSchedule: React.FC = () => {
           {/* "Create a Plan" section */}
 
           <CreatePlan onCompleted={handleCreatePlanCompleted} />
-        </div>
-        <div className="flex flex-grow">
-          {/* "Registered Courses" section */}
-          <Card className="flex flex-col w-full overflow-hidden  border border-gray-100 dark:border-gray-700 dark:bg-transparent">
-            <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">
-              Registered Courses
-            </h1>
-            <List spacing="md" size="sm" center>
-              {inProgressClassList.map((course: Course) => (
-                <Card
-                  key={course.course_id}
-                  className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-grey-dark dark:text-white-base"
-                >
-                  {course.course_id} - {course.name}
-                  <Badge className="ml-2 bg-gold-base font-semibold">
-                    {course.credits} credits
-                  </Badge>
-                </Card>
-              ))}
-            </List>
-            <div className="h-full w-full flex justify-center items-center">
-              <Button className="bg-gold-base hover:bg-gold-light text-white-base font-bold px-4 py-2 rounded-full mt-4">
-                View All
-              </Button>
-            </div>
-          </Card>
         </div>
       </div>
     </div>

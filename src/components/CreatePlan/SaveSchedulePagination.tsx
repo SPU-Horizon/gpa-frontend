@@ -25,15 +25,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
+import ViewScheduleCard from "./ViewScheduleCard";
 
 type ViewScheduleButtonProps = {
   schedule: Schedule;
   nodes: {}[];
   edges: {}[];
-  setSelectedScheduleId: (id: string) => void;
+  setSelectedScheduleId?: (id: string) => void;
 };
 
-const ViewScheduleButton = ({
+export const ViewScheduleButton = ({
   schedule,
   nodes,
   edges,
@@ -46,14 +47,15 @@ const ViewScheduleButton = ({
           size="sm"
           variant="outline"
           onClick={() => {
-            setSelectedScheduleId(schedule.id);
+            // setSelectedScheduleId(schedule.id);
+            setSelectedScheduleId && setSelectedScheduleId(schedule.id);
           }}
-          className="w-full dark:bg-white-light dark:hover:bg-white-dark dark:hover:text-black-base dark:text-black-base"
+          className="w-full bg-primary hover:bg-primary/70 border-none"
         >
           View Details
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[475px] h-[550px] bg-white-light rounded-md max-w-[auto] font-avenir flex flex-col">
+      <DialogContent className="w-[475px] h-[550px] bg-muted rounded-md max-w-[auto] font-avenir flex flex-col">
         <h2 className="font-semibold text-xl mb-4">Path to Graduation</h2>
         <div className="overflow-y-scroll max-h-[420px]">
           <div className="flex flex-col justify-between h-full mr-5 ml-2">
@@ -78,14 +80,14 @@ const ViewScheduleButton = ({
           <DialogTrigger asChild className="w-full mt-auto">
             <Button
               size="sm"
-              className="w-full bg-gold-light border-none"
+              className="w-full bg-primary hover:bg-black border-none"
               variant="outline"
             >
               Visualize
             </Button>
           </DialogTrigger>
 
-          <DialogContent className=" w-[800px] h-[700px] bg-white-light rounded-md max-w-[auto]">
+          <DialogContent className=" w-[800px] h-[700px] bg-muted rounded-md max-w-[auto]">
             <ReactFlowProvider>
               <VisualizeSequence nodes={nodes} edges={edges} />
             </ReactFlowProvider>
@@ -96,13 +98,13 @@ const ViewScheduleButton = ({
   );
 };
 
-const DeleteScheduleButton = () => {
+export const DeleteScheduleButton = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className="w-full">
         <Button
           size="sm"
-          className="bg-gold-light border-none w-full dark:bg-gold-base dark:hover:bg-gold-light"
+          className="bg-muted border-none w-full  hover:bg-muted/50"
           variant="outline"
           onClick={() => {}}
         >
@@ -110,7 +112,7 @@ const DeleteScheduleButton = () => {
         </Button>
       </AlertDialogTrigger>
 
-      <AlertDialogContent className="bg-white-light rounded-md">
+      <AlertDialogContent className="bg-[#111] rounded-md">
         <AlertDialogTitle>
           {" "}
           Are You Sure you want to Delete this Schedule?
@@ -154,49 +156,11 @@ const SaveSchedulePagination = ({ schedules }: SaveSchedulePaginationProps) => {
 
   return (
     <div>
-      <div className="container mx-auto  h-full md:px-0">
+      <div className=" mx-auto  h-full md:px-0">
         <div className="flex flex-col items-center justify-between ">
           <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 mb-8 h-max w-full py-1 ">
-            {schedules.slice(startIndex, endIndex).map((schedule) => (
-              <Card
-                key={schedule.id}
-                className="w-full flex flex-col justify-between h-[350px] dark:bg-black-light  "
-              >
-                <CardContent className="p-4 h-full">
-                  <h3 className="text-lg font-semibold mb-4">
-                    {schedule.name}
-                  </h3>
-
-                  <p className="text-xs mb-4">
-                    Date Created: {schedule.dateCreated.toDateString()}
-                  </p>
-                  <p className="font-semibold mb-4">
-                    Max Credits: {schedule.totalCredits}
-                  </p>
-                  <div className="font-semibold">
-                    Fields:{" "}
-                    {schedule.fields.map((field, i: number) => {
-                      return (
-                        <div key={i} className="inline-block ml-2">
-                          <Badge className="text-[10px] ease-in-out transition-all duration-200 shadow-md hover:scale-[1.01]">
-                            {field}{" "}
-                          </Badge>{" "}
-                          {"  "}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-                <div className="flex items-center gap-2 p-4">
-                  <ViewScheduleButton
-                    setSelectedScheduleId={setSelectedScheduleId}
-                    schedule={schedule}
-                    nodes={nodes}
-                    edges={edges}
-                  />
-                  <DeleteScheduleButton />
-                </div>
-              </Card>
+            {schedules.slice(startIndex, endIndex).map((schedule, i) => (
+              <ViewScheduleCard key={i} schedule={schedule} />
             ))}
           </div>
           <Pagination>

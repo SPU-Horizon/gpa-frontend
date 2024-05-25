@@ -1,5 +1,5 @@
 import { useNavigationStore } from "@/stores/NavigationStore";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuShortcut,
 } from "../ui/dropdown-menu";
 import useAuthStore from "@/stores/AuthStore";
 import { useNavigate } from "react-router-dom";
@@ -31,20 +30,15 @@ export function UserAvatar() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={""} alt="@shadcn" />
-            <AvatarFallback className="bg-black-base text-white-light">
+            <AvatarFallback className="bg-primary text-white">
               {firstName[0].toLocaleUpperCase() +
                 lastName[0].toLocaleUpperCase()}
             </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-56 dark:bg-white-base bg-black-base text-white-light ml-2 border-none "
-        align="end"
-        forceMount
-      >
-        <DropdownMenuLabel className="font-normal">
+      <DropdownMenuContent className=" w-56 bg-white dark:bg-black dark:text-white ml-2 ">
+        <DropdownMenuLabel className="font-normal ">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
               {firstName + " " + lastName}
@@ -54,7 +48,7 @@ export function UserAvatar() {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-black-base" />
+        <DropdownMenuSeparator className="bg-muted dark:bg-muted" />
         <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={() => {
@@ -64,7 +58,7 @@ export function UserAvatar() {
             Profile
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator className="bg-black-base" />
+        <DropdownMenuSeparator className="bg-muted dark:bg-black" />
         <DropdownMenuItem onClick={signOut}>Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

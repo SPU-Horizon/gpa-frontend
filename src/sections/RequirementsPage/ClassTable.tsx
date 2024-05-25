@@ -31,13 +31,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useCourseStore, useUserStore } from "@/stores";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 interface DataTableProps<TData extends { section: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -206,7 +199,7 @@ export function ClassTable<TData extends { section: string }, TValue>({
                     <Split className="w-3 h-3" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white-light font-avenir">
+                <DropdownMenuContent className="bg-popover dark:text-white font-avenir">
                   <DropdownMenuLabel className="font-medium text-sm pt-1 pl-2">
                     Filter Fields
                   </DropdownMenuLabel>
@@ -223,6 +216,7 @@ export function ClassTable<TData extends { section: string }, TValue>({
                           onClick={() => {
                             setActiveField(i);
                           }}
+                          className="dark:text-white text-black"
                         >
                           {f.name}
                         </DropdownMenuRadioItem>
@@ -275,16 +269,29 @@ export function ClassTable<TData extends { section: string }, TValue>({
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
+                    {headerGroup.headers.map((header, index) => {
                       return (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
+                        <React.Fragment key={index}>
+                          {index === 0 ? (
+                            <TableHead key={header.id} className="w-[300px]">
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                            </TableHead>
+                          ) : (
+                            <TableHead key={header.id}>
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                            </TableHead>
+                          )}
+                        </React.Fragment>
                       );
                     })}
 
@@ -309,7 +316,7 @@ export function ClassTable<TData extends { section: string }, TValue>({
                             data-state={row.getIsSelected() && "selected"}
                             className="ease-in-out transition-all cursor-pointer duration-200 w-min border-b-0 hover:bg-transparent"
                           >
-                            {row.getVisibleCells().map((cell) => (
+                            {row.getVisibleCells().map((cell, i) => (
                               <TableCell key={cell.id}>
                                 {flexRender(
                                   cell.column.columnDef.cell,
@@ -368,75 +375,12 @@ export function ClassTable<TData extends { section: string }, TValue>({
         );
       })}
 
-      {table.getPageCount() === 1 ? (
-        <>
-          <div className="flex justify-end items-center gap-2 mt-2 mb-4 text-sm">
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="flex justify-between items-center md:flex-col md:mt-4">
-            <>
-              <div className="flex items-center gap-2">
-                <p className="text-sm font-bold">Classes per page</p>
-                <Select
-                  value={`${table.getState().pagination.pageSize}`}
-                  onValueChange={(value) => {
-                    table.setPageSize(table.getRowCount());
-                  }}
-                >
-                  <SelectTrigger className="h-8 w-[70px]">
-                    <SelectValue
-                      placeholder={table.getState().pagination.pageSize}
-                    />
-                  </SelectTrigger>
-                  <SelectContent side="top" className="bg-white-light">
-                    {[10, 20, 30, 40, 50].map((pageSize) => (
-                      <SelectItem key={pageSize} value={`${pageSize}`}>
-                        {pageSize}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </>
-
-            <div className="flex items-center justify-end space-x-2 py-4">
-              <div
-                className={`${
-                  table.getPageCount() === 1 ? `self-end text-sm` : `text-sm`
-                }`}
-              >
-                Page {table.getState().pagination.pageIndex + 1} of{" "}
-                {table.getPageCount()}
-              </div>
-
-              <>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                  >
-                    Next
-                  </Button>
-                </div>
-              </>
-            </div>
-          </div>
-        </>
-      )}
+      <div>
+        <div className="flex justify-end items-center gap-2 mt-2 mb-4 text-sm">
+          Page {table.getState().pagination.pageIndex + 1} of{" "}
+          {table.getPageCount()}
+        </div>
+      </div>
     </div>
   );
 }
