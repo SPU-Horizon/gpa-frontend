@@ -11,16 +11,15 @@ import { RegisterInputFields } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/AuthStore";
 import { TextInput, PasswordInput } from "@mantine/core";
+import { c } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 const registerSchema = z
   .object({
-    firstName: z.string().min(1).max(18),
-    lastName: z.string().min(1).max(18),
-    email: z.string().email(),
-    password: z.string().min(9, "Password must be at least 9 characters."),
-    confirmPassword: z
-      .string()
-      .min(9, "Password must be at least 9 characters."),
+    firstName: z.string().min(1).max(18, "First name must be 1-18 characters long."),
+  lastName: z.string().min(1).max(18, "Last name must be 1-18 characters long."),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(9, "Password must be at least 9 characters."),
+  confirmPassword: z.string().min(9, "Confirm password must be at least 9 characters.")
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must be matching match.",
@@ -102,6 +101,7 @@ export default function RegisterPage() {
                       <PasswordInput
                         {...register(inputField.zodTitle)}
                         placeholder={inputField.placeholder}
+                        error={errors[inputField.zodTitle]?.message?.toString()}
                         classNames={{
                           input:
                             "font-avenir text-md w-full h-12 bg-gray-100 dark:bg-black-light dark:text-white-light dark:placeholder-white-light text-gray-700 placeholder-gray-400 border border-gray-500 rounded-lg focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40",
@@ -113,6 +113,7 @@ export default function RegisterPage() {
                         {...register(inputField.zodTitle)}
                         type={inputField.type}
                         placeholder={inputField.placeholder}
+                        error={errors[inputField.zodTitle]?.message?.toString()}
                         required
                         classNames={{
                           input:
@@ -127,6 +128,10 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 className="md:my-10 self-end h-[50px] flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-gold-light rounded-lg hover:bg-black-base hover:text-white-light focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                // add console log when button is clicked
+                onClick={() => {
+                  console.log("Button Clicked");
+                }}
               >
                 <span className="dark:text-white-light ">Sign Up </span>
                 <ArrowRight />
