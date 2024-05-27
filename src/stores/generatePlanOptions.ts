@@ -70,30 +70,31 @@ export function generatePlanOptions(
 
   // courses with a grade of 2.0 or higher are added to completed_courses
   for (let enrollment of past_enrollments) {
-    if (points_grade(enrollment.grade) >= 2.0) {
+    if (points_grade(enrollment.grade) >= 2.0 && !repeated_courses.includes(enrollment.course_id)) {
       completed_courses.add(enrollment.course_id);
     }
   }
 
   console.log("completed_courses", completed_courses);
+  console.log("Repeat courses", repeated_courses);
 
   // courses not marked to be repeated are add to completed_courses
   for (let enrollment of current_enrollments) {
     if (!repeated_courses.includes(enrollment.course_id)) {
       completed_courses.add(enrollment.course_id);
-      completed_credits += Number(enrollment.credits);
+      completed_credits += enrollment.credits;
     }
   }
 
   // fields not in selected_fields are removed
-  fields.filter((field: any) =>
-    selected_fields.includes(field.student_field_id)
+  let filteredFields = fields.filter((field: any) =>
+    selected_fields.includes(field)
   );
 
   // Courses of requirements with required credits equal to total credits available are considered mandatory
   // Requirements that are not completed are added to plan_options
 
-  for (let field_requirements of fields) {
+  for (let field_requirements of filteredFields) {
     // loop through each slected field
     for (let requirement of field_requirements.requirements) {
       // loop through each requirement of the field
@@ -131,10 +132,6 @@ export function generatePlanOptions(
       }
     }
   }
-  console.log("plan_options", plan_options);
-  console.log("mandatory_courses", mandatory_courses);
-  console.log("completed_courses", completed_courses);
-  console.log("completed_credits", completed_credits);
 
   // return the plan_options (an array of arrays of objects), mandatory_courses (a set), and completed_courses (a set)
   return {
