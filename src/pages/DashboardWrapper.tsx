@@ -1,16 +1,15 @@
-import * as React from "react";
-import { ClassHistory, IntegrationPage, CreatePlan } from "@/sections";
 import { Routes, Route } from "react-router-dom";
-import HomeOptions from "@/sections/dashboard/HomeOptions";
+import { ClassHistory, IntegrationPage, CreatePlan } from "@/sections";
+import Dashboard from "@/sections/dashboard/Dashboard";
 import { ProfilePage } from ".";
 import RequirementsPage from "./RequirementsPage";
 
-export default function Dashboard() {
+export default function DashboardWrapper() {
   return (
-    <div className="flex h-screen">
+    <div>
       <div className="flex-grow overflow-scroll">
         <Routes>
-          <Route path="" element={<HomeOptions />} />
+          <Route path="" element={<Dashboard />} />
           <Route
             path="/transcript"
             element={

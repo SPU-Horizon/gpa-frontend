@@ -22,7 +22,7 @@ export default function MyRegisteredList() {
   let { registeredClassList } = useCourseStore();
 
   return (
-    <Card className="md:col-span-2 lg:mb-4 col-span-2 shadow-md">
+    <Card className="shadow-md">
       <CardHeader className="px-7 mb-2 flex flex-row justify-between items-center">
         <div>
           <CardTitle>My Courses</CardTitle>
@@ -51,7 +51,14 @@ export default function MyRegisteredList() {
           {registeredClassList.length ? (
             <TableBody>
               {registeredClassList.map((course: any, i) => (
-                <TableRow key={i} className="bg-accent">
+                <TableRow
+                  key={i}
+                  className={
+                    i % 2 === 0
+                      ? `bg-accent hover:bg-primary `
+                      : `bg-muted/50 hover:bg-primary`
+                  }
+                >
                   <TableCell>
                     <div className="font-medium">{course.course_id}</div>
                     <div className="text-sm text-muted-foreground md:inline">

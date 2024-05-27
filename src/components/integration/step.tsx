@@ -1,6 +1,6 @@
 import { Timeline, Text } from "@mantine/core";
 import React from "react";
-import { useThemeStore } from "@/stores";
+import { useTheme } from "../theme-provider";
 
 export type StepProps = {
   title: string;
@@ -10,7 +10,7 @@ export type StepProps = {
 };
 
 export default function Step({ title, description, icon, link }: StepProps) {
-  const { theme } = useThemeStore();
+  const { theme } = useTheme();
   return (
     <>
       <Timeline.Item
@@ -33,10 +33,11 @@ export default function Step({ title, description, icon, link }: StepProps) {
           },
         }}
       >
-        <h1 className="text-lg dark:text-white-light text-black-base">
-          {title}
-        </h1>
-        <Text size="lg" className="dark:text-white-base text-black-light">
+        <h1 className="text-lg dark:text-white text-black">{title}</h1>
+        <Text
+          size="md"
+          className="dark:text-primary-foreground text-black-light"
+        >
           {description}
         </Text>
         {link && (

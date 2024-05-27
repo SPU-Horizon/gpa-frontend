@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { DatePickerInput } from "@mantine/dates";
-import { useThemeStore } from "@/stores";
+import { useTheme } from "../theme-provider";
 
 export default function DatePicker() {
   const [value, setValue] = useState<Date | null>(null);
-  const { theme } = useThemeStore();
+  const { theme } = useTheme();
   return (
     <DatePickerInput
       dropdownType="modal"

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,7 +10,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export type Classes = {
   code: string;
@@ -40,7 +39,10 @@ export const ClassColumns: ColumnDef<Classes>[] = [
               <ChevronsUpDown className="h-3 w-3" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="bottom" className="bg-white-light mt-2">
+          <DropdownMenuContent
+            side="bottom"
+            className="bg-popover text-popover-foreground dark:text-white mt-2"
+          >
             <DropdownMenuLabel>Sort</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -84,7 +86,10 @@ export const ClassColumns: ColumnDef<Classes>[] = [
                 <ChevronsUpDown className="h-3 w-3" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent side="bottom" className="bg-white-light mt-2">
+            <DropdownMenuContent
+              side="bottom"
+              className="bg-popover dark:text-white mt-2"
+            >
               <DropdownMenuLabel>Sort</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -157,7 +162,10 @@ export const ClassColumns: ColumnDef<Classes>[] = [
               <ChevronsUpDown className="h-3 w-3" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="bottom" className="bg-white-light mt-2">
+          <DropdownMenuContent
+            side="bottom"
+            className="bg-popover dark:text-white mt-2"
+          >
             <DropdownMenuLabel>Sort</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -213,46 +221,7 @@ export const ClassColumns: ColumnDef<Classes>[] = [
     accessorKey: "credits",
     header: "Credits",
   },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      return (
-        <Dialog>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-white-light">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DialogTrigger>
-                <DropdownMenuItem>View Details</DropdownMenuItem>
-              </DialogTrigger>
-              <DropdownMenuItem>Update Course Status</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <DialogContent className="bg-white-light h-[400px] w-[400px] rounded-md">
-            <div className="flex flex-col gap-4 p-4">
-              <h1 className="text-xl font-semibold">{row.original.title}</h1>
-              <p className="text-sm font-normal">
-                Course Code: {row.original.code}
-              </p>
-              <p className="text-sm font-normal">
-                Status: {row.original.status}
-              </p>
-              <p className="text-sm font-normal">Grade: {row.original.grade}</p>
-              <p className="text-sm font-normal">
-                Credits: {row.original.credits}
-              </p>
-            </div>
-          </DialogContent>
-        </Dialog>
-      );
-    },
-  },
+
   {
     accessorKey: "field",
     header: "Field",

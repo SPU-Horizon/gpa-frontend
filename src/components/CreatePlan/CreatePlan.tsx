@@ -261,7 +261,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             </div>
             <div className="flex justify-center">
               <Button
-                className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full my-6 ease-in-out transition-all duration-200"
+                className="bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full my-6 ease-in-out transition-all duration-200"
                 type="submit"
               >
                 Submit
@@ -311,7 +311,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
 
           <div className="flex justify-center">
             <Button
-              className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
+              className=" bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full mt-4"
               onClick={handleSecondStepSubmit}
             >
               Submit Preferences
@@ -356,13 +356,13 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
               </div>
               <div className="flex justify-center space-x-4">
                 <Button
-                  className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full"
+                  className="bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full"
                   onClick={handleSavePlan}
                 >
                   Save Plan
                 </Button>
                 <Button
-                  className="bg-gold-base text-white font-bold px-4 py-2 rounded-full"
+                  className="bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full"
                   onClick={handleDiscardPlan}
                 >
                   Discard Plan
@@ -380,7 +380,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             </div>
             <div>
               <Button
-                className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
+                className="bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full mt-4"
                 onClick={resetFormAndCreateAnotherPlan}
               >
                 Create Another Plan
