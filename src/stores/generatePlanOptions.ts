@@ -75,9 +75,6 @@ export function generatePlanOptions(
     }
   }
 
-  console.log("completed_courses", completed_courses);
-  console.log("Repeat courses", repeated_courses);
-
   // courses not marked to be repeated are add to completed_courses
   for (let enrollment of current_enrollments) {
     if (!repeated_courses.includes(enrollment.course_id)) {

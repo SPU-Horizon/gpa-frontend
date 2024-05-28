@@ -280,32 +280,44 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             </label>
             <div className="grid grid-cols-2 gap-4 max-h-[350px] overflow-y-auto p-2">
               {planOptions.map((optionGroup, index) =>
-                optionGroup.map((option, subIndex) => (
-                  <div
-                    key={`group-${index}-option-${subIndex}`}
-                    className="p-3 border-b last:border-b-0"
-                  >
-                    <div className="font-bold">
-                      {option.section_title} (Required Credits:{" "}
-                      {option.credits_required})
-                    </div>
-
-                    {option.courses.map((course, courseIndex) => (
+              optionGroup.map((option, subIndex) => (
+                <div key={`group-${index}-option-${subIndex}`} className="p-3 border-b last:border-b-0">
+                  <div className="font-bold">
+                    {option.section_title} (Required Credits: {option.credits_required})
+                  </div>
+                  {option.courses.length > 1 ? (
+                    <>
+                      <div>Please select one of the following courses:</div>
+                      {option.courses.map((course, courseIndex) => (
+                        <div key={courseIndex} className="flex items-center">
+                          <Checkbox
+                            checked={selectedPreferredCourses.has(course)}
+                            onCheckedChange={() => handlePreferredCourseSelect(course)}
+                            id={`preferred-${index}-${subIndex}-${courseIndex}`}
+                            className="border-[.5px] mr-2 mt-1"
+                          />
+                          {course.name} - Credits: {course.credits}
+                        </div>
+                      ))}
+                    </>
+                  ) : option.courses.length === 1 ? (
+                    option.courses.map((course, courseIndex) => (
                       <div key={courseIndex} className="flex items-center">
                         <Checkbox
                           checked={selectedPreferredCourses.has(course)}
-                          onCheckedChange={() =>
-                            handlePreferredCourseSelect(course)
-                          }
+                          onCheckedChange={() => handlePreferredCourseSelect(course)}
                           id={`preferred-${index}-${subIndex}-${courseIndex}`}
                           className="border-[.5px] mr-2 mt-1"
                         />
                         {course.name} - Credits: {course.credits}
                       </div>
-                    ))}
-                  </div>
-                ))
-              )}
+                    ))
+                  ) : (
+                    <div>No courses available</div>
+                  )}
+                </div>
+              ))
+            )}
             </div>
           </div>
 
