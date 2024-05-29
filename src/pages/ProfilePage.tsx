@@ -37,8 +37,6 @@ export default function Profile() {
     enrollmentYear,
   } = useUserStore();
 
-  console.log(enrollmentQuarter, enrollmentYear);
-
   if (!graduationQuarter || !graduationYear) {
     graduationQuarter = "N/A";
     graduationYear = 0;

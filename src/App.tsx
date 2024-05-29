@@ -4,35 +4,32 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
-  Dashboard,
   Page404,
   ProfilePage,
+  DashboardWrapper,
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./utils/ProtectedRoute";
-
-import { useThemeStore } from "./stores";
-import generatePlanOptions from "./stores/generatePlanOptions";
+import { ThemeProvider } from "@/components/theme-provider";
 
 function App() {
-  const { theme } = useThemeStore();
-  
-  const themeClass = theme === "dark" ? "dark" : "light";
   return (
-    <div className={`${themeClass}`}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/sign-in" element={<LoginPage />}></Route>
-          <Route path="/register" element={<RegisterPage />}></Route>
-          <Route element={<PrivateRoute />}>
-            <Route path="/dashboard/*" element={<Dashboard />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </Route>
-          <Route path="*" element={<Page404 />}></Route>
-        </Routes>
-      </Router>
-    </div>
+    <ThemeProvider>
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<LandingPage />}></Route>
+            <Route path="/sign-in" element={<LoginPage />}></Route>
+            <Route path="/register" element={<RegisterPage />}></Route>
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard/*" element={<DashboardWrapper />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
+            <Route path="*" element={<Page404 />}></Route>
+          </Routes>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -62,7 +62,11 @@ const UserStoreTemplate: StateCreator<
     },
 
     setActiveField: (activeField: number) => {
-      set({ activeField });
+      if (activeField > 0) {
+        set({ activeField });
+      } else {
+        set({ activeField: 0 });
+      }
     },
 
     //Initialize user info

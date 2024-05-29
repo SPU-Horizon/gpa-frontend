@@ -60,12 +60,11 @@ export const FieldsDisplay = ({ setIsLoading }: FieldsDisplayProps) => {
       {fields.length ? (
         fields.map((field, i) => (
           <Paper
-            className="dark:bg-black-light dark:border-none shadow-md transition-all duration-200 ease-in-out hover:cursor-pointer hover:shadow-lg"
+            className=" dark:bg-muted dark:text-pretty dark:border-none shadow-md transition-all duration-200 ease-in-out hover:cursor-pointer hover:shadow-lg hover:scale-[1.02]"
             withBorder
             p="sm"
             radius="md"
             key={field.name + i}
-            onClick={() => setActiveField && setActiveField(i)}
           >
             <Group justify="space-between">
               <Text size="md" c="dimmed">
@@ -80,7 +79,7 @@ export const FieldsDisplay = ({ setIsLoading }: FieldsDisplayProps) => {
                     color="red"
                   />
                 </AlertDialogTrigger>
-                <AlertDialogContent className="bg-white-light">
+                <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle>Remove This Field?</AlertDialogTitle>
                     <AlertDialogDescription>
@@ -92,7 +91,7 @@ export const FieldsDisplay = ({ setIsLoading }: FieldsDisplayProps) => {
                   <AlertDialogFooter className="flex flex-row ml-auto gap-2">
                     <AlertDialogCancel>No</AlertDialogCancel>
                     <AlertDialogCancel
-                      className="bg-gold-light hover:bg-black-base hover:text-white-base"
+                      className="  "
                       onClick={() => {
                         setActiveField(activeField - 1);
                         updateFields(field.student_field_id);
@@ -123,7 +122,7 @@ export const FieldsDisplay = ({ setIsLoading }: FieldsDisplayProps) => {
             </Text>
 
             <Group align="flex-end" gap="xs" mt={20}>
-              <p className="text-black-base dark:text-white-base text-xl font-semibold">
+              <p className="text-black-base dark:text-white text-xl font-semibold">
                 {field.name}
               </p>
             </Group>
@@ -149,7 +148,7 @@ export const FieldsDisplay = ({ setIsLoading }: FieldsDisplayProps) => {
               <Button
                 variant="subtle"
                 size="md"
-                color="#927c4e"
+                className="text-primary bg-muted hover:bg-transparent ease-in-out duration-150"
                 onClick={() => {
                   navigate("/dashboard/integrate-banner");
                   setCurrentTab("BannerSync");

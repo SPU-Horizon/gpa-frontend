@@ -18,49 +18,57 @@ export default function ContactAdvisor() {
     counselorTitle,
   } = useUserStore();
 
+  const counselorInfo = [{}];
+
   return (
-    <Card className="col-span-2 flex flex-col justify-between">
-      <CardHeader className="pb-3 text-center ">
+    <Card
+      className={
+        counselorName
+          ? " h-full flex flex-col  shadow-lg "
+          : " h-full flex flex-col  shadow-lg bg-primary"
+      }
+    >
+      <CardHeader className="pb-3">
         <CardTitle>Academic Counseling</CardTitle>
-        <CardDescription className=" leading-relaxed text-xl font-medium text-gray-400">
+        <CardDescription className="">
           Contact Your Undergraduate Academic Counselor for advice and guidance
           on your academic journey.
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="hover:animate-pulse mt-4 mb-1 text-center">
+      <CardContent className="mt-4 dark:text-white pb-0 flex  flex-grow">
         {counselorName ? (
-          <>
-            <CardTitle>{counselorName}</CardTitle>
-            <CardDescription className="text-base font-medium text-gray-400 mt-1">
+          <div className="flex flex-col">
+            <CardTitle className="mb-3">{counselorName}</CardTitle>
+            <CardDescription className="text-base font-semibold dark:text-white mb-3 ">
               {counselorTitle}
             </CardDescription>
-            <CardDescription className="text-base font-medium text-gray-400">
-              Lastnames Served - {counselorLastnamesServed}
+            <CardDescription className="text-base font-semibold dark:text-white mb-3 ">
+              Lastnames Served: {counselorLastnamesServed}
             </CardDescription>
-            <CardDescription className="text-base font-medium text-gray-400">
+            <CardDescription className="text-base font-semibold  dark:text-white mb-3">
               Email: {counselorEmail}
             </CardDescription>
-            <CardDescription className="text-base font-medium text-gray-400">
+            <CardDescription className="text-base font-semibold dark:text-white mb-3">
               Phone: {counselorPhone}
             </CardDescription>{" "}
-            <CardFooter className="flex items-center p-0 mt-3 justify-center">
+            <CardFooter className="flex items-center mt-auto pl-0 pb-4 w-full ">
               <a
                 href={counselorMeetingLink || "#"}
                 target="_blank"
-                className="p-3 bg-black-light text-white-light rounded-md text-base dark:text-black-base dark:bg-white-light font-medium font-avenir hover:cursor-pointer ease-in-out hover:shadow-sm"
+                className="px-4 py-2 bg-primary dark:text-white rounded-md text-sm font-medium font-avenir hover:cursor-pointer ease-in-out hover:bg-transparent duration-150"
               >
                 Schedule an Appointment
               </a>
             </CardFooter>
-          </>
+          </div>
         ) : (
-          <>
-            <CardDescription className="text-base text-gray-400 font-medium ">
+          <div className="">
+            <CardDescription className="font-semibold text-white text-base text-center">
               You'll need to sync your account with Banner before we can display
               any details.
             </CardDescription>
-          </>
+          </div>
         )}
       </CardContent>
     </Card>

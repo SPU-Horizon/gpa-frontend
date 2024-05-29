@@ -9,7 +9,7 @@ type NavigationStore = {
 };
 
 const initialState = {
-  currentTab: "Home",
+  currentTab: "Dashboard",
 };
 
 export const useNavigationStore = create<NavigationStore>()(
