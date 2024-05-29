@@ -95,6 +95,14 @@ module.exports = {
       xs: { max: "325px" },
       // => @media (max-width: 325px) { ... }
     },
+    // Custom utility for hiding scrollbars
+    scrollbarHide: {
+      '::-webkit-scrollbar': {
+        display: 'none',
+      },
+      '-ms-overflow-style': 'none',
+      'scrollbar-width': 'none',
+    },
   },
   plugins: [require("tailwindcss-animate")],
 };

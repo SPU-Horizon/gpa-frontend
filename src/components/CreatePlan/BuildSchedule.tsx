@@ -48,14 +48,6 @@ const BuildSchedule: React.FC = () => {
   const [value, setValue] = useState<Date | null>(null);
   const { theme } = useTheme();
 
-  // This example assumes you have a function to get all courses for a major
-  // For demonstration, using a static mapping
-  const requiredCoursesForMajor = {
-    // Example structure
-    "Computer Science": ["CSC 1130", "CSC 1230", "CSC 2430", "CSC 3150", "..."],
-    // Populate according to actual program requirements
-  };
-
   useEffect(() => {
     if (!selectedField) return;
 
@@ -141,13 +133,21 @@ const BuildSchedule: React.FC = () => {
   ));
 
   return (
-    <div className="flex mt-4">
-      <div className="flex gap-4 w-full h-max md:flex-col md:gap-16 md:h-auto ">
-        <div className="flex flex-grow md:h-[400px] overflow-scroll border border-gray-100 dark:border-gray-800 rounded-md p-4 dark:bg-db-blue">
-          {/* "Create a Plan" section */}
+    // <div className="flex mt-8 flex-grow w-full h-max md:flex-col md:gap-16 md:h-auto overflow-scroll border border-gray-100 dark:border-gray-800 rounded-md p-4 dark:bg-db-blue">
+    //   {/* <div className="flex gap-4 w-full h-max md:flex-col md:gap-16 md:h-auto "> */}
+        
+    //       {/* "Create a Plan" section */}
 
-          <CreatePlan onCompleted={handleCreatePlanCompleted} />
-        </div>
+    //       <CreatePlan onCompleted={handleCreatePlanCompleted} />
+  
+    //   {/* </div> */}
+    // </div>
+
+    <div className="flex flex-grow  min-h-[500px] my-4 pb-4 md:my-4 md:mx-8 ">
+      <div className="flex flex-col p-6 justify-between w-full rounded-md border border-gray-100 bg-white dark:bg-transparent dark:border-gray-800 dark:bg-db-blue overflow-scroll">
+        <h3 className="font-bold text-xl m-4 ">Build Schedule</h3>
+        <CreatePlan onCompleted={handleCreatePlanCompleted} />
+        {/* Display the selected schedule */}
       </div>
     </div>
   );
