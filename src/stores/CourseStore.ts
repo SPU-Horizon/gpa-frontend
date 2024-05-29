@@ -64,7 +64,6 @@ const useCourseStoreTemplate: StateCreator<
     },
 
     postBanner: async (file, option) => {
-      console.log(option);
       try {
         const res = await axios.post(
           `http://localhost:3000/course/parseBanner?option=${option}`,
@@ -84,7 +83,11 @@ const useCourseStoreTemplate: StateCreator<
         return { status, failedEnrollments, missingFields}; // Return the status and any failed enrollments
       } catch (error) {
         // Handle any errors that occurred during the request
-        return { status: 500, failedEnrollments: [] };
+        if ((error as any).response.status === 499) {
+          return { status: 499, failedEnrollments: [], missingFields: [] };
+        } else {
+          return { status: 500, failedEnrollments: [], missingFields: []};
+        }
       }
     },
 
