@@ -74,7 +74,6 @@ export default function IntegrationPage() {
       const res = await postBanner(formData, option);
       //Res can be an object with 3 properties: parsedCourses, majorRequirements, failedEnrollments (if field option is chosen)
       //Otherwise res only contains parserCourses, failedEnrollments
-
       if (res.status === 200 && res.failedEnrollments.length === 0) {
         toast.success("File Uploaded Successfully, All Classes Added");
         initializeCourseInfo();
@@ -112,6 +111,8 @@ export default function IntegrationPage() {
         );
         initializeCourseInfo();
         initializeUserInfo();
+      } else if (res.status === 499) {
+        toast.error("Invalid Banner Page");
       } else {
         toast.error("An Error Occured While Uploading File");
       }
@@ -143,6 +144,8 @@ export default function IntegrationPage() {
           );
         }
       }
+
+
     }
     setValue(null);
     setAcceptedFile(false);
