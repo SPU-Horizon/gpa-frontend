@@ -19,7 +19,7 @@ const registerSchema = z
   lastName: z.string().min(1).max(18, "Last name must be 1-18 characters long."),
   email: z.string().email("Invalid email address"),
   password: z.string().min(9, "Password must be at least 9 characters."),
-  confirmPassword: z.string().min(9, "Confirm password must be at least 9 characters.")
+  confirmPassword: z.string().min(9, "Password must be at least 9 characters.")
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must be matching match.",
