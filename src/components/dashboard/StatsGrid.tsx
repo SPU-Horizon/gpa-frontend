@@ -1,7 +1,7 @@
-import { Group, Paper, RingProgress, SimpleGrid, Text } from "@mantine/core";
 import { ArrowUpRight } from "lucide-react";
-import classes from "@/lib/modules/StatsGrid.module.css";
+import { Group, Paper, RingProgress, SimpleGrid, Text } from "@mantine/core";
 import { useCourseStore, useUserStore } from "@/stores";
+import classes from "@/lib/modules/StatsGrid.module.css";
 
 interface Course {
   course_id: string;
@@ -72,20 +72,19 @@ export function StatsGrid() {
 
     return (
       <Paper
-        className="dark:bg-black-light dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out shadow-sm hover:shadow-md"
-        withBorder
+        className="bg-primary dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out shadow-sm hover:shadow-md"
         p="lg"
         radius="md"
         key={stat.title}
       >
         <Group justify="space-between">
-          <Text size="md" c="dimmed" className={classes.title}>
+          <Text size="md" className={classes.title}>
             {stat.title}
           </Text>
         </Group>
 
         <Group align="flex-end" gap="xs" mt={35}>
-          <p className="text-black-base dark:text-white-base text-2xl font-semibold">
+          <p className="text-white dark:text-white text-2xl font-semibold">
             {stat.value}
           </p>
         </Group>
@@ -102,7 +101,7 @@ export function StatsGrid() {
           p="lg"
           radius="md"
           key={0}
-          className=" dark:bg-[#030712] dark:border-gray-700 hover:scale-[1.01] transition-all duration-200 ease-in-out shadow-sm hover:shadow-md"
+          className=" dark:bg-muted dark:border-none hover:scale-[1.01] transition-all duration-200 ease-in-out shadow-sm hover:shadow-md"
         >
           <div className="flex justify-between items-center">
             <div className="flex flex-col self-start">
@@ -113,7 +112,7 @@ export function StatsGrid() {
               </Group>
 
               <Group align="flex-end" gap="xs" mt={35}>
-                <Text className="text-black-base dark:text-white-base text-2xl font-semibold">
+                <Text className="text-black-base text-2xl font-semibold">
                   {completionPercentage}% Complete
                 </Text>
               </Group>

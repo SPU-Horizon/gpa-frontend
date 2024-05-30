@@ -4,10 +4,9 @@ import { FieldsDisplay } from "@/sections/RequirementsPage/FieldsDisplay";
 import { ColumnDef } from "@tanstack/react-table";
 import { useCourseStore, useUserStore } from "@/stores";
 import { useState } from "react";
-import { Loader } from "@mantine/core";
 import { StandardHeader } from "@/components/dashboard";
 import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const RequirementsPage = () => {
   // For each section title, we need a table
@@ -79,7 +78,7 @@ const RequirementsPage = () => {
     });
 
     return (
-      <div className="h-screen flex flex-col">
+      <div className="h-screen flex flex-col ">
         <StandardHeader title="Major Fields" />
         <Separator />
 
@@ -115,16 +114,18 @@ const RequirementsPage = () => {
               </div>
             )}
           </div>
+          <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </div>
     );
   } else {
     return (
-      <div className="px-10 h-full  mx-auto pt-4">
-        <header className="flex gap-2 items-end">
-          <h1 className="text-2xl font-bold mb-4 ">Major Fields</h1>
-        </header>
-        <FieldsDisplay />
+      <div className="h-screen flex flex-col ">
+        <StandardHeader title="Major Fields" />
+        <Separator />
+        <div className="h-full mx-auto">
+          <FieldsDisplay />
+        </div>
       </div>
     );
   }

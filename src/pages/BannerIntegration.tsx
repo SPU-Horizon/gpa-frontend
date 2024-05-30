@@ -7,13 +7,14 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { FileDropzone } from "@/components/custom";
-import { useCourseStore, useThemeStore, useUserStore } from "@/stores";
-import { Toaster, toast } from "sonner";
+import { useCourseStore, useUserStore } from "@/stores";
+import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
 import { Text } from "@mantine/core";
 import { BannerGIF } from "@/images";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StandardHeader } from "@/components/dashboard";
+import { useTheme } from "@/components/theme-provider";
 
 type FailedEnrollment = {
   course_id: string;
@@ -47,7 +48,7 @@ export default function IntegrationPage() {
     registeredClassList,
   } = useCourseStore();
   const { studentId, initializeUserInfo } = useUserStore();
-  const { theme } = useThemeStore();
+  const { theme } = useTheme();
 
   const duplicateCheck = (courseId: string) => {
     const allClasses = [
@@ -73,7 +74,6 @@ export default function IntegrationPage() {
       const res = await postBanner(formData, option);
       //Res can be an object with 3 properties: parsedCourses, majorRequirements, failedEnrollments, duplicateFields (if field option is chosen)
       //Otherwise res only contains parserCourses, failedEnrollments
-
       if (res.status === 200 && res.failedEnrollments.length === 0) {
         toast.success("File Uploaded Successfully, All Classes Added");
         initializeCourseInfo();
@@ -111,6 +111,8 @@ export default function IntegrationPage() {
         );
         initializeCourseInfo();
         initializeUserInfo();
+      } else if (res.status === 499) {
+        toast.error("Invalid Banner Page");
       } else {
         toast.error("An Error Occured While Uploading File");
       }
@@ -156,6 +158,8 @@ export default function IntegrationPage() {
           );
         }
       }
+
+
     }
     setValue(null);
     setAcceptedFile(false);
@@ -163,7 +167,7 @@ export default function IntegrationPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col font-avenir">
       <StandardHeader title="Sync With Banner" />
       <Separator />
       <ScrollArea>
@@ -186,7 +190,9 @@ export default function IntegrationPage() {
             </Timeline>
           </div>
           <div className="h-[400px] flex flex-col justify-center mt-4 ">
-            <h1 className="text-2xl font-bold mb-4">Tutorial GIF</h1>
+            <h1 className="text-2xl font-bold mb-4">
+              Here's a quick tutorial Gif:
+            </h1>
             <img src={BannerGIF} width={600} />
           </div>
 
@@ -197,13 +203,13 @@ export default function IntegrationPage() {
             <TabsList className="mt-12 grid w-full grid-cols-2 gap-2 bg-white-light dark:bg-black-light">
               <TabsTrigger
                 value="Update Courses"
-                className="text-md data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
+                className="text-base data-[state=active]:bg-primary dark:data-[state=active]:bg-muted data-[state=active]:text-white dark:data-[state=active]:text-white transition-all ease-in-out duration-200 shadow-md"
               >
                 Update Courses
               </TabsTrigger>
               <TabsTrigger
                 value="New Field"
-                className="text-md data-[state=active]:bg-gold-light dark:data-[state=active]:bg-white-light data-[state=active]:text-white-light dark:data-[state=active]:text-black-base transition-all ease-in-out duration-200 shadow-md"
+                className="text-base data-[state=active]:bg-primary dark:data-[state=active]:bg-muted data-[state=active]:text-white dark:data-[state=active]:text-white transition-all ease-in-out duration-200 shadow-md"
               >
                 New Field
               </TabsTrigger>
@@ -253,7 +259,7 @@ export default function IntegrationPage() {
                     ? "Youre Good To Go!"
                     : " ONLY .html & .htm accepted "
                 }
-                className="mt-16 mb-7 dark:bg-black-light dark:border-none dark:text-white-dark"
+                className="mt-16 mb-7 dark:bg-muted border-muted shadow-lg border-[1px] rounded-md dark:text-white-dark hover:cursor-pointer "
                 icon={
                   acceptedFile ? (
                     <CheckCircle2 size={52} />

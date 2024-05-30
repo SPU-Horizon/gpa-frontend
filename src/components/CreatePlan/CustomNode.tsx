@@ -11,7 +11,7 @@ export type CustomNodeProps = {
 function CustomNode({ data }: NodeProps<CustomNodeProps>) {
   if (!data.credits) {
     return (
-      <div className="w-60 h-16 shadow-md rounded-md bg-gold-light ">
+      <div className="w-60 h-16 shadow-md rounded-md bg-primary ">
         <div className="flex justify-center items-center w-full h-full">
           <div className="">
             <div className="text-lg font-bold">{data.title}</div>
@@ -21,7 +21,7 @@ function CustomNode({ data }: NodeProps<CustomNodeProps>) {
     );
   } else if (data.progress === "completed") {
     return (
-      <div className="w-60 h-max shadow-md rounded-md bg-white border-[2px] bg-red-200">
+      <div className="w-60 h-max shadow-md rounded-md bg-white border-[2px] text-black ">
         <div className="flex justify-center items-center w-full h-full">
           <div className=" py-2">
             <div className="text-lg font-bold text-center">{data.code}</div>
@@ -46,7 +46,7 @@ function CustomNode({ data }: NodeProps<CustomNodeProps>) {
     );
   } else if (data.progress === "in progress") {
     return (
-      <div className="w-60 h-max shadow-md rounded-md bg-white border-[2px] bg-yellow-200">
+      <div className="w-60 h-max shadow-md rounded-md bg-white border-[2px] text-black">
         <div className="flex justify-center items-center w-full h-full">
           <div className=" py-2">
             <div className="text-lg font-bold text-center">{data.code}</div>
@@ -72,7 +72,7 @@ function CustomNode({ data }: NodeProps<CustomNodeProps>) {
   }
 
   return (
-    <div className="w-60 h-max shadow-md rounded-md bg-white border-[2px] border-gold-base">
+    <div className="w-60 h-max shadow-md rounded-md bg-white border-[2px] text-black">
       <div className="flex justify-center items-center w-full h-full">
         <div className=" py-2">
           <div className="text-lg font-bold text-center">{data.code}</div>

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Badge } from "../ui/badge";
 import {
   Dialog,
@@ -7,7 +5,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import { cn } from "@/lib/utils";
 import { DialogDescription, DialogTrigger } from "@radix-ui/react-dialog";
 
@@ -35,7 +32,7 @@ export default function ClassCard({
       <DialogTrigger asChild>
         <button
           className={cn(
-            "flex flex-col items-start gap-2 mb-4 rounded-md border p-3 text-left text-md ease-in-out transition-all hover:bg-accent hover:-translate-x-1 hover:scale-[1.01] dark:bg-black-light duration-200 dark:text-white-light dark:outline-none dark:border-transparent"
+            "flex flex-col items-start gap-2 mb-4 rounded-md border p-3 text-left text-md ease-in-out transition-all dark:hover:bg-accent hover:-translate-x-1 hover:scale-[1.01] dark:bg-muted duration-200 dark:text-white-light dark:outline-none dark:border-transparent"
           )}
         >
           <div className="flex w-full flex-col gap-1">
@@ -45,17 +42,17 @@ export default function ClassCard({
 
                 {completion == "Completed" && (
                   <span>
-                    <Badge>Completed</Badge>
+                    <Badge className="bg-green-600">Completed</Badge>
                   </span>
                 )}
                 {completion == "In Progress" && (
                   <span>
-                    <Badge>In Progress</Badge>
+                    <Badge className="bg-primary">In Progress</Badge>
                   </span>
                 )}
                 {completion == "Registered" && (
                   <span>
-                    <Badge>Registered</Badge>
+                    <Badge className="bg-black">Registered</Badge>
                   </span>
                 )}
               </div>
@@ -69,7 +66,7 @@ export default function ClassCard({
           </div>
         </button>
       </DialogTrigger>
-      <DialogContent className="dark:bg-black-light dark:text-white-base bg-white-light text-black-base font-avenir font-normal border-none border-transparent rounded-md sm:max-w-72 md:max-w-96">
+      <DialogContent className="dark:bg-muted dark:text-white-base bg-muted text-black-base font-avenir font-normal border-none border-transparent rounded-md sm:max-w-72 md:max-w-96">
         <DialogHeader className="text-left">
           <DialogTitle>{item.name}</DialogTitle>
           <DialogDescription>{item.course_id}</DialogDescription>

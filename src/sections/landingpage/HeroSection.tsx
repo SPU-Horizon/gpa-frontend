@@ -28,8 +28,8 @@ export default function HeroSection() {
       id="hero-section"
       className={
         isSticky
-          ? " pt-[185px] overflow-hidden bg-cover items-start pl-12  pr-12 pb-16 sm:p-3 text-white-base"
-          : "  overflow-hidden bg-cover items-start pl-12 pt-16 pr-12 pb-16 sm:p-3 sm:pt-16 text-white-base"
+          ? " pt-[185px] overflow-hidden bg-cover items-start pl-12  pr-12 pb-16 sm:p-3 text-white"
+          : "  overflow-hidden bg-cover items-start pl-12 pt-16 pr-12 pb-16 sm:p-3 sm:pt-16 text-white"
       }
       style={{
         backgroundImage: ` 
@@ -61,13 +61,13 @@ export default function HeroSection() {
 
           <div className="w-full flex gap-4 sm:flex-col sm:w-full md:justify-center transition-all ease-in-out">
             <Button
-              className=" dark:bg-gold-light dark:text-white-light dark:hover:bg-black-light bg-gold-light text-gray-200 hover:bg-black-base hover:text-white-base duration-200 ease-in-out w-40 h-20"
+              className=" dark:bg-muted dark:text-white dark:hover:bg-black  text-gray-200 hover:bg-black hover:text-white duration-200 ease-in-out w-40 h-20"
               onClick={() => navigate("/register")}
             >
               <p className="text-xl font-semibold"> Get Started </p>
             </Button>
             <Button
-              className="dark:hover:bg-black-base dark:hover:text-white-base bg-white-light text-black-base hover:bg-gray-950 hover:text-white-base ease-in-out duration-200 w-48 h-20"
+              className="dark:hover:bg-black-base dark:hover:text-white bg-white text-black hover:bg-gray-950 hover:text-white ease-in-out duration-200 w-48 h-20"
               onClick={() => navigate("/sign-in")}
             >
               <p className="text-xl font-semibold"> Sign In</p>

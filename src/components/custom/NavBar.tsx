@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "../ui/button";
-import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 import { useNavigate } from "react-router-dom";
 
 interface NavProps {
@@ -44,9 +48,9 @@ export function Nav({
                       variant: currentLink === link.title ? "default" : "ghost",
                       size: "icon",
                     }),
-                    "h-9 w-9 p-0 bg-transparent dark:bg-transparent text-black-base dark:text-white-base dark:hover:bg-black-light ",
+                    "h-9 w-9 p-0 bg-transparent dark:bg-transparent text-black-base dark:text-white",
                     currentLink === link.title &&
-                      " bg-gold-base hover:bg-gold-light dark:bg-black-light text-white-base dark:text-muted-foreground dark:hover:bg-black-light dark:hover:text-white"
+                      "bg-primary dark:text-white hover:bg-gold-light dark:bg-black-light text-white"
                   )}
                   onClick={() => {
                     setCurrentLink(link.title);
@@ -59,7 +63,7 @@ export function Nav({
               </TooltipTrigger>
               <TooltipContent
                 side="right"
-                className="flex items-center gap-4 bg-black-light text-white-light"
+                className="flex items-center gap-4 bg-white text-black dark:bg-primary dark:text-white border-none"
               >
                 {link.title}
                 {link.label && (

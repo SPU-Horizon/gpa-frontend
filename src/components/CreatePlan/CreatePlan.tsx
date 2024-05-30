@@ -118,7 +118,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
         mandatory_courses,
         completed_courses,
         completed_credits,
-      } = getOptions(selectedField, repeatedCoursesIds, Number(maxCredit));
+      } = getOptions(selectedField, repeatedCoursesIds);
 
       setPlanOptions(plan_options);
       setMandatoryCourses(mandatory_courses);
@@ -261,7 +261,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             </div>
             <div className="flex justify-center">
               <Button
-                className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full my-6 ease-in-out transition-all duration-200"
+                className="bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full my-6 ease-in-out transition-all duration-200"
                 type="submit"
               >
                 Submit
@@ -280,38 +280,50 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             </label>
             <div className="grid grid-cols-2 gap-4 max-h-[350px] overflow-y-auto p-2">
               {planOptions.map((optionGroup, index) =>
-                optionGroup.map((option, subIndex) => (
-                  <div
-                    key={`group-${index}-option-${subIndex}`}
-                    className="p-3 border-b last:border-b-0"
-                  >
-                    <div className="font-bold">
-                      {option.section_title} (Required Credits:{" "}
-                      {option.credits_required})
-                    </div>
-
-                    {option.courses.map((course, courseIndex) => (
+              optionGroup.map((option, subIndex) => (
+                <div key={`group-${index}-option-${subIndex}`} className="p-3 border-b last:border-b-0">
+                  <div className="font-bold">
+                    {option.section_title} (Required Credits: {option.credits_required})
+                  </div>
+                  {option.courses.length > 1 ? (
+                    <>
+                      <div>Please select one of the following courses:</div>
+                      {option.courses.map((course, courseIndex) => (
+                        <div key={courseIndex} className="flex items-center">
+                          <Checkbox
+                            checked={selectedPreferredCourses.has(course)}
+                            onCheckedChange={() => handlePreferredCourseSelect(course)}
+                            id={`preferred-${index}-${subIndex}-${courseIndex}`}
+                            className="border-[.5px] mr-2 mt-1"
+                          />
+                          {course.name} - Credits: {course.credits}
+                        </div>
+                      ))}
+                    </>
+                  ) : option.courses.length === 1 ? (
+                    option.courses.map((course, courseIndex) => (
                       <div key={courseIndex} className="flex items-center">
                         <Checkbox
                           checked={selectedPreferredCourses.has(course)}
-                          onCheckedChange={() =>
-                            handlePreferredCourseSelect(course)
-                          }
+                          onCheckedChange={() => handlePreferredCourseSelect(course)}
                           id={`preferred-${index}-${subIndex}-${courseIndex}`}
                           className="border-[.5px] mr-2 mt-1"
                         />
                         {course.name} - Credits: {course.credits}
                       </div>
-                    ))}
-                  </div>
-                ))
-              )}
+                    ))
+                  ) : (
+                    <div>No courses available</div>
+                  )}
+                </div>
+              ))
+            )}
             </div>
           </div>
 
           <div className="flex justify-center">
             <Button
-              className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
+              className=" bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full mt-4"
               onClick={handleSecondStepSubmit}
             >
               Submit Preferences
@@ -356,13 +368,13 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
               </div>
               <div className="flex justify-center space-x-4">
                 <Button
-                  className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full"
+                  className="bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full"
                   onClick={handleSavePlan}
                 >
                   Save Plan
                 </Button>
                 <Button
-                  className="bg-gold-base text-white font-bold px-4 py-2 rounded-full"
+                  className="bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full"
                   onClick={handleDiscardPlan}
                 >
                   Discard Plan
@@ -380,7 +392,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
             </div>
             <div>
               <Button
-                className="bg-gold-base hover:bg-gold-light text-white font-bold px-4 py-2 rounded-full mt-4"
+                className="bg-primary hover:bg-muted hover:text-primary text-white font-bold px-4 py-2 rounded-full mt-4"
                 onClick={resetFormAndCreateAnotherPlan}
               >
                 Create Another Plan

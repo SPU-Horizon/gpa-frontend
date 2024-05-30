@@ -1,34 +1,76 @@
 /** @type {import('tailwindcss').Config} */
-
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  prefix: "",
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+    },
     extend: {
       colors: {
-        tran: "transparent",
-        gold: {
-          base: "#927c4e",
-          light: "#927d4e8b",
-          bright: "#f5d061",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
-        black: {
-          base: "#000000",
-          light: "#222",
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
-        white: {
-          base: "#e9e9e9",
-          light: "#fff",
-          dark: "#e1e1e1",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
-        grey: {
-          dark: "#2e2e2e",
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
-        db: {
-          blue: "#030712",
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
       },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
-
     fontFamily: {
       avenir: ["Avenir-Next", "Avenir", "sans-serif"],
       poppins: ["Poppins", "sans-serif"],
@@ -37,8 +79,13 @@ export default {
       xl: { max: "1300px" },
       // => @media (max-width: 1300px) { ... }
 
+      midxl: { max: "1200px" },
+      // => @media (max-width: 1200px) { ... }
+
       lg: { max: "1000px" },
       // => @media (max-width: 1000px) { ... }
+
+      mantineMid: { max: "768px" },
 
       md: { max: "750px" },
       // => @media (max-width: 750px) { ... }
@@ -48,8 +95,14 @@ export default {
       xs: { max: "325px" },
       // => @media (max-width: 325px) { ... }
     },
+    // Custom utility for hiding scrollbars
+    scrollbarHide: {
+      '::-webkit-scrollbar': {
+        display: 'none',
+      },
+      '-ms-overflow-style': 'none',
+      'scrollbar-width': 'none',
+    },
   },
-  // eslint-disable-next-line no-undef
   plugins: [require("tailwindcss-animate")],
-  darkMode: "class",
 };

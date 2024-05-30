@@ -1,20 +1,11 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useUserStore, useCourseStore, useThemeStore } from "@/stores";
-import {
-  UnstyledButton,
-  Text,
-  Badge,
-  Group,
-  List,
-  SimpleGrid,
-  Grid,
-  Card,
-  rem,
-} from "@mantine/core";
+import { useUserStore, useCourseStore } from "@/stores";
+import { UnstyledButton, Text, Badge, List, Card, rem } from "@mantine/core";
 import { Footprints, Network } from "lucide-react";
 import CreatePlan from "@/components/CreatePlan/CreatePlan";
 import { Button } from "../ui/button";
+import { useTheme } from "../theme-provider";
 
 interface Course {
   course_id: string;
@@ -55,19 +46,7 @@ const BuildSchedule: React.FC = () => {
   const [selectedField, setSelectedField] = useState("");
   const [remainingCourses, setRemainingCourses] = useState<string[]>([]);
   const [value, setValue] = useState<Date | null>(null);
-  const { theme } = useThemeStore();
-
-  useEffect(() => {
-    initializeUserInfo();
-  }, [initializeUserInfo]);
-
-  // This example assumes you have a function to get all courses for a major
-  // For demonstration, using a static mapping
-  const requiredCoursesForMajor = {
-    // Example structure
-    "Computer Science": ["CSC 1130", "CSC 1230", "CSC 2430", "CSC 3150", "..."],
-    // Populate according to actual program requirements
-  };
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!selectedField) return;
@@ -154,39 +133,21 @@ const BuildSchedule: React.FC = () => {
   ));
 
   return (
-    <div className="flex mt-4">
-      <div className="flex gap-4 w-full h-max md:flex-col md:gap-16 md:h-auto ">
-        <div className="flex flex-grow md:h-[400px] overflow-scroll border border-gray-100 dark:border-gray-800 rounded-md p-4 dark:bg-db-blue">
-          {/* "Create a Plan" section */}
+    // <div className="flex mt-8 flex-grow w-full h-max md:flex-col md:gap-16 md:h-auto overflow-scroll border border-gray-100 dark:border-gray-800 rounded-md p-4 dark:bg-db-blue">
+    //   {/* <div className="flex gap-4 w-full h-max md:flex-col md:gap-16 md:h-auto "> */}
+        
+    //       {/* "Create a Plan" section */}
 
-          <CreatePlan onCompleted={handleCreatePlanCompleted} />
-        </div>
-        <div className="flex flex-grow">
-          {/* "Registered Courses" section */}
-          <Card className="flex flex-col w-full overflow-hidden  border border-gray-100 dark:border-gray-700 dark:bg-transparent">
-            <h1 className="text-xl font-bold ml-2 mt-4 dark:text-white-base">
-              Registered Courses
-            </h1>
-            <List spacing="md" size="sm" center>
-              {inProgressClassList.map((course: Course) => (
-                <Card
-                  key={course.course_id}
-                  className="my-2 p-4 shadow-inner bg-gray-100 dark:bg-grey-dark dark:text-white-base"
-                >
-                  {course.course_id} - {course.name}
-                  <Badge className="ml-2 bg-gold-base font-semibold">
-                    {course.credits} credits
-                  </Badge>
-                </Card>
-              ))}
-            </List>
-            <div className="h-full w-full flex justify-center items-center">
-              <Button className="bg-gold-base hover:bg-gold-light text-white-base font-bold px-4 py-2 rounded-full mt-4">
-                View All
-              </Button>
-            </div>
-          </Card>
-        </div>
+    //       <CreatePlan onCompleted={handleCreatePlanCompleted} />
+  
+    //   {/* </div> */}
+    // </div>
+
+    <div className="flex flex-grow  min-h-[500px] my-4 pb-4 md:my-4 md:mx-8">
+      <div className="flex flex-col p-6 justify-between w-full rounded-md border border-gray-100 bg-white dark:bg-transparent dark:border-gray-800 dark:bg-db-blue overflow-hidden">
+        <h3 className="font-bold text-xl m-4 ">Build Schedule</h3>
+        <CreatePlan onCompleted={handleCreatePlanCompleted} />
+        {/* Display the selected schedule */}
       </div>
     </div>
   );

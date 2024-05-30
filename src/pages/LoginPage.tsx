@@ -58,7 +58,7 @@ export default function AuthenticationPage() {
   return (
     <div className="h-screen flex justify-center items-center">
       <div className="flex justify-center items-center h-full w-full bg-gradient-to-r from-neutral-500 to-black-light">
-        <div className="flex w-full md:max-w-sm mx-auto overflow-hidden bg-white-light rounded-lg shadow-lg max-w-3xl ">
+        <div className="flex w-full md:max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg max-w-3xl ">
           <div
             className="md:hidden bg-cover block w-1/2 bg-center"
             style={{
@@ -80,31 +80,6 @@ export default function AuthenticationPage() {
             <p className="mt-3 text-xl text-center text-gray-600 ">
               Welcome back!
             </p>
-
-            {/* <a
-              href="#"
-              className="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg hover:bg-gray-50 "
-            >
-              <GoogleIcon />
-
-              <span className="w-5/6 px-4 py-3 font-bold text-center">
-                Sign in with Google
-              </span>
-            </a>
-
-            <div className="flex items-center justify-between mt-4">
-              <span className="w-1/5 border-b  lg:w-1/4"></span>
-
-              <a
-                href="#"
-                className="text-xs text-center text-gray-500 uppercase  hover:underline"
-                aria-disabled="true"
-              >
-                or login with email
-              </a>
-
-              <span className="w-1/5 border-b  lg:w-1/4"></span>
-            </div> */}
 
             <div className="mt-4">
               <label className="block mb-2 text-sm font-medium text-gray-600 ">
@@ -136,7 +111,7 @@ export default function AuthenticationPage() {
             <button
               disabled={isSubmitting}
               type="submit"
-              className="mt-6 w-full px-6 py-3 text-sm font-medium tracking-wide text-white-light capitalize transition-colors duration-300 transform bg-gold-light rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+              className="mt-6 w-full px-6 py-3 text-sm font-medium tracking-wide text-white-light capitalize transition-colors duration-300 transform bg-primary rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
             >
               {isSubmitting ? "Signing In..." : "Sign In"}
             </button>
