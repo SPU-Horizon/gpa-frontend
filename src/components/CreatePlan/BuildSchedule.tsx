@@ -143,8 +143,8 @@ const BuildSchedule: React.FC = () => {
     //   {/* </div> */}
     // </div>
 
-    <div className="flex flex-grow  min-h-[500px] my-4 pb-4 md:my-4 md:mx-8 ">
-      <div className="flex flex-col p-6 justify-between w-full rounded-md border border-gray-100 bg-white dark:bg-transparent dark:border-gray-800 dark:bg-db-blue overflow-scroll">
+    <div className="flex flex-grow  min-h-[500px] my-4 pb-4 md:my-4 md:mx-8">
+      <div className="flex flex-col p-6 justify-between w-full rounded-md border border-gray-100 bg-white dark:bg-transparent dark:border-gray-800 dark:bg-db-blue overflow-hidden">
         <h3 className="font-bold text-xl m-4 ">Build Schedule</h3>
         <CreatePlan onCompleted={handleCreatePlanCompleted} />
         {/* Display the selected schedule */}
