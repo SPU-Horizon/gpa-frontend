@@ -118,7 +118,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
         mandatory_courses,
         completed_courses,
         completed_credits,
-      } = getOptions(selectedField, repeatedCoursesIds, Number(maxCredit));
+      } = getOptions(selectedField, repeatedCoursesIds);
 
       setPlanOptions(plan_options);
       setMandatoryCourses(mandatory_courses);
