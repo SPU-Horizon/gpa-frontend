@@ -9,7 +9,7 @@ export default function CreatePlanSection() {
     <div className="flex flex-col h-screen">
       <StandardHeader title="Create a Plan" />
       <Separator />
-      <ScrollArea>
+      <ScrollArea className="scrollbarHide">
         <div className="mx-auto px-10">
           <BuildSchedule />
           <SaveSchedule />
