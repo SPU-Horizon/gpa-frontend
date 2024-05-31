@@ -134,7 +134,7 @@ type SaveSchedulePaginationProps = {
 };
 
 const SaveSchedulePagination = ({ schedules }: SaveSchedulePaginationProps) => {
-  const cardsPerPage = 6;
+  const cardsPerPage = 12;
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(cardsPerPage);
   const [selectedScheduleId, setSelectedScheduleId] = useState<string>();

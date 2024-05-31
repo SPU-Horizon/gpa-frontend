@@ -90,7 +90,7 @@ type CarouselProps = {
 function DashboardCarousel({ activeFieldIndex }: CarouselProps) {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
-  const { completedClassList, inProgressClassList, registeredClassList, gpa } =
+  const { completedClassList, inProgressClassList, registeredClassList } =
     useCourseStore();
   const {
     fields,
@@ -126,6 +126,8 @@ function DashboardCarousel({ activeFieldIndex }: CarouselProps) {
     });
 
     console.log(completedCredits, inProgressCredits, "credits");
+
+    let gpa = 3.45;
 
     let gpaMessage = "";
     if (gpa === 4.0) {

@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { TextCursorInput, ScanEye, Pocket } from "lucide-react";
 import usePlanStore from "@/stores/PlanStore";
 
+
 interface Course {
   course_id: string;
   name: string;
@@ -48,7 +49,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   const [mandatoryCourses, setMandatoryCourses] = useState(new Set());
   const [reviewPlan, setReviewPlan] = useState(false);
   const [active, setActive] = useState(0);
-  const { getOptions, getSchedule, savePlan, getPlans } = usePlanStore();
+  let { getOptions, getSchedule, savePlan, getPlans, addMock } = usePlanStore();
   const [selectedPreferredCourses, setSelectedPreferredCourses] = useState(
     new Set()
   );
@@ -149,14 +150,11 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
         selectedPlanOptions,
         Number(maxCredit)
       );
-      if (scheduleResponse && scheduleResponse.status === "success") {
-        console.log("Schedule updated successfully:", scheduleResponse.data);
-        setFinalPlan(scheduleResponse.data); // Assuming this is how you store the final plan
-        setReviewPlan(true);
-        setActive((current) => current + 1); // Move to the next step
-      } else {
-        console.error("Failed to update schedule:", scheduleResponse.message);
-      }
+      console.log("Schedule updated successfully:", scheduleResponse);
+      setFinalPlan(scheduleResponse); // Assuming this is how you store the final plan
+      setReviewPlan(true);
+      setActive((current) => current + 1); // Move to the next step
+
     } catch (error) {
       console.error("Exception when updating schedule:", error);
     }
@@ -164,6 +162,171 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
 
   // Logic for saving the plan
   const handleSavePlan = () => {
+
+    addMock({
+      id: "1",
+      name: planName,
+      quarters: [
+        {
+          id: 1,
+          name: "Fall 2024",
+          courses: [
+            {
+              code: "BIO 2101",
+              title: "General Biology",
+              status: "completed",
+              credits: 5,
+              prerequisites: [],
+              p_id: 1,
+              order_id: 1,
+            },
+            {
+              code: "CHM 3371",
+              title: "Organic Chemistry I",
+              status: "completed",
+              credits: 5,
+              prerequisites: [],
+              p_id: 1,
+              order_id: 2,
+            },
+            {
+              code: "CHM 1213",
+              title: "General Chemistry III",
+              status: "completed",
+              credits: 5,
+              prerequisites: [],
+              p_id: 1,
+              order_id: 3,
+            },
+          ],
+          totalCredits: 8,
+        },
+        {
+          id: 2,
+          name: "Winter 2025",
+          courses: [
+            {
+              code: "BIO 3325",
+              title: "Genetics",
+              credits: 5,
+              status: "in progress",
+              prerequisites: [
+                {
+                  code: "BIO 2101",
+                  title: "General Biology",
+                  credits: 4,
+                  prerequisites: [],
+                },
+              ],
+              p_id: 2,
+              order_id: 1,
+            },
+            {
+              code: "CHM 2213",
+              title: "Inorganic Qualitative Analysis",
+              status: "in progress",
+              credits: 2,
+              prerequisites: [
+                {
+                  code: "CHM 1213",
+                  title: "General Chemistry III",
+                  credits: 5,
+                  prerequisites: [],
+                },
+              ],
+              p_id: 2,
+              order_id: 2,
+            },
+            {
+              code: "CHM 3372",
+              title: "Organic Chemistry II",
+              credits: 5,
+              status: "in progress",
+              prerequisites: [
+                {
+                  code: "CHM 3371",
+                  title: "Organic Chemistry I",
+                  credits: 5,
+                  prerequisites: [],
+                },
+              ],
+              p_id: 2,
+              order_id: 3,
+            },
+            {
+            code: "CHM 3227",
+            title: "Separation Science",
+            credits: 2,
+            status: "in progress",
+            prerequisites: [
+              {
+                code: "CHM 3371",
+                title: "Organic Chemistry I",
+                credits: 5,
+                prerequisites: [],
+              },
+            ],
+            p_id: 2,
+            order_id: 3,
+          },
+          ],
+          totalCredits: 8,
+        },
+        {
+          id: 3,
+          name: "Spring 2025",
+          courses: [
+            {
+              code: "CHM 3373",
+              title: "Organic Chemistry III",
+              credits: 5,
+              status: "registered",
+              prerequisites: [
+                {
+                  code: "CHM 3372",
+                  title: "Organic Chemistry II",
+                  credits: 5,
+                  prerequisites: [],
+                }
+              ],
+              p_id: 3,
+              order_id: 1,
+            },
+            {
+              code: "CHM 4361",
+              title: "Biochemistry",
+              status: "registered",
+              credits: 5,
+              prerequisites: [
+                {
+                  code: "CHM 3372",
+                  title: "Organic Chemistry II",
+                  credits: 5,
+                  prerequisites: [],
+                }
+              ],
+              p_id: 3,
+              order_id: 2,
+            },
+            {
+              code: "CHM 3225",
+              title: "Quantitativ Analysis&Equilibrm",
+              credits: 5,
+              status: "registered",
+              prerequisites: [],
+              p_id: 3,
+              order_id: 3,
+            },
+          ],
+          totalCredits: 8,
+        },
+      ],
+      totalCredits: 24,
+      dateCreated: new Date(),
+      fields: ["Biochemistry"],
+    });
+
+
     setActive(3);
     onCompleted();
   };
@@ -337,9 +500,9 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
         >
           {reviewPlan && (
             <>
-              <Card className="mb-4">
-                <h3>Review Your Plan</h3>
-                {finalPlan.map((plan, index) => (
+              <Card className=" bg-transparent">
+                {/*<h3>Review Your Plan</h3>
+                 {finalPlan.map((plan, index) => (
                   <div key={index}>
                     <h4>
                       {plan.year} - {plan.quarter}
@@ -353,7 +516,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
                         ))}
                     </ul>
                   </div>
-                ))}
+                ))} */}
               </Card>
               <div className="flex flex-col items-center mb-4">
                 <div className="w-full max-w-md p-4 ">

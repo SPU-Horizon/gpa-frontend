@@ -74,7 +74,7 @@ export default function IntegrationPage() {
       const res = await postBanner(formData, option);
       //Res can be an object with 3 properties: parsedCourses, majorRequirements, failedEnrollments (if field option is chosen)
       //Otherwise res only contains parserCourses, failedEnrollments
-      if (res.status === 200 && res.failedEnrollments.length === 0) {
+      if (res.status === 200) {
         toast.success("File Uploaded Successfully, All Classes Added");
         initializeCourseInfo();
         initializeUserInfo();

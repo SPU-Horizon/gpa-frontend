@@ -13,6 +13,7 @@ import {
 } from "@/components/CreatePlan/SaveSchedulePagination";
 import { Badge } from "@/components/ui/badge";
 import useVisualizeStore, { Schedule } from "@/stores/VisualizeStore";
+import { date } from "zod";
 
 type ViewScheduleCardProps = {
   schedule?: Schedule;
@@ -64,7 +65,7 @@ function ViewScheduleCard({ schedule, isDashboard }: ViewScheduleCardProps) {
           </CardTitle>
 
           <p className="text-base font-semibold mb-4">
-            Date Created: {schedule.dateCreated.toDateString()}
+            Date Created: {new Date().toDateString()}
           </p>
           <p className="text-base font-semibold mb-4">
             Max Credits: {schedule.totalCredits}
@@ -111,7 +112,7 @@ function ViewScheduleCard({ schedule, isDashboard }: ViewScheduleCardProps) {
           </CardTitle>
 
           <p className="text-xs mb-4">
-            Date Created: {schedule.dateCreated.toDateString()}
+            Date Created: {new Date().toDateString()}
           </p>
           <p className="font-semibold mb-4">
             Max Credits: {schedule.totalCredits}

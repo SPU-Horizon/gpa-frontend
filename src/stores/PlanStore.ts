@@ -4,12 +4,17 @@ import { useCourseStore } from ".";
 import { useUserStore } from ".";
 import axios from "axios";
 import { generatePlanOptions } from "./generatePlanOptions";
+import { Student } from "@/icons";
+import { mockSchedules } from "@/constants/MockScheduleData";
+import { Schedule } from "./VisualizeStore";
 
 type PlanStore = {
   plans: [];
-  maxCredits: number;
+  mocks: Schedule[];
+  maxCredits: number; //TODO: RESET AFTER USE
   completedCourses: []; 
   mandatoryCourses: [];
+  selectedFields: any[]; //TODO: RESET AFTER USE
   getOptions: (
     selected_fields: any[],
     repeated_courses: any[],
@@ -22,6 +27,7 @@ type PlanStore = {
   getSchedule: (options_selected: any[], maxCredits: number) => void; 
   savePlan: (plan_name: string, plan_json: {}) => void;
   getPlans: () => void;
+  addMock: (mock: Schedule) => void;
 };
 
 const usePlanStoreTemplate: StateCreator<
@@ -30,12 +36,25 @@ const usePlanStoreTemplate: StateCreator<
   [["zustand/persist", PlanStore]]
 > = persist(
   (set) => ({
+    mocks: mockSchedules,
     plans: [],
     maxCredits: 0,
     completedCourses: [],
     mandatoryCourses: [],
     planOptions: [],
+    selectedFields: [],
     formInformation: {},
+
+    addMock: (mock: Schedule) => {
+
+      const mocks = usePlanStore.getState().mocks;
+
+      let mocks2 = [mock, ...mocks];
+
+      set({
+        mocks: mocks2
+      });
+    },
 
     getOptions: (
       selected_fields: any[],
@@ -55,6 +74,10 @@ const usePlanStoreTemplate: StateCreator<
         completedCredits
       );
 
+      set({
+        selectedFields: selected_fields
+      });
+
       return planOptions;
     },
 
@@ -68,6 +91,7 @@ const usePlanStoreTemplate: StateCreator<
 
       set({
         mandatoryCourses: [],
+        maxCredits: maxCredits,
       });
 
       let formInformation = {
@@ -94,13 +118,23 @@ const usePlanStoreTemplate: StateCreator<
     },
 
     savePlan: async (plan_name: string, plan_json: {}) => {
+      const ID = useUserStore.getState().studentId;
+      const maxCredits = usePlanStore.getState().maxCredits;
+      const selectedFields = usePlanStore.getState().selectedFields;
+
+
       let formInformation = {
         planName: plan_name,
         planJson: plan_json,
+        studentID: ID,
+        max: maxCredits,
+        selectedFields: selectedFields
       };
 
+      console.log("formInformation ", formInformation)
+
       const res = await axios
-        .post(`http://localhost:3000/plan/saveSchedule`, {
+        .post(`http://localhost:3000/plan/savePlan`, {
           params: formInformation,
         })
         .then((response) => {
@@ -113,9 +147,10 @@ const usePlanStoreTemplate: StateCreator<
     },
 
     getPlans: async () => {
+      const studentID = useUserStore.getState().studentId;
 
       const res = await axios
-        .get(`http://localhost:3000/plan/getPlans`)
+        .get(`http://localhost:3000/plan/getPlans?id=${studentID}`)
         .then((response) => {
           return response.data;
         })
@@ -126,6 +161,9 @@ const usePlanStoreTemplate: StateCreator<
 
       console.log(res);
 
+      set({
+        plans: res
+      });
 
     },
 
