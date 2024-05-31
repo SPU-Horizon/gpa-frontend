@@ -5,6 +5,7 @@ import {
   LoginPage,
   RegisterPage,
   Page404,
+  PrivacyPolicy,
   ProfilePage,
   DashboardWrapper,
 } from "./pages";
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="/sign-in" element={<LoginPage />}></Route>
             <Route path="/register" element={<RegisterPage />}></Route>
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard/*" element={<DashboardWrapper />} />
               <Route path="/profile" element={<ProfilePage />} />

@@ -12,6 +12,11 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/AuthStore";
 import { TextInput, PasswordInput } from "@mantine/core";
 import { c } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
+import { Checkbox } from "@/components/ui/checkbox";
+
+const handlePrivacyAgreement = () => {
+
+}
 
 const registerSchema = z
   .object({
@@ -78,7 +83,7 @@ export default function RegisterPage() {
         />
 
         {/* Form Section on the right side of the page */}
-        <div className="flex bg-white items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2 ">
+        <div className="flex bg-white items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2 text-gray-600">
           <div className="w-full md:pt-12">
             <RegisterPageHeader />
 
@@ -132,7 +137,13 @@ export default function RegisterPage() {
                 <span className="dark:text-white-light ">Sign Up </span>
                 <ArrowRight />
               </button>
+              <Checkbox
+                onCheckedChange={() => handlePrivacyAgreement()}
+                id={`PrivacyAgreement`}
+                className="border-[.5px] mr-2 mt-1"
+              />
             </form>
+            By registering for GPA, you agree to our <a href="./privacy" className="text-red-600">Privacy Policy</a>.
           </div>
         </div>
       </div>
