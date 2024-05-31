@@ -85,9 +85,9 @@ const useCourseStoreTemplate: StateCreator<
       } catch (error) {
         // Handle any errors that occurred during the request
         if ((error as any).response.status === 499) {
-          return { status: 499, failedEnrollments: [], missingFields: [] };
+          return { status: 499, failedEnrollments: [], missingFields: [], duplicateFields: [] };
         } else {
-          return { status: 500, failedEnrollments: [], missingFields: []};
+          return { status: 500, failedEnrollments: [], missingFields: [], duplicateFields: [] };
         }
       }
     },

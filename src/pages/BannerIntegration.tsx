@@ -117,7 +117,7 @@ export default function IntegrationPage() {
         toast.error("An Error Occured While Uploading File");
       }
 
-      if (res.duplicateFields[0] > 0) {
+      if (res.duplicateFields.length > 0 && res.duplicateFields[0] > 0) {
         toast.warning(
           <div className="font-avenir flex flex-col gap-2">
             <div>
