@@ -13,18 +13,27 @@ import useAuthStore from "@/stores/AuthStore";
 import { TextInput, PasswordInput } from "@mantine/core";
 import { c } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import { set } from "date-fns";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
-const handlePrivacyAgreement = () => {
-
-}
+const handlePrivacyAgreement = () => {};
 
 const registerSchema = z
   .object({
-    firstName: z.string().min(1).max(18, "First name must be 1-18 characters long."),
-  lastName: z.string().min(1).max(18, "Last name must be 1-18 characters long."),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(9, "Password must be at least 9 characters."),
-  confirmPassword: z.string().min(9, "Password must be at least 9 characters.")
+    firstName: z
+      .string()
+      .min(1)
+      .max(18, "First name must be 1-18 characters long."),
+    lastName: z
+      .string()
+      .min(1)
+      .max(18, "Last name must be 1-18 characters long."),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(9, "Password must be at least 9 characters."),
+    confirmPassword: z
+      .string()
+      .min(9, "Password must be at least 9 characters."),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must be matching match.",
@@ -42,12 +51,19 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   });
 
+  const [privacyAgreement, setPrivacyAgreement] = useState(false);
+
   const navigate = useNavigate();
 
   const { registerUser } = useAuthStore();
 
   const submitHandler = async () => {
     isSubmitting ? toast.loading("Loading...") : toast.dismiss();
+
+    if (!privacyAgreement) {
+      toast.error("You must agree to the Privacy Policy to continue!");
+      return false;
+    }
 
     const res = await registerUser({
       firstName: getValues().firstName,
@@ -86,7 +102,6 @@ export default function RegisterPage() {
         <div className="flex bg-white items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5 md:p-2 text-gray-600">
           <div className="w-full md:pt-12">
             <RegisterPageHeader />
-
             {/* Form Component */}
             <form
               className="grid md:grid-cols-1 gap-6 mt-8 grid-cols-2"
@@ -129,7 +144,6 @@ export default function RegisterPage() {
                   </>
                 </div>
               ))}
-
               <button
                 type="submit"
                 className="md:my-10 self-end h-[50px] flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-primary rounded-lg hover:bg-black-base hover:text-white-light focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
@@ -137,13 +151,26 @@ export default function RegisterPage() {
                 <span className="dark:text-white-light ">Sign Up </span>
                 <ArrowRight />
               </button>
+            </form>
+            <div className="mt-6 mb-2 font-semibold">
+              By registering for GPA, you agree to our{" "}
+              <a href="./privacy" className="text-red-600 hover:underline">
+                Privacy Policy.
+              </a>
+            </div>
+
+            <div className="flex gap-2 font-semibold">
+              Click here to agree
               <Checkbox
-                onCheckedChange={() => handlePrivacyAgreement()}
+                onCheckedChange={
+                  privacyAgreement
+                    ? () => setPrivacyAgreement(false)
+                    : () => setPrivacyAgreement(true)
+                }
                 id={`PrivacyAgreement`}
                 className="border-[.5px] mr-2 mt-1"
               />
-            </form>
-            By registering for GPA, you agree to our <a href="./privacy" className="text-red-600">Privacy Policy</a>.
+            </div>
           </div>
         </div>
       </div>
