@@ -11,11 +11,10 @@ import { RegisterInputFields } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/AuthStore";
 import { TextInput, PasswordInput } from "@mantine/core";
-import { c } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { set } from "date-fns";
-import { CheckedState } from "@radix-ui/react-checkbox";
 
 const handlePrivacyAgreement = () => {};
 
@@ -154,7 +153,12 @@ export default function RegisterPage() {
             </form>
             <div className="mt-6 mb-2 font-semibold">
               By registering for GPA, you agree to our{" "}
-              <a href="./privacy" className="text-red-600 hover:underline">
+              <a
+                href="./privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:underline"
+              >
                 Privacy Policy.
               </a>
             </div>

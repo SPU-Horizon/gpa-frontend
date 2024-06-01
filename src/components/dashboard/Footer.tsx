@@ -6,7 +6,15 @@ function Footer() {
       <footer className="flex justify-between p-4 md:items-center md:justify-between md:p-6 ">
         <div>
           <p className="font-avenir font-bold">
-            &copy; GPA 2024 <a href="../privacy" className="text-red-600">Privacy Policy</a>
+            &copy; GPA 2024{" "}
+            <a
+              href="../privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-red-600"
+            >
+              Privacy Policy
+            </a>
           </p>
         </div>
       </footer>
