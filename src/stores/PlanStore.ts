@@ -44,10 +44,8 @@ const usePlanStoreTemplate: StateCreator<
       const completedCourses = useCourseStore.getState().completedClassList;
       const inProgressCourses = useCourseStore.getState().inProgressClassList;
       const completedCredits = useCourseStore.getState().completedCredits;
-      const fields = useUserStore.getState().fields;
 
       const planOptions = generatePlanOptions(
-        fields,
         selected_fields,
         repeated_courses,
         inProgressCourses,
