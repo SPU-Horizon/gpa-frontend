@@ -72,7 +72,7 @@ export default function IntegrationPage() {
       formData.append("student_id", studentId.toString());
 
       const res = await postBanner(formData, option);
-      //Res can be an object with 3 properties: parsedCourses, majorRequirements, failedEnrollments (if field option is chosen)
+      //Res can be an object with 3 properties: parsedCourses, majorRequirements, failedEnrollments, duplicateFields (if field option is chosen)
       //Otherwise res only contains parserCourses, failedEnrollments
       if (res.status === 200 && res.failedEnrollments.length === 0) {
         toast.success("File Uploaded Successfully, All Classes Added");
@@ -115,6 +115,20 @@ export default function IntegrationPage() {
         toast.error("Invalid Banner Page");
       } else {
         toast.error("An Error Occured While Uploading File");
+      }
+
+      if (res.duplicateFields.length > 0 && res.duplicateFields[0] > 0) {
+        toast.warning(
+          <div className="font-avenir flex flex-col gap-2">
+            <div>
+              <Text className="font-bold text-base text-center">
+                We've noticed the field you uploaded already exists.
+                If you intend to re-register that field with a new enrollment year, 
+                you'll need to drop the original from the Graduation Requirements page.
+              </Text>
+            </div>
+          </div>
+        );
       }
 
       if (res.missingFields.length > 0) {
