@@ -1,3 +1,4 @@
+//ts-nocheck
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 import { useCourseStore } from ".";
@@ -9,17 +10,16 @@ type PlanStore = {
   plans: [];
   maxCredits: number;
   completedCourses: []; 
-  mandatoryCourses: [];
   getOptions: (
     selected_fields: any[],
     repeated_courses: any[],
   ) => {
     plan_options: any[][];
-    mandatory_courses: Set<any>;
-    completed_courses: Set<any>;
+    mandatory_courses: any[];
+    completed_courses: any[];
     completed_credits: any;
   }; 
-  getSchedule: (options_selected: any[], maxCredits: number) => void; 
+  getSchedule: (max_credits: number, final_courses: any[], updated_completed_courses: any[], updated_completed_credits: number) => void; 
   savePlan: (plan_name: string, plan_json: {}) => void;
   getPlans: () => void;
 };
@@ -33,7 +33,6 @@ const usePlanStoreTemplate: StateCreator<
     plans: [],
     maxCredits: 0,
     completedCourses: [],
-    mandatoryCourses: [],
     planOptions: [],
     formInformation: {},
 
@@ -56,24 +55,18 @@ const usePlanStoreTemplate: StateCreator<
       return planOptions;
     },
 
-    getSchedule: async (options_selected: any[], maxCredits: number) => {
-      // First step is to update mandatory courses
-      const finalCourses = new Set();
-      options_selected.forEach((option: any) => {
-        finalCourses.add(option.course);
-      });
+    getSchedule: async (max_credits: number, final_courses: any[], updated_completed_courses: any[], updated_completed_credits: number) => {
 
-
-      set({
-        mandatoryCourses: [],
-      });
 
       let formInformation = {
-        maxCredits: maxCredits,
-        completedCredits: useCourseStore.getState().completedCredits,
-        completedCourses: useCourseStore.getState().completedClassList,
-        options_selected,
+        max_credits: max_credits,
+        final_courses: final_courses,
+        completed_courses: updated_completed_courses,
+        completed_credits: updated_completed_credits,
       };
+
+      console.log(formInformation);
+
 
       // Send all necessary information to steven
       const res = await axios

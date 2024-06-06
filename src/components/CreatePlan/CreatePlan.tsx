@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useRef, useState } from "react";
 import { useUserStore, useCourseStore } from "@/stores";
 import {
@@ -12,6 +13,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { TextCursorInput, ScanEye, Pocket } from "lucide-react";
 import usePlanStore from "@/stores/PlanStore";
+import { max } from "date-fns";
 
 interface Course {
   course_id: string;
@@ -46,6 +48,8 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   const [selectedField, setSelectedField] = useState<Field[]>([]);
   const [planOptions, setPlanOptions] = useState<any[][]>([]);
   const [mandatoryCourses, setMandatoryCourses] = useState(new Set());
+  const [completedCourses, setCompletedCourses] = useState(new Set());
+  const [completedCredits, setCompletedCredits] = useState(0);
   const [reviewPlan, setReviewPlan] = useState(false);
   const [active, setActive] = useState(0);
   const { getOptions, getSchedule, savePlan, getPlans } = usePlanStore();
@@ -70,6 +74,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
   // Function to handle checkbox changes
   const handleCourseSelect = (course: Course) => {
     setSelectedCoursesToRepeat((prev) => {
+      
       if (prev.includes(course)) {
         return prev.filter((id) => id !== course);
       } else {
@@ -107,11 +112,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
     const repeatedCoursesIds = selectedCoursesToRepeat.map(
       (course) => course.course_id
     );
-    // console.log("repeatedCoursesIds", repeatedCoursesIds);
-    // Call getOptions function with the selected field names and repeated course IDs
-    // console.log("selectedField in creaePlan before getOptions", selectedField);
-    // console.log("repeatedCoursesIds in creaePlan before getOptions", repeatedCoursesIds);
-    console.log("maxCredit before in createPlan getOptions", maxCredit);
+
     try {
       const {
         plan_options,
@@ -122,10 +123,9 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
 
       setPlanOptions(plan_options);
       setMandatoryCourses(mandatory_courses);
+      setCompletedCourses(completed_courses);
+      setCompletedCredits(completed_credits);
 
-      console.log("plan_options", plan_options);
-      console.log("mandatory_courses", mandatory_courses);
-      console.log("completed_credit", completed_credits);
     } catch (error) {
       console.error(error);
     }
@@ -136,19 +136,18 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
 
   // Logic for second step submission
   const handleSecondStepSubmit = async () => {
-    const selectedPlanOptions = planOptions
-      .flat()
-      .filter((option) =>
-        option.courses.some((courseId: string) =>
-          selectedPreferredCourses.has(courseId)
-        )
-      );
+  
+    let finalCourses = Array.from(selectedPreferredCourses).map(course => course.course_id);
+    finalCourses = finalCourses.concat(mandatoryCourses);
 
     try {
       const scheduleResponse = await getSchedule(
-        selectedPlanOptions,
-        Number(maxCredit)
+        parseInt(maxCredit),
+        finalCourses,
+        completedCourses,
+        completedCredits
       );
+
       if (scheduleResponse && scheduleResponse.status === "success") {
         console.log("Schedule updated successfully:", scheduleResponse.data);
         setFinalPlan(scheduleResponse.data); // Assuming this is how you store the final plan
@@ -156,6 +155,7 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
         setActive((current) => current + 1); // Move to the next step
       } else {
         console.error("Failed to update schedule:", scheduleResponse.message);
+        console.log(scheduleResponse.status)
       }
     } catch (error) {
       console.error("Exception when updating schedule:", error);
@@ -176,7 +176,6 @@ const CreatePlan: React.FC<CreatePlanProps> = ({ onCompleted }) => {
 
   // Logic to handle review and save the plan
   const handleReviewPlan = () => {
-    console.log("Plan reviewed and saved");
     setReviewPlan(true);
     onCompleted(); // This can be called after the plan is successfully saved
   };
